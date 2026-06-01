@@ -1,22 +1,53 @@
-name: Deploy to Azure App Service
-
+name: Build & Deploy to Azure App Service
+ 
 on:
   push:
-    branches:
-      - faiz
-
+    branches: [main]
+  workflow_dispatch:
 jobs:
   build-and-deploy:
+    name: Build and Deploy Application
     runs-on: ubuntu-latest
-
+ 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
-
+ 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: package-lock.json
+ 
+      - name: Install dependencies
+        run: npm ci
+ 
+      - name: Build Next.js application
+        run: npm run build
+        env:
+          NODE_ENV: production
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+ 
+      - name: Create deployment package
+        run: |
+          mkdir -p deployment-package
+          cp -r .next deployment-package/
+          cp -r public deployment-package/ 2>/dev/null || true
+          cp package*.json deployment-package/
+          cp next.config.js deployment-package/ 2>/dev/null || true
+ 
+      - name: Install deployement package
+        working-directory: deployment-package
+        run: npm ci --omit=dev
+ 
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ vars.WEBAPP_NAME }}
+          slot-name: 'Production'
+          package: deployment-package
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
       - name: Install Frontend Dependencies
         run: |
@@ -27,3 +58,5 @@ jobs:
         run: |
           cd frontend
           npm run build
+
+      
