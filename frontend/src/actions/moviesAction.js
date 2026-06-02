@@ -24,7 +24,7 @@ export const addMovie = (movie, history) => {
     formData.append("genre", movie.genre);
     formData.append("rate", movie.rate);
     formData.append("description", movie.description);
-    formData.append("image", movie.image);
+    if (movie.image) formData.append("image", movie.image);
     formData.append("trailerLink", movie.trailerLink);
     formData.append("movieLength", movie.movieLength);
 
