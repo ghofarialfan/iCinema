@@ -26,7 +26,11 @@ export default function (state = initState, action) {
     case LOGIN_ERROR:
       return {
         ...state,
-        authMessage: action.error.response.data.error,
+        authMessage:
+          action.error?.response?.data?.error ||
+          action.error?.response?.data?.message ||
+          action.error?.message ||
+          "Login failed",
       };
     case SIGNUP_SUCCESS:
       return {
@@ -39,7 +43,11 @@ export default function (state = initState, action) {
     case SIGNUP_ERROR:
       return {
         ...state,
-        authMessage: action.error.response.data.error,
+        authMessage:
+          action.error?.response?.data?.error ||
+          action.error?.response?.data?.message ||
+          action.error?.message ||
+          "Sign up failed",
       };
 
     case SIGNOUT:
