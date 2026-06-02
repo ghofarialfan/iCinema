@@ -139,15 +139,7 @@ class AddMovieForm extends React.Component {
               type="number"
             />
 
-            <Input
-              name="image"
-              label="Cover Image URL"
-              onChange={this.handleChange}
-              error={errors["image"]}
-              iconClass="fas fa-file-image"
-              placeholder="https://..."
-              value={data.image}
-            />
+
 
             <Input
               name="trailerLink"
