@@ -92,11 +92,36 @@ class AddMovieForm extends React.Component {
   };
 
   uploadImage = (e) => {
-    if (e.target.files[0]) {
-      const data = { ...this.state.data };
-      data.image = e.target.files[0];
-      this.setState({ data });
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type?.startsWith("image/")) {
+      this.setState((prevState) => ({
+        data: { ...prevState.data, image: null },
+        errors: {
+          ...prevState.errors,
+          image: "Cover Image must be an image file",
+        },
+      }));
+      return;
     }
+
+    const maxBytes = 5 * 1024 * 1024;
+    if (file.size > maxBytes) {
+      this.setState((prevState) => ({
+        data: { ...prevState.data, image: null },
+        errors: {
+          ...prevState.errors,
+          image: "Cover Image size must be 5MB or less",
+        },
+      }));
+      return;
+    }
+
+    this.setState((prevState) => ({
+      data: { ...prevState.data, image: file },
+      errors: { ...prevState.errors, image: null },
+    }));
   };
 
   componentWillUnmount() {
