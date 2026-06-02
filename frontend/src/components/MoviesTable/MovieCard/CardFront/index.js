@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import noPoster from "../../../../images/noposter.jpg";
 
 const CardFront = ({
   coverImage,
@@ -9,9 +10,10 @@ const CardFront = ({
   trailerLink,
   movieLength,
 }) => {
+  const imageSrc = coverImage || noPoster;
   return (
     <div className="front">
-      <img src={coverImage} alt="coverImage" />
+      <img src={imageSrc} alt="coverImage" />
       <div className="card-footer">
         <h4> {title} </h4>
         <p>
