@@ -6,17 +6,6 @@ import Genre from "../models/genre.js";
 import checkAuth from "../middleware/checkAuth.js";
 import checkAdmin from "../middleware/checkAdmin.js";
 
-import { upload } from "../utils/cloudinary.js";
-
-const uploadImage = (req, res, next) => {
-  upload.single("image")(req, res, (err) => {
-    if (err) {
-      return res.status(500).json({ error: "Upload failed", message: err.message });
-    }
-    next();
-  });
-};
-
 /**
  * Read all movies.
  * @route GET /api/movies
@@ -76,18 +65,16 @@ router.post(
   "/addMovie",
   checkAuth,
   checkAdmin,
-  uploadImage,
   async (req, res) => {
     try {
-      const { title, genre, rate, description, trailerLink, movieLength } =
-      req.body;
+      const { title, genre, rate, description, trailerLink, movieLength, image } =
+        req.body;
     const isMovieExists = await Movie.findOne({ title });
 
     if (isMovieExists) {
       return res.status(400).json({ message: "Movie already exists" });
     }
 
-    const imagePath = req.file?.path || "";
     const movieGenre = Array.isArray(genre) ? genre : genre ? [genre] : [];
 
     const newMovie = new Movie({
@@ -97,7 +84,7 @@ router.post(
       description,
       trailerLink,
       movieLength,
-      image: imagePath,
+      image: image || "",
     });
     await newMovie.save();
     const movies = await Movie.find().populate({
