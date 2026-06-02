@@ -65,21 +65,20 @@ router.get("/:movieId", async (req, res) => {
  */
 router.post(
   "/addMovie",
-  upload.single("image"),
   checkAuth,
   checkAdmin,
+  upload.single("image"),
   async (req, res) => {
-    console.log("Received request to add movie:", req.body);
     try {
       const { title, genre, rate, description, trailerLink, movieLength } =
       req.body;
-    console.log("Request body:", req.body);
     const isMovieExists = await Movie.findOne({ title });
 
     if (isMovieExists) {
-      console.log("Movie already exists:", title);
       return res.status(400).json({ message: "Movie already exists" });
     }
+
+    const imagePath = req.file?.path || "";
 
     const newMovie = new Movie({
       title,
@@ -88,17 +87,15 @@ router.post(
       description,
       trailerLink,
       movieLength,
-      image: req.file.path,
+      image: imagePath,
     });
     await newMovie.save();
-    console.log("Movie saved successfully:", newMovie);
     const movies = await Movie.find().populate({
       path: "genre",
       select: "name",
     });
     res.status(201).json({ message: "Movie added successfully", movies: movies });
   } catch (error) {
-    console.error("Error adding movie to database:", error);
     res
       .status(500)
       .json({ error: "Failed to add movie", message: error.message });
