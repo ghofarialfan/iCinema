@@ -8,6 +8,15 @@ import checkAdmin from "../middleware/checkAdmin.js";
 
 import { upload } from "../utils/cloudinary.js";
 
+const uploadImage = (req, res, next) => {
+  upload.single("image")(req, res, (err) => {
+    if (err) {
+      return res.status(500).json({ error: "Upload failed", message: err.message });
+    }
+    next();
+  });
+};
+
 /**
  * Read all movies.
  * @route GET /api/movies
@@ -67,7 +76,7 @@ router.post(
   "/addMovie",
   checkAuth,
   checkAdmin,
-  upload.single("image"),
+  uploadImage,
   async (req, res) => {
     try {
       const { title, genre, rate, description, trailerLink, movieLength } =
@@ -79,11 +88,12 @@ router.post(
     }
 
     const imagePath = req.file?.path || "";
+    const movieGenre = Array.isArray(genre) ? genre : genre ? [genre] : [];
 
     const newMovie = new Movie({
       title,
-      genre: genre,
-      rate,
+      genre: movieGenre,
+      rate: Number(rate) || 0,
       description,
       trailerLink,
       movieLength,
