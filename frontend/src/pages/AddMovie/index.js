@@ -18,7 +18,7 @@ class AddMovieForm extends React.Component {
       genre: "",
       rate: 0,
       description: "",
-      image: null,
+      image: "",
       trailerLink: "",
       movieLength: "",
     },
@@ -73,7 +73,7 @@ class AddMovieForm extends React.Component {
             genre: "",
             rate: 0,
             description: "",
-            image: null,
+            image: "",
             trailerLink: "",
             movieLength: "",
           },
@@ -89,39 +89,6 @@ class AddMovieForm extends React.Component {
         "Failed to add movie";
       this.setState({ submitError: message });
     }
-  };
-
-  uploadImage = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type?.startsWith("image/")) {
-      this.setState((prevState) => ({
-        data: { ...prevState.data, image: null },
-        errors: {
-          ...prevState.errors,
-          image: "Cover Image must be an image file",
-        },
-      }));
-      return;
-    }
-
-    const maxBytes = 5 * 1024 * 1024;
-    if (file.size > maxBytes) {
-      this.setState((prevState) => ({
-        data: { ...prevState.data, image: null },
-        errors: {
-          ...prevState.errors,
-          image: "Cover Image size must be 5MB or less",
-        },
-      }));
-      return;
-    }
-
-    this.setState((prevState) => ({
-      data: { ...prevState.data, image: file },
-      errors: { ...prevState.errors, image: null },
-    }));
   };
 
   componentWillUnmount() {
@@ -174,12 +141,12 @@ class AddMovieForm extends React.Component {
 
             <Input
               name="image"
-              label="Cover Image"
-              onChange={this.uploadImage}
+              label="Cover Image URL"
+              onChange={this.handleChange}
               error={errors["image"]}
               iconClass="fas fa-file-image"
-              accept="image/*"
-              type="file"
+              placeholder="https://..."
+              value={data.image}
             />
 
             <Input
