@@ -16,13 +16,14 @@ class AddMovieForm extends React.Component {
     data: {
       title: "",
       genre: "",
-      rate: "",
+      rate: 0,
       description: "",
       image: null,
       trailerLink: "",
       movieLength: "",
     },
     errors: {},
+    submitError: null,
   };
 
   componentDidMount() {
@@ -43,7 +44,7 @@ class AddMovieForm extends React.Component {
 
   handleChange = ({ currentTarget: input }) => {
     const data = { ...this.state.data };
-    data[input.name] = input.value;
+    data[input.name] = input.name === "rate" ? Number(input.value) : input.value;
     this.setState({ data });
   };
 
@@ -51,9 +52,16 @@ class AddMovieForm extends React.Component {
     e.preventDefault();
     const { data } = this.state;
     const { error } = movieSchema.validate(data);
-    this.setState({ errors: error ? error.details : {} });
     if (error) {
-      console.log("Validation error:", error.details);
+      const errors = {};
+      error.details.forEach((detail) => {
+        errors[detail.path[0]] = detail.message;
+      });
+      this.setState({ errors, submitError: null });
+      return;
+    }
+    this.setState({ errors: {}, submitError: null });
+    if (error) {
       return;
     }
     try {
@@ -63,17 +71,23 @@ class AddMovieForm extends React.Component {
           data: {
             title: "",
             genre: "",
-            rate: "",
+            rate: 0,
             description: "",
             image: null,
             trailerLink: "",
             movieLength: "",
           },
           errors: {},
+          submitError: null,
         });
       }
     } catch (err) {
-      console.error("Error adding movie:", err);
+      const message =
+        err?.response?.data?.error ||
+        err?.response?.data?.message ||
+        err?.message ||
+        "Failed to add movie";
+      this.setState({ submitError: message });
     }
   };
 
@@ -90,7 +104,7 @@ class AddMovieForm extends React.Component {
   }
 
   render() {
-    const { errors, data } = this.state;
+    const { errors, data, submitError } = this.state;
     const { title, genre, rate, description, trailerLink, movieLength } = data;
     const { genres } = this.props;
 
@@ -98,6 +112,7 @@ class AddMovieForm extends React.Component {
       <div className="background-container pt-5 pb-3">
         <div className="container">
           <h1 className="header">Add a new movie</h1>
+          {submitError && <p className="text-white">{submitError}</p>}
 
           <form onSubmit={this.handleSubmit} encType="multipart/form-data">
             <Input
@@ -136,7 +151,7 @@ class AddMovieForm extends React.Component {
               name="image"
               label="Cover Image"
               onChange={this.uploadImage}
-              error={errors["coverImage"]}
+              error={errors["image"]}
               iconClass="fas fa-file-image"
               accept="image/*"
               type="file"
