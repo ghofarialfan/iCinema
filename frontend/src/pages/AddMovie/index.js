@@ -83,8 +83,8 @@ class AddMovieForm extends React.Component {
       }
     } catch (err) {
       const message =
-        err?.response?.data?.error ||
         err?.response?.data?.message ||
+        err?.response?.data?.error ||
         err?.message ||
         "Failed to add movie";
       this.setState({ submitError: message });
