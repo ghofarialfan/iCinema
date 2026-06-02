@@ -23,7 +23,7 @@ export const signIn = (credentials, history) => {
 export const signUp = (credentials, history) => {
   return async (dispatch) => {
     try {
-      const result = await Axios.post("/api/auth/signup", credentials);
+      const result = await Axios.post("/api/auth/signUp", credentials);
       localStorage.setItem("user", JSON.stringify(result.data));
       dispatch({ type: SIGNUP_SUCCESS, payload: result.data });
       history.push("/movies");
