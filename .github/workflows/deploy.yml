@@ -16,33 +16,32 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
-      - name: Install Frontend Dependencies
+      - name: Install frontend dependencies
         run: |
-          cd frontend
-          npm install --legacy-peer-deps
+          npm ci --prefix frontend --legacy-peer-deps
 
-      - name: Build Frontend
+      - name: Build frontend
         run: |
-          cd frontend
-          npm run build
-    
-      - name: Build Next.js application
-        run: npm run build
-        env:
-          NODE_ENV: production
-          MONGODB_URL: ${{ secrets.MONGODB_URL }}
- 
+          npm run build --prefix frontend
+
       - name: Create deployment package
         run: |
           mkdir -p deployment-package
-          cp -r .next deployment-package/
-          cp -r public deployment-package/ 2>/dev/null || true
-          cp package*.json deployment-package/
-          cp next.config.js deployment-package/ 2>/dev/null || true
- 
-      - name: Install deployement package
+
+          cp -r controller deployment-package/
+          cp -r middleware deployment-package/
+          cp -r models deployment-package/
+          cp -r utils deployment-package/
+          cp server.js deployment-package/
+          cp package.json deployment-package/
+          cp package-lock.json deployment-package/
+
+          mkdir -p deployment-package/frontend
+          cp -r frontend/build deployment-package/frontend/build
+
+      - name: Install deployment package
         working-directory: deployment-package
         run: npm ci --omit=dev
  
