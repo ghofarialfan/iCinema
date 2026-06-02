@@ -31,7 +31,8 @@ router.post("/signUp", async (req, res) => {
     }
     await user.save();
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const jwtSecret = process.env.JWT_SECRET || process.env.JWT_KEY;
+    const token = jwt.sign({ id: user._id }, jwtSecret, {
       expiresIn: "1h",
     });
 
@@ -78,7 +79,8 @@ router.post("/signIn", async (req, res) => {
         .json({ error: "Username or Password Incorrect" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const jwtSecret = process.env.JWT_SECRET || process.env.JWT_KEY;
+    const token = jwt.sign({ id: user._id }, jwtSecret, {
       expiresIn: "1h",
     });
 
