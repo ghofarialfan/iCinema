@@ -1,6 +1,13 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import crypto from "crypto";
+
+if (!process.env.JWT_SECRET && !process.env.JWT_KEY) {
+  process.env.JWT_SECRET = crypto.randomBytes(32).toString("hex");
+  console.warn("JWT secret is not set (JWT_SECRET/JWT_KEY). Using an ephemeral secret; tokens will reset after restart.");
+}
+
 import cors from "cors";
 import path from "path";
 import express from "express";
