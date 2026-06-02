@@ -41,6 +41,8 @@ jobs:
           mkdir -p deployment-package/frontend
           cp -r frontend/build deployment-package/frontend/build
 
+          printf "MONGODB_URL=%s\nJWT_SECRET=%s\n" "${{ secrets.MONGODB_URL }}" "${{ secrets.JWT_SECRET }}" > deployment-package/.env
+
       - name: Install deployment package
         working-directory: deployment-package
         run: npm ci --omit=dev
