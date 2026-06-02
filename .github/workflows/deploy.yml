@@ -41,7 +41,7 @@ jobs:
           mkdir -p deployment-package/frontend
           cp -r frontend/build deployment-package/frontend/build
 
-          printf "MONGODB_URL=%s\nJWT_SECRET=%s\n" "${{ secrets.MONGODB_URL }}" "${{ secrets.JWT_SECRET }}" > deployment-package/.env
+          printf "MONGODB_URL=%s\nJWT_SECRET=%s\nCLOUDINARY_CLOUD_NAME=%s\nCLOUDINARY_API_KEY=%s\nCLOUDINARY_API_SECRET=%s\n" "${{ secrets.MONGODB_URL }}" "${{ secrets.JWT_SECRET }}" "${{ secrets.CLOUDINARY_CLOUD_NAME }}" "${{ secrets.CLOUDINARY_API_KEY }}" "${{ secrets.CLOUDINARY_API_SECRET }}" > deployment-package/.env
 
       - name: Install deployment package
         working-directory: deployment-package
