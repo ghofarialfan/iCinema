@@ -353,3 +353,17 @@
     font-size: 34px;
   }
 }
+
+.add-movie-error-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(220, 38, 38, 0.16);
+  border: 1px solid rgba(248, 113, 113, 0.26);
+  color: #fecaca;
+  font-size: 14px;
+  font-weight: 800;
+}
