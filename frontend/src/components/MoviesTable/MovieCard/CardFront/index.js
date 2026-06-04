@@ -1,6 +1,9 @@
 import React from "react";
 import "./style.css";
 
+const DEFAULT_POSTER =
+  "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80";
+
 const CardFront = ({
   coverImage,
   rate,
@@ -9,26 +12,60 @@ const CardFront = ({
   trailerLink,
   movieLength,
 }) => {
+  const genres = Array.isArray(genre)
+    ? genre.map((g) => g.name).filter(Boolean).join(", ")
+    : "Uncategorized";
+
+  const rating = rate || "N/A";
+  const duration = movieLength || "Unknown length";
+  const poster = coverImage || DEFAULT_POSTER;
+
+  const handleTrailerClick = (event) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className="front">
-      <img src={coverImage} alt="coverImage" />
-      <div className="card-footer">
-        <h4> {title} </h4>
-        <p>
-          {movieLength} / {genre.map((g) => g.name).join(", ")}
-        </p>
+    <div className="movie-card-front">
+      <div className="movie-poster-wrapper">
+        <img
+          src={poster}
+          alt={title || "Movie poster"}
+          className="movie-poster"
+        />
+
+        <div className="movie-poster-overlay"></div>
+
+        <span className="movie-rating-badge">
+          <i className="fas fa-star"></i>
+          {rating}
+        </span>
+      </div>
+
+      <div className="movie-card-content">
+        <div className="movie-card-meta">
+          <span>
+            <i className="fas fa-clock"></i>
+            {duration}
+          </span>
+        </div>
+
+        <h4>{title || "Untitled Movie"}</h4>
+
+        <p>{genres}</p>
 
         <a
-          href={trailerLink}
+          href={trailerLink || "#"}
           target="_blank"
           rel="noopener noreferrer"
-          className="trailer-btn"
+          className={trailerLink ? "movie-trailer-button" : "movie-trailer-button disabled"}
+          onClick={handleTrailerClick}
         >
-          watch trailer
+          <i className="fas fa-play"></i>
+          Watch Trailer
         </a>
       </div>
-      <span className="like"> {rate}</span>
     </div>
   );
 };
+
 export default CardFront;

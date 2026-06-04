@@ -1,102 +1,150 @@
-.front {
+.movie-card-front {
   position: absolute;
-  top: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  border-radius: 26px;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+}
+
+.movie-poster-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease;
+}
+
+.card-wrapper:hover .movie-poster {
+  transform: scale(1.06);
+}
+
+.movie-poster-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.4) 48%, rgba(15, 23, 42, 0.96) 100%);
+}
+
+.movie-rating-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  min-width: 58px;
+  height: 36px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.92);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 14px 34px rgba(245, 158, 11, 0.24);
+  backface-visibility: hidden;
+}
+
+.movie-rating-badge i {
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.movie-card-content {
+  position: absolute;
   left: 0;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-
-.front > img {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-}
-
-.like {
-  position: absolute;
   right: 0;
-  bottom: 70px !important;
-}
-
-.front > span {
-  position: absolute;
-  display: block;
-  color: white;
-  background: rgb(230, 158, 24);
-  width: 50px;
-  height: 50px;
-  padding: 13px;
-  border-radius: 50%;
-  text-align: center;
-  right: -10px;
-  top: -10px;
-  backface-visibility: hidden;
-  font-weight: 700;
-}
-
-.card-footer {
-  padding: 15px;
-  position: absolute;
-  border-radius: 5px;
   bottom: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  background: #1e1b26;
+  padding: 22px 18px 18px;
+  background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.95) 28%, rgba(15, 23, 42, 0.98) 100%);
 }
 
-.card-footer > .trailer-btn,
-i {
-  color: rgb(240, 98, 73);
-  border-color: rgb(240, 98, 73);
-  transition: 0.15s ease-in-out;
+.movie-card-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 9px;
 }
 
-.card-footer > i {
-  position: absolute;
-  bottom: 20px;
-  right: 15px;
-}
-
-.card-footer > .trailer-btn {
-  border: 1px solid;
-  position: absolute;
-  padding: 3px 7px;
-  background: transparent;
-  border-radius: 5px;
-  bottom: 20px;
-  left: 15px;
-}
-
-.card-footer > .trailer-btn:hover {
-  text-decoration: none;
-  cursor: pointer;
-  background: rgb(240, 98, 73);
-  border-color: rgb(240, 98, 73);
-  color: white;
-}
-
-.card-footer > h4 {
-  margin: 2px 0;
-  text-align: left;
-  font-size: 13px;
-  font-weight: bold;
-  color: white;
-}
-
-.card-footer > h5 {
-  margin: 2px 0;
-  text-align: left;
-  font-size: 13px;
-  font-weight: bold;
-  color: white;
-}
-
-.card-footer > p {
-  text-align: left;
-  font-weight: 100;
+.movie-card-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.78);
   font-size: 11px;
-  color: rgb(255, 255, 255);
+  font-weight: 800;
 }
 
+.movie-card-meta i {
+  color: #fecaca;
+  font-size: 11px;
+}
+
+.movie-card-content h4 {
+  margin: 0 0 7px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+  text-align: left;
+}
+
+.movie-card-content p {
+  min-height: 34px;
+  margin: 0 0 15px;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.movie-trailer-button {
+  width: 100%;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 900;
+  border: none;
+  box-shadow: 0 16px 34px rgba(220, 38, 38, 0.24);
+  transition: 0.2s ease;
+}
+
+.movie-trailer-button:hover {
+  color: #ffffff;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 20px 42px rgba(220, 38, 38, 0.34);
+}
+
+.movie-trailer-button i {
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.movie-trailer-button.disabled {
+  opacity: 0.55;
+  pointer-events: none;
+  box-shadow: none;
+}

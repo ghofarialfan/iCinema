@@ -1,73 +1,139 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authAction";
 import "./style.css";
 
 function Navbar(props) {
-  function toggleNav() {
-    animateSlider();
-    const burgerButton = document.getElementById("burger");
-    burgerButton.classList.toggle("is-active");
-  }
+  const [isOpen, setIsOpen] = useState(false);
 
-  function animateSlider() {
-    const slider = document.getElementsByClassName("slider")[0];
-    document.getElementById("root").style.overflow = "hidden";
-    slider.classList.toggle("active");
+  const toggleNav = () => {
+    setIsOpen((prevState) => !prevState);
+  };
 
-    const list = document.getElementsByClassName("list")[0];
-    list.childNodes.forEach((e, index) => {
-      if (e.style.animation) e.style.animation = "";
-      else
-        e.style.animation = `listItemFade 0.5s ease forwards ${
-          index / 5 + 0.3
-        }s`;
-    });
-  }
+  const closeNav = () => {
+    setIsOpen(false);
+  };
+
+  const handleSignOut = () => {
+    closeNav();
+    props.signOut();
+  };
 
   return (
     <nav className="nav-wrapper">
-      <div id="burger" className="ico-btn" onClick={toggleNav}>
-        <span className="ico-btn__burger"></span>
-      </div>
+      <div className="nav-container">
+        <Link className="nav-brand" to="/movies" onClick={closeNav}>
+          <span className="nav-brand-icon">
+            <i className="fas fa-film"></i>
+          </span>
+          <span className="nav-brand-text">iCinema</span>
+        </Link>
 
-      {/* <Link className="nav-brand" to="/">iCinema</Link> */}
+        <div className="nav-desktop-menu">
+          <NavLink className="nav-link-item" activeClassName="active" to="/movies">
+            Movies
+          </NavLink>
 
-      <div id="slider" className="slider">
-        <ul className="list">
-          <Link onClick={toggleNav} to="/movies">
-            Home
-          </Link>
+          {props.user && props.user.role === "admin" && (
+            <>
+              <NavLink
+                className="nav-link-item"
+                activeClassName="active"
+                to="/movies/new"
+              >
+                Add Movie
+              </NavLink>
+
+              <NavLink
+                className="nav-link-item"
+                activeClassName="active"
+                to="/genres/new"
+              >
+                Add Genre
+              </NavLink>
+            </>
+          )}
+        </div>
+
+        <div className="nav-desktop-actions">
           {!props.loggedIn ? (
             <>
-              <Link onClick={toggleNav} to="/login">
+              <NavLink
+                className="nav-action-link"
+                activeClassName="active"
+                to="/login"
+              >
                 Login
-              </Link>
+              </NavLink>
 
-              <Link onClick={toggleNav} to="/register">
+              <NavLink className="nav-primary-button" to="/register">
                 Register
-              </Link>
+              </NavLink>
             </>
           ) : (
-            <Link
-              onClick={() => {
-                toggleNav();
-                props.signOut();
-              }}
-              to="/#"
-            >
+            <button className="nav-logout-button" onClick={handleSignOut}>
+              <i className="fas fa-sign-out-alt"></i>
+              Logout
+            </button>
+          )}
+        </div>
+
+        <button
+          id="burger"
+          className={isOpen ? "ico-btn is-active" : "ico-btn"}
+          onClick={toggleNav}
+          type="button"
+          aria-label="Toggle navigation"
+        >
+          <span className="ico-btn__burger"></span>
+        </button>
+      </div>
+
+      <div className={isOpen ? "slider active" : "slider"}>
+        <div className="mobile-menu-header">
+          <div>
+            <span className="mobile-menu-label">Navigation</span>
+            <h3>iCinema Menu</h3>
+          </div>
+        </div>
+
+        <ul className="list">
+          <NavLink onClick={closeNav} activeClassName="active" to="/movies">
+            <i className="fas fa-home"></i>
+            Home
+          </NavLink>
+
+          {!props.loggedIn ? (
+            <>
+              <NavLink onClick={closeNav} activeClassName="active" to="/login">
+                <i className="fas fa-sign-in-alt"></i>
+                Login
+              </NavLink>
+
+              <NavLink onClick={closeNav} activeClassName="active" to="/register">
+                <i className="fas fa-user-plus"></i>
+                Register
+              </NavLink>
+            </>
+          ) : (
+            <Link onClick={handleSignOut} to="/#">
+              <i className="fas fa-sign-out-alt"></i>
               Log out
             </Link>
           )}
+
           {props.user && props.user.role === "admin" && (
             <>
-              <Link onClick={toggleNav} to="/movies/new">
+              <NavLink onClick={closeNav} activeClassName="active" to="/movies/new">
+                <i className="fas fa-plus-circle"></i>
                 Add Movie
-              </Link>
-              <Link onClick={toggleNav} to="/genres/new">
+              </NavLink>
+
+              <NavLink onClick={closeNav} activeClassName="active" to="/genres/new">
+                <i className="fas fa-tags"></i>
                 Add Genre
-              </Link>
+              </NavLink>
             </>
           )}
         </ul>
