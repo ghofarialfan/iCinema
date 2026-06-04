@@ -31,7 +31,8 @@ router.post("/signUp", async (req, res) => {
     }
     await user.save();
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const jwtSecret = process.env.JWT_SECRET || process.env.JWT_KEY;
+    const token = jwt.sign({ id: user._id }, jwtSecret, {
       expiresIn: "1h",
     });
 
@@ -67,7 +68,7 @@ router.post("/signIn", async (req, res) => {
     if (!user) {
       return res
         .status(401)
-        .json({ message: "Username or Password Incorrect" });
+        .json({ error: "Username or Password Incorrect" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -75,10 +76,11 @@ router.post("/signIn", async (req, res) => {
     if (!isPasswordValid) {
       return res
         .status(401)
-        .json({ message: "Username or Password Incorrect" });
+        .json({ error: "Username or Password Incorrect" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const jwtSecret = process.env.JWT_SECRET || process.env.JWT_KEY;
+    const token = jwt.sign({ id: user._id }, jwtSecret, {
       expiresIn: "1h",
     });
 
@@ -91,10 +93,9 @@ router.post("/signIn", async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
     res
       .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+      .json({ error: "Internal Server Error", message: error.message });
   }
 });
 

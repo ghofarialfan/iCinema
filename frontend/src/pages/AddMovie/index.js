@@ -16,13 +16,14 @@ class AddMovieForm extends React.Component {
     data: {
       title: "",
       genre: "",
-      rate: "",
+      rate: 0,
       description: "",
-      image: null,
+      image: "",
       trailerLink: "",
       movieLength: "",
     },
     errors: {},
+    submitError: null,
   };
 
   componentDidMount() {
@@ -63,16 +64,8 @@ class AddMovieForm extends React.Component {
 
   handleChange = ({ currentTarget: input }) => {
     const data = { ...this.state.data };
-    data[input.name] = input.value;
+    data[input.name] = input.name === "rate" ? Number(input.value) : input.value;
     this.setState({ data });
-  };
-
-  uploadImage = (e) => {
-    if (e.target.files[0]) {
-      const data = { ...this.state.data };
-      data.image = e.target.files[0];
-      this.setState({ data });
-    }
   };
 
   handleSubmit = async (e) => {
@@ -81,12 +74,17 @@ class AddMovieForm extends React.Component {
     const { data } = this.state;
     const { error } = movieSchema.validate(data);
 
-    this.setState({ errors: error ? error.details : {} });
-
     if (error) {
-      console.log("Validation error:", error.details);
+      const errors = {};
+      error.details.forEach((detail) => {
+        errors[detail.path[0]] = detail.message;
+      });
+
+      this.setState({ errors, submitError: null });
       return;
     }
+
+    this.setState({ errors: {}, submitError: null });
 
     try {
       await this.props.addMovie(data, this.props.history);
@@ -96,23 +94,31 @@ class AddMovieForm extends React.Component {
           data: {
             title: "",
             genre: "",
-            rate: "",
+            rate: 0,
             description: "",
-            image: null,
+            image: "",
             trailerLink: "",
             movieLength: "",
           },
           errors: {},
+          submitError: null,
         });
       }
     } catch (err) {
-      console.error("Error adding movie:", err);
+      const message =
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
+        err?.message ||
+        "Failed to add movie";
+
+      this.setState({ submitError: message });
     }
   };
 
   render() {
-    const { data } = this.state;
-    const { title, genre, rate, description, trailerLink, movieLength } = data;
+    const { data, submitError } = this.state;
+    const { title, genre, rate, description, trailerLink, movieLength, image } =
+      data;
     const { genres } = this.props;
 
     return (
@@ -142,11 +148,14 @@ class AddMovieForm extends React.Component {
             </div>
           </section>
 
-          <form
-            onSubmit={this.handleSubmit}
-            encType="multipart/form-data"
-            className="add-movie-form"
-          >
+          {submitError && (
+            <div className="add-movie-error-message">
+              <i className="fas fa-exclamation-circle"></i>
+              <span>{submitError}</span>
+            </div>
+          )}
+
+          <form onSubmit={this.handleSubmit} className="add-movie-form">
             <div className="add-movie-grid">
               <section className="add-movie-panel add-movie-main-panel">
                 <div className="add-movie-section-header">
@@ -219,12 +228,12 @@ class AddMovieForm extends React.Component {
 
                 <Input
                   name="image"
-                  label="Cover Image"
-                  onChange={this.uploadImage}
+                  label="Cover Image URL"
+                  onChange={this.handleChange}
                   error={this.getFieldError("image")}
                   iconClass="fas fa-file-image"
-                  accept="image/*"
-                  type="file"
+                  placeholder="https://..."
+                  value={image}
                 />
 
                 <Input
@@ -241,7 +250,7 @@ class AddMovieForm extends React.Component {
                   <i className="fas fa-info-circle"></i>
                   <p>
                     Make sure the trailer link is accessible and the cover image
-                    has a clear poster ratio for better movie card display.
+                    URL has a clear poster ratio for better movie card display.
                   </p>
                 </div>
               </section>

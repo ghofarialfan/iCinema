@@ -1,8 +1,6 @@
 import React from "react";
 import "./style.css";
-
-const DEFAULT_POSTER =
-  "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80";
+import noPoster from "../../../../images/noposter.jpg";
 
 const CardFront = ({
   coverImage,
@@ -18,7 +16,7 @@ const CardFront = ({
 
   const rating = rate || "N/A";
   const duration = movieLength || "Unknown length";
-  const poster = coverImage || DEFAULT_POSTER;
+  const poster = coverImage || noPoster;
 
   const handleTrailerClick = (event) => {
     event.stopPropagation();
@@ -57,7 +55,11 @@ const CardFront = ({
           href={trailerLink || "#"}
           target="_blank"
           rel="noopener noreferrer"
-          className={trailerLink ? "movie-trailer-button" : "movie-trailer-button disabled"}
+          className={
+            trailerLink
+              ? "movie-trailer-button"
+              : "movie-trailer-button disabled"
+          }
           onClick={handleTrailerClick}
         >
           <i className="fas fa-play"></i>
