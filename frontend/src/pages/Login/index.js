@@ -56,65 +56,152 @@ class Login extends React.Component {
       this.state.data,
       options
     );
+
     if (!error) return null;
 
     const errors = {};
     error.details.forEach(
       (element) => (errors[element.path[0]] = element.message)
     );
+
     return errors;
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
+
     const errors = this.validate();
-    if (_.isEmpty(errors))
+    this.setState({ errors: errors || {} });
+
+    if (_.isEmpty(errors)) {
       this.props.signIn(this.state.data, this.props.history);
+    }
   };
 
   render() {
     const { data, errors } = this.state;
     const { email, password } = data;
     const { authMessage } = this.props;
+
     return (
-      <div className="background-container pt-5">
-        <div className="container">
-          <h1 className="header">Login</h1>
-          <form onSubmit={this.handleSubmit}>
-            <Input
-              name="email"
-              label="Email"
-              type="email"
-              error={errors["email"]}
-              iconClass="fas fa-envelope"
-              onChange={this.handleChange}
-              placeholder="Please enter your email..."
-              value={email}
-              autoFocus
-            />
-            <Input
-              name="password"
-              type="password"
-              label="Password"
-              error={errors["password"]}
-              iconClass="fas fa-key"
-              onChange={this.handleChange}
-              placeholder="Please enter your password..."
-              value={password}
-            />
-            {authMessage && <p className="text-white">{authMessage}</p>}
-            <Button disabled={this.validate()} type="submit" label="Login" />
-          </form>
+      <div className="login-page">
+        <div className="login-background-glow login-background-glow-one"></div>
+        <div className="login-background-glow login-background-glow-two"></div>
+
+        <div className="login-wrapper">
+          <section className="login-brand-panel">
+            <div className="login-brand-content">
+              <span className="login-badge">iCinema Platform</span>
+
+              <h1>Welcome Back to iCinema</h1>
+
+              <p>
+                Sign in to continue managing your movie experience, explore
+                collections, and access personalized cinema features.
+              </p>
+
+              <div className="login-feature-list">
+                <div className="login-feature-item">
+                  <span>
+                    <i className="fas fa-film"></i>
+                  </span>
+                  <div>
+                    <strong>Movie Library</strong>
+                    <p>Explore and manage movie collections.</p>
+                  </div>
+                </div>
+
+                <div className="login-feature-item">
+                  <span>
+                    <i className="fas fa-star"></i>
+                  </span>
+                  <div>
+                    <strong>Smart Filtering</strong>
+                    <p>Find movies based on genres and ratings.</p>
+                  </div>
+                </div>
+
+                <div className="login-feature-item">
+                  <span>
+                    <i className="fas fa-lock"></i>
+                  </span>
+                  <div>
+                    <strong>Secure Access</strong>
+                    <p>Authentication is handled using token-based access.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="login-form-panel">
+            <div className="login-form-card">
+              <div className="login-form-header">
+                <div className="login-form-icon">
+                  <i className="fas fa-user-circle"></i>
+                </div>
+
+                <h2>Login</h2>
+                <p>Enter your account credentials to access iCinema.</p>
+              </div>
+
+              <form onSubmit={this.handleSubmit} className="login-form">
+                <Input
+                  name="email"
+                  label="Email"
+                  type="email"
+                  error={errors["email"]}
+                  iconClass="fas fa-envelope"
+                  onChange={this.handleChange}
+                  placeholder="Enter your email address"
+                  value={email}
+                  autoFocus
+                />
+
+                <Input
+                  name="password"
+                  type="password"
+                  label="Password"
+                  error={errors["password"]}
+                  iconClass="fas fa-key"
+                  onChange={this.handleChange}
+                  placeholder="Enter your password"
+                  value={password}
+                />
+
+                {authMessage && (
+                  <div className="login-auth-message">
+                    <i className="fas fa-exclamation-circle"></i>
+                    <span>{authMessage}</span>
+                  </div>
+                )}
+
+                <div className="login-button-wrapper">
+                  <Button disabled={this.validate()} type="submit" label="Login" />
+                </div>
+              </form>
+
+              <div className="login-footer-note">
+                <p>
+                  Admin access is required for managing movie data and system
+                  content.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.auth.loggedIn,
     authMessage: state.auth.authMessage,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     signIn: (creds, history) => dispatch(signIn(creds, history)),

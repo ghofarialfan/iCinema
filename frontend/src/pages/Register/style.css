@@ -1,16 +1,16 @@
-.login-page {
+.register-page {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(circle at top left, rgba(220, 38, 38, 0.24), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.22), transparent 30%),
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.24), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(220, 38, 38, 0.24), transparent 30%),
     linear-gradient(135deg, #0f172a 0%, #111827 50%, #1e293b 100%);
   color: #ffffff;
   padding: 56px 24px;
 }
 
-.login-background-glow {
+.register-background-glow {
   position: absolute;
   border-radius: 999px;
   filter: blur(12px);
@@ -18,23 +18,23 @@
   pointer-events: none;
 }
 
-.login-background-glow-one {
+.register-background-glow-one {
   width: 280px;
   height: 280px;
   top: -80px;
   left: -70px;
-  background: rgba(220, 38, 38, 0.28);
+  background: rgba(37, 99, 235, 0.28);
 }
 
-.login-background-glow-two {
+.register-background-glow-two {
   width: 320px;
   height: 320px;
   right: -100px;
   bottom: -90px;
-  background: rgba(37, 99, 235, 0.28);
+  background: rgba(220, 38, 38, 0.28);
 }
 
-.login-wrapper {
+.register-wrapper {
   position: relative;
   z-index: 2;
   width: 100%;
@@ -47,26 +47,26 @@
   gap: 32px;
 }
 
-.login-brand-panel {
-  min-height: 620px;
+.register-brand-panel {
+  min-height: 660px;
   display: flex;
   align-items: center;
   border-radius: 34px;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(185, 28, 28, 0.92), rgba(30, 64, 175, 0.78)),
+    linear-gradient(135deg, rgba(30, 64, 175, 0.86), rgba(185, 28, 28, 0.82)),
     url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80");
   background-size: cover;
   background-position: center;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.36);
 }
 
-.login-brand-content {
+.register-brand-content {
   max-width: 720px;
   padding: 56px 46px;
 }
 
-.login-badge {
+.register-badge {
   display: inline-block;
   padding: 9px 16px;
   margin-bottom: 22px;
@@ -79,7 +79,7 @@
   text-transform: uppercase;
 }
 
-.login-brand-content h1 {
+.register-brand-content h1 {
   margin: 0 0 18px;
   color: #ffffff;
   font-size: clamp(34px, 5vw, 60px);
@@ -88,7 +88,7 @@
   letter-spacing: -1.3px;
 }
 
-.login-brand-content > p {
+.register-brand-content > p {
   max-width: 620px;
   margin: 0 0 34px;
   color: rgba(255, 255, 255, 0.9);
@@ -96,12 +96,12 @@
   line-height: 1.75;
 }
 
-.login-feature-list {
+.register-feature-list {
   display: grid;
   gap: 14px;
 }
 
-.login-feature-item {
+.register-feature-item {
   display: flex;
   align-items: flex-start;
   gap: 14px;
@@ -112,7 +112,7 @@
   backdrop-filter: blur(12px);
 }
 
-.login-feature-item span {
+.register-feature-item span {
   flex: 0 0 auto;
   width: 44px;
   height: 44px;
@@ -125,7 +125,7 @@
   font-size: 17px;
 }
 
-.login-feature-item strong {
+.register-feature-item strong {
   display: block;
   margin-bottom: 4px;
   color: #ffffff;
@@ -133,7 +133,7 @@
   font-weight: 900;
 }
 
-.login-feature-item p {
+.register-feature-item p {
   margin: 0;
   color: rgba(255, 255, 255, 0.76);
   font-size: 13px;
@@ -141,13 +141,13 @@
   font-weight: 600;
 }
 
-.login-form-panel {
+.register-form-panel {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.login-form-card {
+.register-form-card {
   width: 100%;
   max-width: 480px;
   padding: 34px;
@@ -158,12 +158,12 @@
   backdrop-filter: blur(18px);
 }
 
-.login-form-header {
+.register-form-header {
   text-align: center;
   margin-bottom: 28px;
 }
 
-.login-form-icon {
+.register-form-icon {
   width: 72px;
   height: 72px;
   margin: 0 auto 18px;
@@ -171,13 +171,13 @@
   align-items: center;
   justify-content: center;
   border-radius: 24px;
-  background: linear-gradient(135deg, #dc2626, #991b1b);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
-  font-size: 32px;
-  box-shadow: 0 18px 42px rgba(220, 38, 38, 0.28);
+  font-size: 30px;
+  box-shadow: 0 18px 42px rgba(37, 99, 235, 0.28);
 }
 
-.login-form-header h2 {
+.register-form-header h2 {
   margin: 0 0 8px;
   color: #ffffff;
   font-size: 34px;
@@ -185,7 +185,7 @@
   letter-spacing: -0.8px;
 }
 
-.login-form-header p {
+.register-form-header p {
   margin: 0;
   color: rgba(255, 255, 255, 0.66);
   font-size: 14px;
@@ -193,18 +193,18 @@
   font-weight: 600;
 }
 
-.login-form {
+.register-form {
   margin-top: 10px;
 }
 
-.login-page label {
+.register-page label {
   color: #ffffff !important;
   font-weight: 800;
   font-size: 14px;
 }
 
-.login-page input,
-.login-page .form-control {
+.register-page input,
+.register-page .form-control {
   min-height: 48px;
   border-radius: 16px !important;
   border: 1px solid rgba(255, 255, 255, 0.16) !important;
@@ -213,26 +213,26 @@
   font-weight: 600;
 }
 
-.login-page input::placeholder,
-.login-page .form-control::placeholder {
+.register-page input::placeholder,
+.register-page .form-control::placeholder {
   color: rgba(255, 255, 255, 0.45) !important;
 }
 
-.login-page input:focus,
-.login-page .form-control:focus {
-  border-color: rgba(220, 38, 38, 0.75) !important;
-  box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.18) !important;
+.register-page input:focus,
+.register-page .form-control:focus {
+  border-color: rgba(37, 99, 235, 0.75) !important;
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.18) !important;
   background: rgba(255, 255, 255, 0.12) !important;
   color: #ffffff !important;
 }
 
-.login-page .invalid-feedback,
-.login-page .text-danger {
+.register-page .invalid-feedback,
+.register-page .text-danger {
   color: #fecaca !important;
   font-weight: 700;
 }
 
-.login-auth-message {
+.register-auth-message {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -246,39 +246,33 @@
   font-weight: 700;
 }
 
-.login-button-wrapper {
-  margin-top: 18px;
-}
-
-.login-button-wrapper button,
-.login-page button[type="submit"] {
+.register-submit-button {
   width: 100%;
   min-height: 48px;
+  margin-top: 18px;
   border-radius: 16px !important;
   border: none !important;
-  background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
   color: #ffffff !important;
   font-weight: 900 !important;
   letter-spacing: 0.2px;
-  box-shadow: 0 18px 42px rgba(220, 38, 38, 0.26);
+  box-shadow: 0 18px 42px rgba(37, 99, 235, 0.26);
   transition: 0.2s ease;
 }
 
-.login-button-wrapper button:hover,
-.login-page button[type="submit"]:hover {
+.register-submit-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 22px 50px rgba(220, 38, 38, 0.34);
+  box-shadow: 0 22px 50px rgba(37, 99, 235, 0.34);
 }
 
-.login-button-wrapper button:disabled,
-.login-page button[type="submit"]:disabled {
+.register-submit-button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-.login-footer-note {
+.register-footer-note {
   margin-top: 24px;
   padding: 14px;
   border-radius: 18px;
@@ -286,7 +280,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.login-footer-note p {
+.register-footer-note p {
   margin: 0;
   color: rgba(255, 255, 255, 0.58);
   font-size: 13px;
@@ -295,63 +289,56 @@
   font-weight: 600;
 }
 
-.header {
-  color: white;
-  text-align: center;
-  font-size: 35px;
-  margin: 0 0 20px 0;
-}
-
 @media (max-width: 991px) {
-  .login-page {
+  .register-page {
     padding: 36px 20px;
   }
 
-  .login-wrapper {
+  .register-wrapper {
     grid-template-columns: 1fr;
     min-height: auto;
   }
 
-  .login-brand-panel {
+  .register-brand-panel {
     min-height: auto;
   }
 
-  .login-brand-content {
+  .register-brand-content {
     padding: 44px 32px;
   }
 
-  .login-form-card {
+  .register-form-card {
     max-width: 100%;
   }
 }
 
 @media (max-width: 576px) {
-  .login-page {
+  .register-page {
     padding: 24px 14px;
   }
 
-  .login-brand-panel,
-  .login-form-card {
+  .register-brand-panel,
+  .register-form-card {
     border-radius: 24px;
   }
 
-  .login-brand-content {
+  .register-brand-content {
     padding: 36px 22px;
   }
 
-  .login-brand-content h1 {
+  .register-brand-content h1 {
     font-size: 34px;
   }
 
-  .login-brand-content > p {
+  .register-brand-content > p {
     font-size: 15px;
   }
 
-  .login-form-card {
+  .register-form-card {
     padding: 26px 20px;
   }
 
-  .login-form-header h2 {
+  .register-form-header h2 {
     font-size: 30px;
   }
 }

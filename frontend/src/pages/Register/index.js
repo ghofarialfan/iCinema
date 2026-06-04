@@ -3,6 +3,7 @@ import Joi from "joi";
 import Input from "../../components/common/Input";
 import { connect } from "react-redux";
 import { signUp } from "../../actions/authAction";
+import "./style.css";
 
 class RegisterForm extends React.Component {
   state = {
@@ -21,6 +22,15 @@ class RegisterForm extends React.Component {
     }
   }
 
+  schema = {
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required()
+      .label("Email"),
+    password: Joi.string().min(8).required().label("Password"),
+    passwordRepeat: Joi.string().required().label("Repeat Password"),
+  };
+
   validateProperty = (input) => {
     const { name, value } = input;
     const obj = { [name]: value };
@@ -38,7 +48,12 @@ class RegisterForm extends React.Component {
 
     const data = { ...this.state.data };
     data[input.name] = input.value;
-    this.setState({ data, errors });
+
+    this.setState({
+      data,
+      errors,
+      passwordError: "",
+    });
   };
 
   validate = () => {
@@ -47,99 +62,179 @@ class RegisterForm extends React.Component {
       this.state.data,
       options
     );
+
     if (!error) return null;
 
     const errors = {};
     error.details.forEach(
       (element) => (errors[element.path[0]] = element.message)
     );
+
     return errors;
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
     const { password, passwordRepeat, email } = this.state.data;
-    if (password !== passwordRepeat)
-      this.setState({ passwordError: "The passwords doesn not match." });
-    else this.props.signUp({ email, password }, this.props.history);
+
+    if (password !== passwordRepeat) {
+      this.setState({
+        passwordError: "The passwords do not match.",
+      });
+      return;
+    }
+
+    this.props.signUp({ email, password }, this.props.history);
   };
 
-  schema = {
-    email: Joi.string()
-      .email({ tlds: { allow: false } })
-      .required()
-      .label("Email"),
-    password: Joi.string().min(8).required().label("Password"),
-    passwordRepeat: Joi.string().required().label("Repear Password"),
-  };
   render() {
     const { authMessage } = this.props;
     const { errors, passwordError } = this.state;
     const { email, password, passwordRepeat } = this.state.data;
 
     return (
-      <div className="background-container pt-5">
-        <div className="container">
-          <h1 className="header">Register Form</h1>
-          <form onSubmit={this.handleSubmit}>
-            <Input
-              name="email"
-              label="Email"
-              type="email"
-              error={errors["email"]}
-              iconClass="fas fa-envelope"
-              onChange={this.handleChange}
-              placeholder="Please enter your email..."
-              value={email}
-              autoFocus
-            />
-            <Input
-              name="password"
-              label="Password"
-              type="password"
-              error={errors["password"]}
-              iconClass="fas fa-key"
-              onChange={this.handleChange}
-              placeholder="Please enter your password..."
-              value={password}
-            />
-            <Input
-              name="passwordRepeat"
-              type="password"
-              label="Repeat Password"
-              error={errors["passwordRepeat"]}
-              iconClass="fas fa-key"
-              onChange={this.handleChange}
-              placeholder="Repeat your password..."
-              value={passwordRepeat}
-            />
-            {authMessage || passwordError ? (
-              <p className="bg-info text-white">
-                {" "}
-                {authMessage} {passwordError}
+      <div className="register-page">
+        <div className="register-background-glow register-background-glow-one"></div>
+        <div className="register-background-glow register-background-glow-two"></div>
+
+        <div className="register-wrapper">
+          <section className="register-brand-panel">
+            <div className="register-brand-content">
+              <span className="register-badge">Join iCinema</span>
+
+              <h1>Create Your Cinema Account</h1>
+
+              <p>
+                Register to access iCinema features, explore movie collections,
+                and manage your movie experience through a cleaner digital
+                platform.
               </p>
-            ) : (
-              <> </>
-            )}
-            <button
-              type="submit"
-              className="btn special-btn"
-              disabled={this.validate()}
-            >
-              {" "}
-              Sign Up{" "}
-            </button>
-          </form>
+
+              <div className="register-feature-list">
+                <div className="register-feature-item">
+                  <span>
+                    <i className="fas fa-user-plus"></i>
+                  </span>
+                  <div>
+                    <strong>Easy Registration</strong>
+                    <p>Create an account using your email and password.</p>
+                  </div>
+                </div>
+
+                <div className="register-feature-item">
+                  <span>
+                    <i className="fas fa-film"></i>
+                  </span>
+                  <div>
+                    <strong>Movie Access</strong>
+                    <p>Browse cinema collections with a better experience.</p>
+                  </div>
+                </div>
+
+                <div className="register-feature-item">
+                  <span>
+                    <i className="fas fa-shield-alt"></i>
+                  </span>
+                  <div>
+                    <strong>Secure Account</strong>
+                    <p>Your account is protected using authentication flow.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="register-form-panel">
+            <div className="register-form-card">
+              <div className="register-form-header">
+                <div className="register-form-icon">
+                  <i className="fas fa-user-plus"></i>
+                </div>
+
+                <h2>Register</h2>
+                <p>Create your account to start using iCinema.</p>
+              </div>
+
+              <form onSubmit={this.handleSubmit} className="register-form">
+                <Input
+                  name="email"
+                  label="Email"
+                  type="email"
+                  error={errors["email"]}
+                  iconClass="fas fa-envelope"
+                  onChange={this.handleChange}
+                  placeholder="Enter your email address"
+                  value={email}
+                  autoFocus
+                />
+
+                <Input
+                  name="password"
+                  label="Password"
+                  type="password"
+                  error={errors["password"]}
+                  iconClass="fas fa-key"
+                  onChange={this.handleChange}
+                  placeholder="Create your password"
+                  value={password}
+                />
+
+                <Input
+                  name="passwordRepeat"
+                  type="password"
+                  label="Repeat Password"
+                  error={errors["passwordRepeat"]}
+                  iconClass="fas fa-key"
+                  onChange={this.handleChange}
+                  placeholder="Repeat your password"
+                  value={passwordRepeat}
+                />
+
+                {(authMessage || passwordError) && (
+                  <div className="register-auth-message">
+                    <i className="fas fa-exclamation-circle"></i>
+                    <span>
+                      {authMessage} {passwordError}
+                    </span>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className="register-submit-button"
+                  disabled={this.validate()}
+                >
+                  Sign Up
+                </button>
+              </form>
+
+              <div className="register-footer-note">
+                <p>
+                  Already have an account? Use the login page to access your
+                  iCinema account.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.auth.loggedIn,
     authMessage: state.auth.authMessage,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     signUp: (creds, history) => dispatch(signUp(creds, history)),
