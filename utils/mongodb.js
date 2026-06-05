@@ -3,12 +3,16 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
+const mongoUrl = process.env.MONGODB_URL || process.env.MONGO_URL;
+
+if (!mongoUrl) {
+  throw new Error("Missing MongoDB connection string: set MONGODB_URL (or MONGO_URL)");
+}
+
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect(mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("MongoDb connected ..."))
   .catch((err) => console.log(err));
-
-console.log(process.env.MONGO_URL);
