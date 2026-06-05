@@ -1,7 +1,7 @@
 .nav-wrapper {
   position: fixed;
   height: 76px;
-  z-index: 999;
+  z-index: 10000;
   top: 0;
   right: 0;
   left: 0;
@@ -206,11 +206,11 @@
 
 .slider {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 998;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9999;
   background:
     radial-gradient(circle at top left, rgba(220, 38, 38, 0.25), transparent 32%),
     radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.24), transparent 32%),
@@ -357,5 +357,16 @@
   .nav-desktop-menu,
   .nav-desktop-actions {
     display: flex !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .slider {
+    padding-top: 110px;
+    min-height: 100dvh;
+  }
+
+  .list {
+    padding-bottom: 80px;
   }
 }
