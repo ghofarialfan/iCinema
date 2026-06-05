@@ -91,15 +91,6 @@ function Navbar(props) {
       </div>
 
       <div className={isOpen ? "slider active" : "slider"}>
-        <button
-          type="button"
-          className="mobile-menu-close"
-          onClick={closeNav}
-          aria-label="Close navigation menu"
-        >
-          <i className="fas fa-times"></i>
-        </button>
-      
         <div className="mobile-menu-header">
           <div>
             <span className="mobile-menu-label">Navigation</span>
