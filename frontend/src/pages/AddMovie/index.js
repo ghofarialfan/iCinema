@@ -18,13 +18,16 @@ class AddMovieForm extends React.Component {
       genre: "",
       rate: 0,
       description: "",
+      image: "",
+      video: "",
       trailerLink: "",
       movieLength: "",
     },
     imageFile: null,
-    imagePreview: null,
     errors: {},
     submitError: null,
+    imagePreview: null,
+    videoFile: null,
   };
 
   componentDidMount() {
@@ -106,6 +109,15 @@ class AddMovieForm extends React.Component {
     });
   };
 
+  handleVideoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      this.setState({
+        videoFile: file,
+      });
+    }
+  };
+
   handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -133,7 +145,12 @@ class AddMovieForm extends React.Component {
     this.setState({ errors: {}, submitError: null });
 
     try {
-      await this.props.addMovie({ ...data, imageFile }, this.props.history);
+      const movieData = {
+        ...data,
+        imageFile: this.state.imageFile,
+        videoFile: this.state.videoFile,
+      };
+      await this.props.addMovie(movieData, this.props.history);
 
       if (this._isMounted) {
         if (this.state.imagePreview) {
@@ -146,10 +163,13 @@ class AddMovieForm extends React.Component {
             genre: "",
             rate: 0,
             description: "",
+            image: "",
+            video: "",
             trailerLink: "",
             movieLength: "",
           },
           imageFile: null,
+          videoFile: null,
           imagePreview: null,
           errors: {},
           submitError: null,
@@ -319,6 +339,23 @@ class AddMovieForm extends React.Component {
                   iconClass="fas fa-link"
                   value={trailerLink}
                 />
+
+                <div className="add-movie-file-input">
+                  <label>
+                    <i className="fas fa-video"></i> Movie Video File
+                  </label>
+                  <input
+                    type="file"
+                    accept="video/*"
+                    onChange={this.handleVideoChange}
+                    className="form-control"
+                  />
+                  {this.state.videoFile && (
+                    <span className="file-selected-badge">
+                      <i className="fas fa-check"></i> {this.state.videoFile.name}
+                    </span>
+                  )}
+                </div>
 
                 <div className="add-movie-helper-card">
                   <i className="fas fa-info-circle"></i>

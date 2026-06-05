@@ -29,6 +29,9 @@ export const addMovie = (movie, history) => {
     formData.append("trailerLink", movie.trailerLink || "");
     formData.append("movieLength", movie.movieLength);
     formData.append("image", movie.imageFile);
+    if (movie.videoFile) {
+      formData.append("video", movie.videoFile);
+    }
 
     const config = {
       headers: {

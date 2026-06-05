@@ -9,11 +9,14 @@ import checkAdmin from "../middleware/checkAdmin.js";
 import { upload } from "../utils/cloudinary.js";
 
 const handleUpload = (req, res, next) => {
-  upload.single("image")(req, res, (err) => {
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "video", maxCount: 1 },
+  ])(req, res, (err) => {
     if (err instanceof multer.MulterError) {
       const message =
         err.code === "LIMIT_FILE_SIZE"
-          ? "Cover image must be 5MB or smaller"
+          ? "File size too large (Image < 5MB, Video < 100MB)"
           : err.message;
       return res.status(400).json({ message });
     }
@@ -89,7 +92,7 @@ router.post(
       const { title, genre, rate, description, trailerLink, movieLength } =
         req.body;
 
-      if (!req.file) {
+      if (!req.files || !req.files.image) {
         return res.status(400).json({ message: "Cover image is required" });
       }
 
@@ -100,7 +103,8 @@ router.post(
       }
 
       const movieGenre = Array.isArray(genre) ? genre : genre ? [genre] : [];
-      const imageUrl = req.file.path || req.file.url || "";
+      const imageUrl = req.files.image[0].path || req.files.image[0].url || "";
+      const videoUrl = req.files.video ? (req.files.video[0].path || req.files.video[0].url) : "";
 
       const newMovie = new Movie({
         title,
@@ -108,6 +112,7 @@ router.post(
         rate: Number(rate) || 0,
         description,
         trailerLink,
+        videoUrl,
         movieLength,
         image: imageUrl,
       });

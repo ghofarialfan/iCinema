@@ -13,6 +13,7 @@ export default function ({ movie }) {
     image,
     description,
     trailerLink,
+    videoUrl,
     movieLength,
   } = movie;
 
@@ -35,7 +36,10 @@ export default function ({ movie }) {
           title={title}
         />
 
-        <FlippingCardBack description={description} />
+        <FlippingCardBack
+          description={description}
+          videoUrl={videoUrl}
+        />
       </div>
     </div>
   );

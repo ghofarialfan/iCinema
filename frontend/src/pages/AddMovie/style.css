@@ -437,6 +437,37 @@
   }
 }
 
+.add-movie-file-input {
+  margin-top: 18px;
+}
+
+.add-movie-file-input label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.add-movie-file-input label i {
+  margin-right: 8px;
+  color: #dc2626;
+}
+
+.file-selected-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .add-movie-error-message {
   display: flex;
   align-items: center;

@@ -7,6 +7,7 @@ const movieSchema = mongoose.Schema({
   rate: { type: Number, required: true, default: 0},
   description: { type: String, required: true },
   trailerLink: { type: String },
+  videoUrl: { type: String },
   movieLength: { type: String, required: true },
 });
 

@@ -78,6 +78,27 @@
   font-weight: 600;
 }
 
+.movie-video-container {
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.movie-video-player {
+  width: 100%;
+  display: block;
+  max-height: 180px;
+}
+
+.description-with-video {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
 .movie-card-back-body::-webkit-scrollbar {
   width: 4px;
 }

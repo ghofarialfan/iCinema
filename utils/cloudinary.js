@@ -13,13 +13,17 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: "Movies",
-    allowedFormats: ["jpeg", "png", "jpg"],
+  params: async (req, file) => {
+    const isVideo = file.mimetype.startsWith("video");
+    return {
+      folder: "iCinema",
+      resource_type: isVideo ? "video" : "image",
+      allowed_formats: isVideo ? ["mp4", "mkv", "avi"] : ["jpeg", "png", "jpg"],
+    };
   },
 });
 
 export const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 100 * 1024 * 1024 }, // Meningkatkan limit ke 100MB untuk video
 });

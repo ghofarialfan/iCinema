@@ -1,7 +1,11 @@
 import React from "react";
 import "./style.css";
 
-const CardBack = ({ description }) => {
+const CardBack = ({ description, videoUrl }) => {
+  const handleVideoClick = (event) => {
+    event.stopPropagation();
+  };
+
   return (
     <div className="movie-card-back">
       <div className="movie-card-back-header">
@@ -16,7 +20,16 @@ const CardBack = ({ description }) => {
       </div>
 
       <div className="movie-card-back-body">
-        <p>
+        {videoUrl ? (
+          <div className="movie-video-container" onClick={handleVideoClick}>
+            <video controls className="movie-video-player">
+              <source src={videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        ) : null}
+
+        <p className={videoUrl ? "description-with-video" : ""}>
           {description ||
             "No description available for this movie. Please update the movie details to improve the viewing experience."}
         </p>
