@@ -127,12 +127,12 @@ function Navbar(props) {
             <>
               <NavLink onClick={closeNav} activeClassName="active" to="/movies/new">
                 <i className="fas fa-plus-circle"></i>
-                Add Movie
+                Manage Movie
               </NavLink>
 
               <NavLink onClick={closeNav} activeClassName="active" to="/genres/new">
                 <i className="fas fa-tags"></i>
-                Add Genre
+                Manage Genre
               </NavLink>
             </>
           )}

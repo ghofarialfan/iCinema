@@ -44,4 +44,24 @@ router.post("/", checkAuth, checkAdmin, async (req, res) => {
   }
 });
 
+/**
+ * Delete a genre by its ID.
+ * @route DELETE /api/genres/:genreId
+ * @param {string} genreId - The ID of the genre to delete.
+ * @returns {object} A success message and the list of remaining genres.
+ * @throws {Error} If the genre is not found or an error occurs while deleting it.
+ */
+router.delete("/:genreId", checkAuth, checkAdmin, async (req, res) => {
+  try {
+    const genre = await Genre.findByIdAndDelete(req.params.genreId);
+    if (!genre) {
+      return res.status(404).json({ message: "Genre not found" });
+    }
+    const genres = await Genre.find();
+    res.status(200).json({ message: "Genre deleted successfully", genres });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

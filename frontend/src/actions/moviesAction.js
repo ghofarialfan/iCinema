@@ -1,5 +1,9 @@
 import Axios from "axios";
-import { GET_MOVIES_SUCCESS, GET_MOVIES_ERROR } from "./actionTypes";
+import {
+  GET_MOVIES_SUCCESS,
+  GET_MOVIES_ERROR,
+  DELETE_MOVIE_SUCCESS,
+} from "./actionTypes";
 
 export const getMovies = () => {
   return async (dispatch) => {
@@ -46,6 +50,29 @@ export const addMovie = (movie, history) => {
         type: GET_MOVIES_SUCCESS,
         payload: updatedMovies.data.movies,
       });
+    } catch (error) {
+      dispatch({ type: GET_MOVIES_ERROR, error });
+      throw error;
+    }
+  };
+};
+
+export const deleteMovie = (movieId) => {
+  return async (dispatch) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user ? user.accessToken : null;
+
+    const config = {
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    };
+
+    try {
+      const result = await Axios.delete(`/api/movies/${movieId}`, config);
+      dispatch({ type: DELETE_MOVIE_SUCCESS, payload: result.data.movies });
+      // Also update general movies list
+      dispatch({ type: GET_MOVIES_SUCCESS, payload: result.data.movies });
     } catch (error) {
       dispatch({ type: GET_MOVIES_ERROR, error });
       throw error;

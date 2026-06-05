@@ -147,4 +147,27 @@ router.patch("/:movieId", checkAuth, checkAdmin, async (req, res) => {
   }
 });
 
+/**
+ * Delete a movie by its ID.
+ * @route DELETE /api/movies/:movieId
+ * @param {string} movieId - The ID of the movie to delete.
+ * @returns {object} A success message and the list of remaining movies.
+ * @throws {Error} If the movie is not found or an error occurs while deleting it.
+ */
+router.delete("/:movieId", checkAuth, checkAdmin, async (req, res) => {
+  try {
+    const movie = await Movie.findByIdAndDelete(req.params.movieId);
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+    const movies = await Movie.find().populate({
+      path: "genre",
+      select: "name",
+    });
+    res.status(200).json({ message: "Movie deleted successfully", movies });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

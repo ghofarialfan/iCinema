@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Input from "../../components/common/Input";
 import Select from "../../components/common/Select";
 import { Button } from "../../components/common";
-import { addMovie } from "../../actions/moviesAction";
+import { addMovie, getMovies, deleteMovie } from "../../actions/moviesAction";
 import { getGenres } from "../../actions/genreAction";
 import { movieSchema } from "./schema";
 import "./style.css";
@@ -30,6 +30,7 @@ class AddMovieForm extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     this.props.getGenres();
+    this.props.getMovies();
   }
 
   componentDidUpdate(prevProps) {
