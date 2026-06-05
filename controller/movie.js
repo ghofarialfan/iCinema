@@ -1,10 +1,28 @@
 import express from "express";
+import multer from "multer";
 const router = express.Router();
 
 import Movie from "../models/movie.js";
 import Genre from "../models/genre.js";
 import checkAuth from "../middleware/checkAuth.js";
 import checkAdmin from "../middleware/checkAdmin.js";
+import { upload } from "../utils/cloudinary.js";
+
+const handleUpload = (req, res, next) => {
+  upload.single("image")(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      const message =
+        err.code === "LIMIT_FILE_SIZE"
+          ? "Cover image must be 5MB or smaller"
+          : err.message;
+      return res.status(400).json({ message });
+    }
+    if (err) {
+      return res.status(400).json({ message: err.message });
+    }
+    next();
+  });
+};
 
 /**
  * Read all movies.
@@ -38,7 +56,7 @@ router.get("/:movieId", async (req, res) => {
   try {
     const movie = await Movie.findById({ _id: req.params.movieId })
       .populate("genre", "name")
-      .exec(); // populate the genre associated with the movie
+      .exec();
     if (movie) return res.status(200).json(movie);
     return res
       .status(404)
@@ -57,7 +75,7 @@ router.get("/:movieId", async (req, res) => {
  * @param {string} description - The description of the movie.
  * @param {string} trailerLink - The link to the movie's trailer.
  * @param {number} movieLength - The length of the movie in minutes.
- * @param {File} image - The image file for the movie.
+ * @param {File} image - The poster image file (uploaded to Cloudinary).
  * @returns {object} A success message if the movie is added successfully.
  * @throws {Error} If the movie already exists, an error occurs while saving the movie, or validation fails.
  */
@@ -65,39 +83,49 @@ router.post(
   "/addMovie",
   checkAuth,
   checkAdmin,
+  handleUpload,
   async (req, res) => {
     try {
-      const { title, genre, rate, description, trailerLink, movieLength, image } =
+      const { title, genre, rate, description, trailerLink, movieLength } =
         req.body;
-    const isMovieExists = await Movie.findOne({ title });
 
-    if (isMovieExists) {
-      return res.status(400).json({ message: "Movie already exists" });
+      if (!req.file) {
+        return res.status(400).json({ message: "Cover image is required" });
+      }
+
+      const isMovieExists = await Movie.findOne({ title });
+
+      if (isMovieExists) {
+        return res.status(400).json({ message: "Movie already exists" });
+      }
+
+      const movieGenre = Array.isArray(genre) ? genre : genre ? [genre] : [];
+      const imageUrl = req.file.path || req.file.url || "";
+
+      const newMovie = new Movie({
+        title,
+        genre: movieGenre,
+        rate: Number(rate) || 0,
+        description,
+        trailerLink,
+        movieLength,
+        image: imageUrl,
+      });
+      await newMovie.save();
+      const movies = await Movie.find().populate({
+        path: "genre",
+        select: "name",
+      });
+      res
+        .status(201)
+        .json({ message: "Movie added successfully", movies: movies });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ error: "Failed to add movie", message: error.message });
     }
-
-    const movieGenre = Array.isArray(genre) ? genre : genre ? [genre] : [];
-
-    const newMovie = new Movie({
-      title,
-      genre: movieGenre,
-      rate: Number(rate) || 0,
-      description,
-      trailerLink,
-      movieLength,
-      image: image || "",
-    });
-    await newMovie.save();
-    const movies = await Movie.find().populate({
-      path: "genre",
-      select: "name",
-    });
-    res.status(201).json({ message: "Movie added successfully", movies: movies });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to add movie", message: error.message });
   }
-});
+);
 
 /**
  * Update a movie by its ID.

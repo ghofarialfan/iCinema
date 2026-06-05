@@ -1,15 +1,9 @@
-import * as cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
 
 import dotenv from "dotenv";
 dotenv.config();
-
-console.log("--- Cloudinary Configuration ---");
-console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME ? "Loaded" : "Missing");
-console.log("API Key:", process.env.CLOUDINARY_API_KEY ? "Loaded" : "Missing");
-console.log("API Secret:", process.env.CLOUDINARY_API_SECRET ? "Loaded" : "Missing");
-console.log("-----------------------------");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -18,11 +12,14 @@ cloudinary.config({
 });
 
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary.v2,
+  cloudinary,
   params: {
     folder: "Movies",
     allowedFormats: ["jpeg", "png", "jpg"],
   },
 });
 
-export const upload = multer({ storage });
+export const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+});

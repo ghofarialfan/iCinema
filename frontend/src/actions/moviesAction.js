@@ -16,23 +16,27 @@ export const addMovie = (movie, history) => {
   return async (dispatch) => {
     const user = JSON.parse(localStorage.getItem("user"));
     const token = user ? user.accessToken : null;
+
+    const formData = new FormData();
+    formData.append("title", movie.title);
+    formData.append("genre", movie.genre);
+    formData.append("rate", movie.rate);
+    formData.append("description", movie.description);
+    formData.append("trailerLink", movie.trailerLink || "");
+    formData.append("movieLength", movie.movieLength);
+    formData.append("image", movie.imageFile);
+
     const config = {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    };
-    const payload = {
-      title: movie.title,
-      genre: movie.genre,
-      rate: movie.rate,
-      description: movie.description,
-      image: movie.image,
-      trailerLink: movie.trailerLink,
-      movieLength: movie.movieLength,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        "Content-Type": "multipart/form-data",
+      },
     };
 
     try {
       const result = await Axios.post(
         "/api/movies/addMovie",
-        payload,
+        formData,
         config
       );
       dispatch({ type: GET_MOVIES_SUCCESS, payload: result.data.movies });

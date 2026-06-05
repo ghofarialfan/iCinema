@@ -18,10 +18,11 @@ class AddMovieForm extends React.Component {
       genre: "",
       rate: 0,
       description: "",
-      image: "",
       trailerLink: "",
       movieLength: "",
     },
+    imageFile: null,
+    imagePreview: null,
     errors: {},
     submitError: null,
   };
@@ -44,6 +45,9 @@ class AddMovieForm extends React.Component {
 
   componentWillUnmount() {
     this._isMounted = false;
+    if (this.state.imagePreview) {
+      URL.revokeObjectURL(this.state.imagePreview);
+    }
   }
 
   getFieldError = (fieldName) => {
@@ -68,10 +72,43 @@ class AddMovieForm extends React.Component {
     this.setState({ data });
   };
 
+  handleImageChange = ({ currentTarget: input }) => {
+    const file = input.files[0];
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file.type)) {
+      this.setState({
+        errors: { ...this.state.errors, image: "Poster must be JPG or PNG" },
+      });
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      this.setState({
+        errors: { ...this.state.errors, image: "Poster must be 5MB or smaller" },
+      });
+      return;
+    }
+
+    if (this.state.imagePreview) {
+      URL.revokeObjectURL(this.state.imagePreview);
+    }
+
+    const errors = { ...this.state.errors };
+    delete errors.image;
+
+    this.setState({
+      imageFile: file,
+      imagePreview: URL.createObjectURL(file),
+      errors,
+    });
+  };
+
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data } = this.state;
+    const { data, imageFile } = this.state;
     const { error } = movieSchema.validate(data);
 
     if (error) {
@@ -84,22 +121,35 @@ class AddMovieForm extends React.Component {
       return;
     }
 
+    if (!imageFile) {
+      this.setState({
+        errors: { ...this.state.errors, image: "Cover image is required" },
+        submitError: null,
+      });
+      return;
+    }
+
     this.setState({ errors: {}, submitError: null });
 
     try {
-      await this.props.addMovie(data, this.props.history);
+      await this.props.addMovie({ ...data, imageFile }, this.props.history);
 
       if (this._isMounted) {
+        if (this.state.imagePreview) {
+          URL.revokeObjectURL(this.state.imagePreview);
+        }
+
         this.setState({
           data: {
             title: "",
             genre: "",
             rate: 0,
             description: "",
-            image: "",
             trailerLink: "",
             movieLength: "",
           },
+          imageFile: null,
+          imagePreview: null,
           errors: {},
           submitError: null,
         });
@@ -116,9 +166,8 @@ class AddMovieForm extends React.Component {
   };
 
   render() {
-    const { data, submitError } = this.state;
-    const { title, genre, rate, description, trailerLink, movieLength, image } =
-      data;
+    const { data, submitError, imagePreview } = this.state;
+    const { title, genre, rate, description, trailerLink, movieLength } = data;
     const { genres } = this.props;
 
     return (
@@ -155,7 +204,11 @@ class AddMovieForm extends React.Component {
             </div>
           )}
 
-          <form onSubmit={this.handleSubmit} className="add-movie-form">
+          <form
+            onSubmit={this.handleSubmit}
+            className="add-movie-form"
+            encType="multipart/form-data"
+          >
             <div className="add-movie-grid">
               <section className="add-movie-panel add-movie-main-panel">
                 <div className="add-movie-section-header">
@@ -222,19 +275,39 @@ class AddMovieForm extends React.Component {
 
                   <div>
                     <h3>Media Source</h3>
-                    <p>Add poster and trailer information for the movie.</p>
+                    <p>Upload a poster image and add a trailer link.</p>
                   </div>
                 </div>
 
-                <Input
-                  name="image"
-                  label="Cover Image URL"
-                  onChange={this.handleChange}
-                  error={this.getFieldError("image")}
-                  iconClass="fas fa-file-image"
-                  placeholder="https://..."
-                  value={image}
-                />
+                <div className="input-container">
+                  <label htmlFor="image">Cover Poster</label>
+                  <div className="input-icon fas fa-file-image" />
+                  <input
+                    id="image"
+                    name="image"
+                    type="file"
+                    accept="image/jpeg,image/png,image/jpg"
+                    className="form-control"
+                    onChange={this.handleImageChange}
+                  />
+                  {this.getFieldError("image") && (
+                    <div className="alert alert-danger">
+                      {this.getFieldError("image")}
+                    </div>
+                  )}
+                  {imagePreview && (
+                    <img
+                      src={imagePreview}
+                      alt="Poster preview"
+                      className="add-movie-poster-preview"
+                      style={{
+                        maxWidth: "200px",
+                        marginTop: "12px",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  )}
+                </div>
 
                 <Input
                   name="trailerLink"
@@ -249,8 +322,8 @@ class AddMovieForm extends React.Component {
                 <div className="add-movie-helper-card">
                   <i className="fas fa-info-circle"></i>
                   <p>
-                    Make sure the trailer link is accessible and the cover image
-                    URL has a clear poster ratio for better movie card display.
+                    Upload a JPG or PNG poster (max 5MB). The image is stored on
+                    Cloudinary. Make sure the trailer link is accessible.
                   </p>
                 </div>
               </section>
