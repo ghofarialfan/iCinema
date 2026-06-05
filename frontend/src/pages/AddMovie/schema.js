@@ -8,4 +8,6 @@ export const movieSchema = Joi.object({
   rate: Joi.number().min(0).max(10).default(0).label("Rating"),
   trailerLink: Joi.string().allow(null, "").label("Trailer Link"),
   movieLength: Joi.string().required().label("Movie length"),
+  image: Joi.any().allow(null, ""),
+  video: Joi.any().allow(null, ""),
 });
