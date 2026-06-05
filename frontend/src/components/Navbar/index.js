@@ -42,7 +42,7 @@ function Navbar(props) {
                 activeClassName="active"
                 to="/movies/new"
               >
-                Add Movie
+                Manage Movie
               </NavLink>
 
               <NavLink
@@ -50,7 +50,7 @@ function Navbar(props) {
                 activeClassName="active"
                 to="/genres/new"
               >
-                Add Genre
+                Manage Genre
               </NavLink>
             </>
           )}

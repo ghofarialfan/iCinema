@@ -186,10 +186,20 @@ class AddMovieForm extends React.Component {
     }
   };
 
+  handleDelete = async (movieId) => {
+    if (window.confirm("Are you sure you want to delete this movie?")) {
+      try {
+        await this.props.deleteMovie(movieId);
+      } catch (err) {
+        alert("Failed to delete movie");
+      }
+    }
+  };
+
   render() {
     const { data, submitError, imagePreview } = this.state;
     const { title, genre, rate, description, trailerLink, movieLength } = data;
-    const { genres } = this.props;
+    const { genres, movies } = this.props;
 
     return (
       <div className="add-movie-page">
@@ -198,25 +208,82 @@ class AddMovieForm extends React.Component {
             <div className="add-movie-hero-content">
               <span className="add-movie-badge">Admin Movie Management</span>
 
-              <h1>Add New Movie</h1>
+              <h1>Manage Movies</h1>
 
               <p>
-                Create a new movie record for iCinema by completing the movie
-                information, media source, rating, and description.
+                Add new movies or remove existing ones from the iCinema
+                database.
               </p>
             </div>
 
             <div className="add-movie-hero-card">
               <div className="add-movie-hero-icon">
-                <i className="fas fa-plus-circle"></i>
+                <i className="fas fa-tasks"></i>
               </div>
 
               <div>
-                <h4>Movie Entry Form</h4>
-                <p>Fill in accurate data before publishing it to the system.</p>
+                <h4>Manage Catalog</h4>
+                <p>Keep the movie list updated and relevant.</p>
               </div>
             </div>
           </section>
+
+          {/* Movie List Section */}
+          <section className="add-movie-panel mb-5">
+            <div className="add-movie-section-header">
+              <span>
+                <i className="fas fa-list"></i>
+              </span>
+              <div>
+                <h3>Existing Movies</h3>
+                <p>List of all movies currently in the database.</p>
+              </div>
+            </div>
+
+            <div className="manage-list-container">
+              {movies && movies.length > 0 ? (
+                <div className="manage-table-wrapper">
+                  <table className="manage-table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {movies.map((movie) => (
+                        <tr key={movie._id}>
+                          <td>{movie.title}</td>
+                          <td>
+                            {movie.genre && movie.genre.length > 0
+                              ? movie.genre.map((g) => g.name).join(", ")
+                              : "N/A"}
+                          </td>
+                          <td>{movie.rate}</td>
+                          <td>
+                            <button
+                              className="manage-delete-btn"
+                              onClick={() => this.handleDelete(movie._id)}
+                            >
+                              <i className="fas fa-trash"></i> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="text-muted">No movies found in database.</p>
+              )}
+            </div>
+          </section>
+
+          <div className="add-movie-section-divider">
+            <span>OR ADD NEW MOVIE</span>
+          </div>
 
           {submitError && (
             <div className="add-movie-error-message">
@@ -414,6 +481,8 @@ class AddMovieForm extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     addMovie: (movie, history) => dispatch(addMovie(movie, history)),
+    getMovies: () => dispatch(getMovies()),
+    deleteMovie: (movieId) => dispatch(deleteMovie(movieId)),
     getGenres: () => dispatch(getGenres()),
   };
 };
@@ -421,6 +490,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     genres: state.genre.genres,
+    movies: state.movie.movies,
   };
 };
 
