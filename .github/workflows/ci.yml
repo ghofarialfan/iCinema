@@ -1,16 +1,19 @@
-name: Deploy to Azure App Service
+name: CI
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
 
 concurrency:
-  group: deploy-${{ github.repository }}-${{ vars.WEBAPP_NAME }}
+  group: ci-${{ github.repository }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,12 +26,10 @@ jobs:
           node-version: "20"
 
       - name: Install frontend dependencies
-        run: |
-          npm ci --prefix frontend --legacy-peer-deps
+        run: npm ci --prefix frontend --legacy-peer-deps
 
       - name: Build frontend
-        run: |
-          npm run build --prefix frontend
+        run: npm run build --prefix frontend
 
       - name: Create deployment package
         run: |
@@ -45,16 +46,13 @@ jobs:
           mkdir -p deployment-package/frontend
           cp -r frontend/build deployment-package/frontend/build
 
-          printf "MONGODB_URL=%s\nJWT_SECRET=%s\nCLOUDINARY_CLOUD_NAME=%s\nCLOUDINARY_API_KEY=%s\nCLOUDINARY_API_SECRET=%s\n" "${{ secrets.MONGODB_URL }}" "${{ secrets.JWT_SECRET }}" "${{ secrets.CLOUDINARY_CLOUD_NAME }}" "${{ secrets.CLOUDINARY_API_KEY }}" "${{ secrets.CLOUDINARY_API_SECRET }}" > deployment-package/.env
-
-      - name: Install deployment package
+      - name: Install deployment package dependencies
         working-directory: deployment-package
         run: npm ci --omit=dev
- 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
+
+      - name: Upload deployment package
+        uses: actions/upload-artifact@v4
         with:
-          app-name: ${{ vars.WEBAPP_NAME }}
-          slot-name: 'Production'
-          package: deployment-package
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          name: deployment-package
+          path: deployment-package/
+          retention-days: 7
