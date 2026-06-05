@@ -199,7 +199,7 @@ class AddMovieForm extends React.Component {
   render() {
     const { data, submitError, imagePreview } = this.state;
     const { title, genre, rate, description, trailerLink, movieLength } = data;
-    const { genres, movies } = this.props;
+    const { genres = [], movies = [] } = this.props;
 
     return (
       <div className="add-movie-page">
@@ -257,8 +257,11 @@ class AddMovieForm extends React.Component {
                         <tr key={movie._id}>
                           <td>{movie.title}</td>
                           <td>
-                            {movie.genre && movie.genre.length > 0
-                              ? movie.genre.map((g) => g.name).join(", ")
+                            {movie.genre && Array.isArray(movie.genre) && movie.genre.length > 0
+                              ? movie.genre
+                                  .map((g) => (typeof g === "object" ? g.name : g))
+                                  .filter(Boolean)
+                                  .join(", ")
                               : "N/A"}
                           </td>
                           <td>{movie.rate}</td>
@@ -328,7 +331,7 @@ class AddMovieForm extends React.Component {
                     onChange={this.handleChange}
                     value={genre}
                     error={this.getFieldError("genre")}
-                    options={genres}
+                    options={genres || []}
                     iconClass="fas fa-tags"
                   />
 
