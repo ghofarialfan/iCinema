@@ -31,7 +31,12 @@ function Navbar(props) {
         </Link>
 
         <div className="nav-desktop-menu">
-          <NavLink className="nav-link-item" activeClassName="active" to="/movies">
+          <NavLink
+            exact
+            className="nav-link-item"
+            activeClassName="active"
+            to="/movies"
+          >
             Movies
           </NavLink>
 
@@ -99,7 +104,12 @@ function Navbar(props) {
         </div>
 
         <ul className="list">
-          <NavLink onClick={closeNav} activeClassName="active" to="/movies">
+          <NavLink
+            exact
+            onClick={closeNav}
+            activeClassName="active"
+            to="/movies"
+          >
             <i className="fas fa-home"></i>
             Home
           </NavLink>
