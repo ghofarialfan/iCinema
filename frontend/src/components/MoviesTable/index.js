@@ -15,8 +15,6 @@ export default function MoviesTable({ movies, currentPage, pageSize }) {
         currentMovies.map((movie) => (
           <MovieCard movie={movie} key={movie._id} />
         ))}
-       
     </div>
   );
 }
-
