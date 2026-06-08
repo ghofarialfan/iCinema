@@ -6,53 +6,63 @@
   overflow: hidden;
   backface-visibility: hidden;
   transform: rotateY(180deg);
-  border-radius: 26px;
+  border-radius: 28px;
   padding: 20px;
   text-align: left;
   background:
-    radial-gradient(circle at top left, rgba(220, 38, 38, 0.24), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.2), transparent 34%),
+    radial-gradient(circle at top left, rgba(220, 38, 38, 0.28), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.24), transparent 34%),
     linear-gradient(135deg, #111827 0%, #1e293b 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.38);
 }
 
 .movie-card-back::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.18));
+  background:
+    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.18)),
+    radial-gradient(circle at 50% 120%, rgba(220, 38, 38, 0.16), transparent 45%);
   pointer-events: none;
 }
 
-.movie-card-back-header {
+.movie-card-back-header,
+.movie-card-back-stats,
+.movie-card-back-genre,
+.movie-card-back-body,
+.movie-card-back-actions {
   position: relative;
   z-index: 2;
+}
+
+.movie-card-back-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .movie-card-back-icon {
   flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 16px;
   background: rgba(220, 38, 38, 0.22);
   color: #ffffff;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .movie-card-back h5 {
   margin: 0 0 4px;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 900;
   letter-spacing: -0.3px;
+  line-height: 1.25;
 }
 
 .movie-card-back-header p {
@@ -62,17 +72,52 @@
   font-weight: 800;
 }
 
+.movie-card-back-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.movie-card-back-stats span,
+.movie-card-back-genre {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.movie-card-back-stats i,
+.movie-card-back-genre i {
+  color: #fecaca;
+}
+
+.movie-card-back-genre {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.movie-card-back-genre span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .movie-card-back-body {
-  position: relative;
-  z-index: 2;
-  max-height: 250px;
+  max-height: 158px;
   overflow-y: auto;
   padding-right: 4px;
 }
 
 .movie-card-back-body p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.76);
   font-size: 13px;
   line-height: 1.7;
   font-weight: 600;
@@ -108,25 +153,46 @@
   background: rgba(255, 255, 255, 0.24);
 }
 
-.movie-card-back-hint {
+.movie-card-back-actions {
   position: absolute;
-  z-index: 2;
   left: 20px;
   right: 20px;
   bottom: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.movie-card-back-trailer,
+.movie-card-back-hint {
   min-height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  padding: 10px 12px;
+  gap: 8px;
   border-radius: 15px;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.68);
   font-size: 12px;
   font-weight: 900;
+  text-decoration: none;
 }
 
-.movie-card-back-hint i {
-  color: #fecaca;
+.movie-card-back-trailer {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: #ffffff;
+  box-shadow: 0 16px 34px rgba(220, 38, 38, 0.22);
+}
+
+.movie-card-back-trailer:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.movie-card-back-trailer.disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.movie-card-back-hint {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.68);
 }
