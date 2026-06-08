@@ -16,7 +16,7 @@ export const getMovies = () => {
   };
 };
 
-export const addMovie = (movie, history) => {
+export const addMovie = (movie, history, onUploadProgress) => {
   return async (dispatch) => {
     const user = JSON.parse(localStorage.getItem("user"));
     const token = user ? user.accessToken : null;
@@ -29,6 +29,7 @@ export const addMovie = (movie, history) => {
     formData.append("trailerLink", movie.trailerLink || "");
     formData.append("movieLength", movie.movieLength);
     formData.append("image", movie.imageFile);
+
     if (movie.videoFile) {
       formData.append("video", movie.videoFile);
     }
@@ -38,6 +39,7 @@ export const addMovie = (movie, history) => {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         "Content-Type": "multipart/form-data",
       },
+      onUploadProgress,
     };
 
     try {
@@ -46,13 +48,16 @@ export const addMovie = (movie, history) => {
         formData,
         config
       );
+
       dispatch({ type: GET_MOVIES_SUCCESS, payload: result.data.movies });
-      history.push("/movies");
+
       const updatedMovies = await Axios.get("/api/movies");
       dispatch({
         type: GET_MOVIES_SUCCESS,
         payload: updatedMovies.data.movies,
       });
+
+      return result.data;
     } catch (error) {
       dispatch({ type: GET_MOVIES_ERROR, error });
       throw error;
@@ -74,7 +79,6 @@ export const deleteMovie = (movieId) => {
     try {
       const result = await Axios.delete(`/api/movies/${movieId}`, config);
       dispatch({ type: DELETE_MOVIE_SUCCESS, payload: result.data.movies });
-      // Also update general movies list
       dispatch({ type: GET_MOVIES_SUCCESS, payload: result.data.movies });
     } catch (error) {
       dispatch({ type: GET_MOVIES_ERROR, error });
