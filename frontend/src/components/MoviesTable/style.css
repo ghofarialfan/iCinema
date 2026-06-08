@@ -1,26 +1,46 @@
 .movies-grid {
+  width: 100%;
   display: grid;
-  grid-auto-flow: row;
-  grid-template-columns: repeat(4, 1fr);
-  grid-row-gap: 20px;
-  grid-column-gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 270px));
+  gap: 30px;
+  justify-content: center;
   justify-items: center;
+  align-items: start;
+  overflow: visible;
 }
 
-@media only screen and (max-width: 1400px) {
+.movies-grid .card-container {
+  width: 100%;
+  max-width: 270px;
+  margin: 0 !important;
+}
+
+@media only screen and (max-width: 1200px) {
   .movies-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(230px, 270px));
+    gap: 28px;
   }
 }
 
-@media only screen and (max-width: 1092px) {
+@media only screen and (max-width: 768px) {
   .movies-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .movies-grid .card-container {
+    max-width: 260px;
   }
 }
 
-@media only screen and (max-width: 620px) {
+@media only screen and (max-width: 576px) {
   .movies-grid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .movies-grid .card-container {
+    width: 100%;
+    max-width: 320px;
   }
 }
