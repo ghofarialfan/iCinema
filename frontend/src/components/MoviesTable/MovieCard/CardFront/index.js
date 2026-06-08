@@ -32,11 +32,19 @@ const CardFront = ({
         />
 
         <div className="movie-poster-overlay"></div>
+        <div className="movie-hover-shine"></div>
 
         <span className="movie-rating-badge">
           <i className="fas fa-star"></i>
           {rating}
         </span>
+
+        <div className="movie-hover-action">
+          <span>
+            <i className="fas fa-mouse-pointer"></i>
+          </span>
+          <p>Click to view details</p>
+        </div>
       </div>
 
       <div className="movie-card-content">
