@@ -94,17 +94,6 @@ function Navbar(props) {
           </div>
 
           <div className="nav-right">
-            <NavLink
-              className="nav-icon-button"
-              activeClassName="active"
-              to="/movies"
-              aria-label="Search movies"
-              onClick={closeNav}
-              title="Search"
-            >
-              <i className="fas fa-search" aria-hidden="true"></i>
-            </NavLink>
-
             <div className="nav-desktop-actions">
               {!props.loggedIn ? (
                 <>
