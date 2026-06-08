@@ -1,15 +1,9 @@
-import * as cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
 
 import dotenv from "dotenv";
 dotenv.config();
-
-console.log("--- Cloudinary Configuration ---");
-console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME ? "Loaded" : "Missing");
-console.log("API Key:", process.env.CLOUDINARY_API_KEY ? "Loaded" : "Missing");
-console.log("API Secret:", process.env.CLOUDINARY_API_SECRET ? "Loaded" : "Missing");
-console.log("-----------------------------");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -18,11 +12,18 @@ cloudinary.config({
 });
 
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary.v2,
-  params: {
-    folder: "Movies",
-    allowedFormats: ["jpeg", "png", "jpg"],
+  cloudinary,
+  params: async (req, file) => {
+    const isVideo = file.mimetype.startsWith("video");
+    return {
+      folder: "iCinema",
+      resource_type: isVideo ? "video" : "image",
+      allowed_formats: isVideo ? ["mp4", "mkv", "avi"] : ["jpeg", "png", "jpg"],
+    };
   },
 });
 
-export const upload = multer({ storage });
+export const upload = multer({
+  storage,
+  limits: { fileSize: 100 * 1024 * 1024 }, // Meningkatkan limit ke 100MB untuk video
+});

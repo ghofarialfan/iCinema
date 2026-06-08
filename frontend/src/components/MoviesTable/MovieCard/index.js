@@ -14,6 +14,7 @@ export default function MovieCard({ movie }) {
     image,
     description,
     trailerLink,
+    videoUrl,
     movieLength,
   } = movie;
 
@@ -42,6 +43,7 @@ export default function MovieCard({ movie }) {
           genre={genre}
           description={description}
           trailerLink={trailerLink}
+          videoUrl={videoUrl}
           movieLength={movieLength}
         />
       </div>

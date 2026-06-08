@@ -31,7 +31,12 @@ function Navbar(props) {
         </Link>
 
         <div className="nav-desktop-menu">
-          <NavLink className="nav-link-item" activeClassName="active" to="/movies">
+          <NavLink
+            exact
+            className="nav-link-item"
+            activeClassName="active"
+            to="/movies"
+          >
             Movies
           </NavLink>
 
@@ -42,7 +47,7 @@ function Navbar(props) {
                 activeClassName="active"
                 to="/movies/new"
               >
-                Add Movie
+                Manage Movie
               </NavLink>
 
               <NavLink
@@ -50,7 +55,7 @@ function Navbar(props) {
                 activeClassName="active"
                 to="/genres/new"
               >
-                Add Genre
+                Manage Genre
               </NavLink>
             </>
           )}
@@ -99,7 +104,12 @@ function Navbar(props) {
         </div>
 
         <ul className="list">
-          <NavLink onClick={closeNav} activeClassName="active" to="/movies">
+          <NavLink
+            exact
+            onClick={closeNav}
+            activeClassName="active"
+            to="/movies"
+          >
             <i className="fas fa-home"></i>
             Home
           </NavLink>
@@ -127,12 +137,12 @@ function Navbar(props) {
             <>
               <NavLink onClick={closeNav} activeClassName="active" to="/movies/new">
                 <i className="fas fa-plus-circle"></i>
-                Add Movie
+                Manage Movie
               </NavLink>
 
               <NavLink onClick={closeNav} activeClassName="active" to="/genres/new">
                 <i className="fas fa-tags"></i>
-                Add Genre
+                Manage Genre
               </NavLink>
             </>
           )}

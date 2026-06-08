@@ -1,0 +1,48 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+
+concurrency:
+  group: deploy-${{ github.repository }}-${{ vars.WEBAPP_NAME }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.event == 'push'
+
+    permissions:
+      actions: read
+
+    steps:
+      - name: Download deployment package
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          run_id: ${{ github.event.workflow_run.id }}
+          name: deployment-package
+          path: deployment-package
+
+      - name: Create .env for deployment
+        run: |
+          printf "MONGODB_URL=%s\nJWT_SECRET=%s\nCLOUDINARY_CLOUD_NAME=%s\nCLOUDINARY_API_KEY=%s\nCLOUDINARY_API_SECRET=%s\n" \
+            "${{ secrets.MONGODB_URL }}" \
+            "${{ secrets.JWT_SECRET }}" \
+            "${{ secrets.CLOUDINARY_CLOUD_NAME }}" \
+            "${{ secrets.CLOUDINARY_API_KEY }}" \
+            "${{ secrets.CLOUDINARY_API_SECRET }}" > deployment-package/.env
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ vars.WEBAPP_NAME }}
+          slot-name: Production
+          package: deployment-package
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}

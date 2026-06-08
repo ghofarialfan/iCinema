@@ -1,7 +1,7 @@
 import React from "react";
 import Joi from "joi";
 import { connect } from "react-redux";
-import { addGenre } from "../../actions/genreAction";
+import { addGenre, getGenres, deleteGenre } from "../../actions/genreAction";
 import { Input, Button } from "../../components/common";
 import "./style.css";
 
@@ -16,6 +16,10 @@ class AddGenre extends React.Component {
   schema = {
     name: Joi.string().required().label("Genre"),
   };
+
+  componentDidMount() {
+    this.props.getGenres();
+  }
 
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
@@ -65,12 +69,19 @@ class AddGenre extends React.Component {
     }
 
     await this.props.addGenre(this.state.data);
-    this.props.history.push("/movies");
+    this.setState({ data: { name: "" } });
+  };
+
+  handleDelete = async (genreId) => {
+    if (window.confirm("Are you sure you want to delete this genre?")) {
+      await this.props.deleteGenre(genreId);
+    }
   };
 
   render() {
     const { data, errors } = this.state;
     const { name } = data;
+    const { genres } = this.props;
 
     return (
       <div className="add-genre-page">
@@ -79,25 +90,74 @@ class AddGenre extends React.Component {
             <div className="add-genre-hero-content">
               <span className="add-genre-badge">Admin Genre Management</span>
 
-              <h1>Create New Genre</h1>
+              <h1>Manage Genres</h1>
 
               <p>
-                Add a new movie genre to keep the iCinema catalog organized,
-                searchable, and easier for users to explore.
+                Add new movie genres or remove existing ones to keep the iCinema
+                catalog organized.
               </p>
             </div>
 
             <div className="add-genre-hero-card">
               <div className="add-genre-hero-icon">
-                <i className="fas fa-tags"></i>
+                <i className="fas fa-tasks"></i>
               </div>
 
               <div>
-                <h4>Genre Entry</h4>
+                <h4>Manage Categories</h4>
                 <p>Use clear genre names to improve movie filtering.</p>
               </div>
             </div>
           </section>
+
+          {/* Genre List Section */}
+          <section className="add-genre-form-card mb-5">
+            <div className="add-genre-section-header">
+              <span>
+                <i className="fas fa-list"></i>
+              </span>
+              <div>
+                <h3>Existing Genres</h3>
+                <p>List of all genres currently in the database.</p>
+              </div>
+            </div>
+
+            <div className="manage-list-container">
+              {genres && genres.length > 0 ? (
+                <div className="manage-table-wrapper">
+                  <table className="manage-table">
+                    <thead>
+                      <tr>
+                        <th>Genre Name</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {genres.map((genre) => (
+                        <tr key={genre._id}>
+                          <td>{genre.name}</td>
+                          <td>
+                            <button
+                              className="manage-delete-btn"
+                              onClick={() => this.handleDelete(genre._id)}
+                            >
+                              <i className="fas fa-trash"></i> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="text-muted">No genres found in database.</p>
+              )}
+            </div>
+          </section>
+
+          <div className="add-movie-section-divider">
+            <span>OR CREATE NEW GENRE</span>
+          </div>
 
           <section className="add-genre-form-card">
             <div className="add-genre-section-header">
@@ -157,10 +217,18 @@ class AddGenre extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    addGenre: (genre) => dispatch(addGenre(genre)),
+    genres: state.genre.genres,
   };
 };
 
-export default connect(null, mapDispatchToProps)(AddGenre);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addGenre: (genre) => dispatch(addGenre(genre)),
+    getGenres: () => dispatch(getGenres()),
+    deleteGenre: (genreId) => dispatch(deleteGenre(genreId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddGenre);
