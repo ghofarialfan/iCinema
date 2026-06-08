@@ -30,6 +30,7 @@ class AddGenre extends React.Component {
 
     const data = { ...this.state.data };
     data[input.name] = input.value;
+
     this.setState({ data, errors });
   };
 
@@ -38,6 +39,7 @@ class AddGenre extends React.Component {
     const obj = { [name]: value };
     const subSchema = Joi.object({ [name]: this.schema[name] });
     const { error } = subSchema.validate(obj);
+
     return error ? error.details[0].message : null;
   };
 
@@ -69,12 +71,18 @@ class AddGenre extends React.Component {
     }
 
     await this.props.addGenre(this.state.data);
-    this.setState({ data: { name: "" } });
+    await this.props.getGenres();
+
+    this.setState({
+      data: { name: "" },
+      errors: {},
+    });
   };
 
   handleDelete = async (genreId) => {
     if (window.confirm("Are you sure you want to delete this genre?")) {
       await this.props.deleteGenre(genreId);
+      await this.props.getGenres();
     }
   };
 
@@ -110,12 +118,12 @@ class AddGenre extends React.Component {
             </div>
           </section>
 
-          {/* Genre List Section */}
           <section className="add-genre-form-card mb-5">
             <div className="add-genre-section-header">
               <span>
                 <i className="fas fa-list"></i>
               </span>
+
               <div>
                 <h3>Existing Genres</h3>
                 <p>List of all genres currently in the database.</p>
@@ -132,12 +140,14 @@ class AddGenre extends React.Component {
                         <th>Actions</th>
                       </tr>
                     </thead>
+
                     <tbody>
                       {genres.map((genre) => (
                         <tr key={genre._id}>
                           <td>{genre.name}</td>
                           <td>
                             <button
+                              type="button"
                               className="manage-delete-btn"
                               onClick={() => this.handleDelete(genre._id)}
                             >
@@ -167,7 +177,9 @@ class AddGenre extends React.Component {
 
               <div>
                 <h3>Genre Information</h3>
-                <p>Enter the genre name that will be available in movie filters.</p>
+                <p>
+                  Enter the genre name that will be available in movie filters.
+                </p>
               </div>
             </div>
 
