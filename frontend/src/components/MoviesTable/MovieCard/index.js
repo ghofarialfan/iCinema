@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 import FlippingCardFront from "./CardFront";
-import FlippingCardBack from "./CardBack";
+import MovieDetailPanel from "./CardBack";
 import "./style.css";
 
 export default function MovieCard({ movie }) {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const {
     title,
@@ -18,35 +18,42 @@ export default function MovieCard({ movie }) {
     movieLength,
   } = movie;
 
-  const handleFlipCard = () => {
-    setIsFlipped((prevState) => !prevState);
+  const openDetail = () => {
+    setIsDetailOpen(true);
+  };
+
+  const closeDetail = () => {
+    setIsDetailOpen(false);
   };
 
   return (
-    <div className="card-container">
-      <div
-        className={isFlipped ? "card-wrapper flipped" : "card-wrapper"}
-        onClick={handleFlipCard}
-      >
-        <FlippingCardFront
-          trailerLink={trailerLink}
-          coverImage={image}
-          rate={rate}
-          movieLength={movieLength}
-          genre={genre}
-          title={title}
-        />
+    <>
+      <div className="card-container" onClick={openDetail}>
+        <div className="card-wrapper">
+          <FlippingCardFront
+            trailerLink={trailerLink}
+            coverImage={image}
+            rate={rate}
+            movieLength={movieLength}
+            genre={genre}
+            title={title}
+          />
+        </div>
+      </div>
 
-        <FlippingCardBack
+      {isDetailOpen && (
+        <MovieDetailPanel
           title={title}
           rate={rate}
           genre={genre}
+          coverImage={image}
           description={description}
           trailerLink={trailerLink}
           videoUrl={videoUrl}
           movieLength={movieLength}
+          onClose={closeDetail}
         />
-      </div>
-    </div>
+      )}
+    </>
   );
 }
