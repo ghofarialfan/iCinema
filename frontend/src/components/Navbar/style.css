@@ -5,21 +5,30 @@
   top: 0;
   right: 0;
   left: 0;
-  background: rgba(15, 23, 42, 0.86);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  padding: 10px 18px;
 }
 
-.nav-container {
+.nav-shell {
   width: 100%;
-  height: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 32px;
+}
+
+.nav-surface {
+  width: 100%;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 18px;
+  background: rgba(15, 23, 42, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  border-radius: 999px;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.34);
 }
 
 .nav-brand {
@@ -38,31 +47,37 @@
 }
 
 .nav-brand-icon {
-  width: 44px;
-  height: 44px;
+  width: 34px;
+  height: 34px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 16px;
+  border-radius: 999px;
   background: linear-gradient(135deg, #dc2626, #991b1b);
   color: #ffffff;
-  font-size: 18px;
-  box-shadow: 0 14px 34px rgba(220, 38, 38, 0.28);
+  font-size: 14px;
+  box-shadow: 0 14px 30px rgba(220, 38, 38, 0.25);
 }
 
 .nav-brand-text {
   color: #ffffff;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 900;
   letter-spacing: -0.4px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
 }
 
 .nav-desktop-menu {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-left: 32px;
-  margin-right: auto;
+  gap: 6px;
+  min-width: 0;
 }
 
 .nav-link-item,
@@ -70,27 +85,61 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 42px;
+  gap: 10px;
+  min-height: 38px;
   padding: 0 14px;
-  border-radius: 14px;
-  color: rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.78);
   text-decoration: none;
   font-size: 14px;
   font-weight: 800;
   transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link-item i {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
 }
 
 .nav-link-item:hover,
 .nav-action-link:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.09);
   text-decoration: none;
 }
 
 .nav-link-item.active,
 .nav-action-link.active {
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-icon-button {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: 0.2s ease;
+}
+
+.nav-icon-button:hover,
+.nav-icon-button.active {
+  color: #ffffff;
   background: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
 }
 
 .nav-desktop-actions {
@@ -103,9 +152,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
+  min-height: 38px;
   padding: 0 18px;
-  border-radius: 15px;
+  border-radius: 999px;
   background: linear-gradient(135deg, #dc2626, #991b1b);
   color: #ffffff;
   text-decoration: none;
@@ -122,26 +171,101 @@
   box-shadow: 0 18px 42px rgba(220, 38, 38, 0.34);
 }
 
-.nav-logout-button {
-  min-height: 42px;
+.nav-account {
+  position: relative;
+}
+
+.nav-account-button {
+  min-height: 38px;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 0 16px;
-  border: 1px solid rgba(248, 113, 113, 0.26);
-  border-radius: 15px;
-  background: rgba(220, 38, 38, 0.14);
-  color: #fecaca;
+  gap: 10px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.86);
   font-size: 14px;
   font-weight: 900;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
-.nav-logout-button:hover {
+.nav-account-button:hover,
+.nav-account-button.is-open {
   color: #ffffff;
-  background: rgba(220, 38, 38, 0.28);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-account-icon {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+}
+
+.nav-account-label {
+  line-height: 1;
+}
+
+.nav-account-caret {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+}
+
+.nav-account-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 180px;
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.34);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: 0.16s ease;
+}
+
+.nav-account-menu.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.nav-account-menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+  font-weight: 900;
+  transition: 0.2s ease;
+}
+
+.nav-account-menu-item i {
+  width: 18px;
+  color: #fecaca;
+}
+
+.nav-account-menu-item:hover {
+  background: rgba(220, 38, 38, 0.18);
+  color: #ffffff;
 }
 
 .ico-btn {
@@ -210,7 +334,7 @@
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  z-index: 9999;
+  z-index: 10001;
   background:
     radial-gradient(circle at top left, rgba(220, 38, 38, 0.25), transparent 32%),
     radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.24), transparent 32%),
@@ -294,13 +418,13 @@
   transform: translateX(4px);
 }
 
-@media only screen and (max-width: 768px) {
-  .nav-container {
-    padding: 0 20px;
-  }
-
+@media only screen and (max-width: 960px) {
   .nav-desktop-menu,
   .nav-desktop-actions {
+    display: none;
+  }
+
+  .nav-icon-button {
     display: none;
   }
 
@@ -315,6 +439,21 @@
 
   .list {
     padding-bottom: 80px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .nav-wrapper {
+    padding: 10px 14px;
+  }
+
+  .nav-surface {
+    height: 54px;
+    padding: 0 14px;
+  }
+
+  .nav-brand-text {
+    font-size: 18px;
   }
 }
 
