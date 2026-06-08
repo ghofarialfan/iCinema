@@ -1,16 +1,21 @@
-body {
-  padding-top: 70px;
-  background:
+html {
+  background-color: #0f172a;
+}
+
+:root {
+  --icinema-app-background:
     radial-gradient(circle at top left, rgba(220, 38, 38, 0.22), transparent 32%),
     radial-gradient(circle at top right, rgba(37, 99, 235, 0.2), transparent 28%),
     linear-gradient(135deg, #0f172a 0%, #111827 48%, #1e293b 100%);
-  background-color: #0f172a;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  --icinema-app-background-color: #0f172a;
 }
 
-html {
-  background-color: #0f172a;
+body {
+  padding-top: 70px;
+  background: var(--icinema-app-background);
+  background-color: var(--icinema-app-background-color);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 .background-container {
