@@ -49,6 +49,7 @@ class AddMovieForm extends React.Component {
 
   componentWillUnmount() {
     this._isMounted = false;
+
     if (this.state.imagePreview) {
       URL.revokeObjectURL(this.state.imagePreview);
     }
@@ -70,27 +71,53 @@ class AddMovieForm extends React.Component {
     return errors[fieldName] || null;
   };
 
+  normalizeRating = (value) => {
+    const parsedValue = Number(value);
+
+    if (Number.isNaN(parsedValue)) return 0;
+
+    if (parsedValue < 0) return 9;
+
+    if (parsedValue > 9) return 0;
+
+    return parsedValue;
+  };
+
   handleChange = ({ currentTarget: input }) => {
     const data = { ...this.state.data };
-    data[input.name] = input.name === "rate" ? Number(input.value) : input.value;
+
+    if (input.name === "rate") {
+      data.rate = this.normalizeRating(input.value);
+    } else {
+      data[input.name] = input.value;
+    }
+
     this.setState({ data });
   };
 
   handleImageChange = ({ currentTarget: input }) => {
     const file = input.files[0];
+
     if (!file) return;
 
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+
     if (!allowedTypes.includes(file.type)) {
       this.setState({
-        errors: { ...this.state.errors, image: "Poster must be JPG or PNG" },
+        errors: {
+          ...this.state.errors,
+          image: "Poster must be JPG or PNG",
+        },
       });
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
       this.setState({
-        errors: { ...this.state.errors, image: "Poster must be 5MB or smaller" },
+        errors: {
+          ...this.state.errors,
+          image: "Poster must be 5MB or smaller",
+        },
       });
       return;
     }
@@ -111,6 +138,7 @@ class AddMovieForm extends React.Component {
 
   handleVideoChange = (e) => {
     const file = e.target.files[0];
+
     if (file) {
       this.setState({
         videoFile: file,
@@ -122,10 +150,16 @@ class AddMovieForm extends React.Component {
     e.preventDefault();
 
     const { data, imageFile } = this.state;
-    const { error } = movieSchema.validate(data);
+    const sanitizedData = {
+      ...data,
+      rate: this.normalizeRating(data.rate),
+    };
+
+    const { error } = movieSchema.validate(sanitizedData);
 
     if (error) {
       const errors = {};
+
       error.details.forEach((detail) => {
         errors[detail.path[0]] = detail.message;
       });
@@ -136,7 +170,10 @@ class AddMovieForm extends React.Component {
 
     if (!imageFile) {
       this.setState({
-        errors: { ...this.state.errors, image: "Cover image is required" },
+        errors: {
+          ...this.state.errors,
+          image: "Cover image is required",
+        },
         submitError: null,
       });
       return;
@@ -146,10 +183,11 @@ class AddMovieForm extends React.Component {
 
     try {
       const movieData = {
-        ...data,
+        ...sanitizedData,
         imageFile: this.state.imageFile,
         videoFile: this.state.videoFile,
       };
+
       await this.props.addMovie(movieData, this.props.history);
 
       if (this._isMounted) {
@@ -190,6 +228,7 @@ class AddMovieForm extends React.Component {
     if (window.confirm("Are you sure you want to delete this movie?")) {
       try {
         await this.props.deleteMovie(movieId);
+        await this.props.getMovies();
       } catch (err) {
         alert("Failed to delete movie");
       }
@@ -228,12 +267,12 @@ class AddMovieForm extends React.Component {
             </div>
           </section>
 
-          {/* Movie List Section */}
           <section className="add-movie-panel mb-5">
             <div className="add-movie-section-header">
               <span>
                 <i className="fas fa-list"></i>
               </span>
+
               <div>
                 <h3>Existing Movies</h3>
                 <p>List of all movies currently in the database.</p>
@@ -252,14 +291,19 @@ class AddMovieForm extends React.Component {
                         <th>Actions</th>
                       </tr>
                     </thead>
+
                     <tbody>
                       {movies.map((movie) => (
                         <tr key={movie._id}>
                           <td>{movie.title}</td>
                           <td>
-                            {movie.genre && Array.isArray(movie.genre) && movie.genre.length > 0
+                            {movie.genre &&
+                            Array.isArray(movie.genre) &&
+                            movie.genre.length > 0
                               ? movie.genre
-                                  .map((g) => (typeof g === "object" ? g.name : g))
+                                  .map((g) =>
+                                    typeof g === "object" ? g.name : g
+                                  )
                                   .filter(Boolean)
                                   .join(", ")
                               : "N/A"}
@@ -267,6 +311,7 @@ class AddMovieForm extends React.Component {
                           <td>{movie.rate}</td>
                           <td>
                             <button
+                              type="button"
                               className="manage-delete-btn"
                               onClick={() => this.handleDelete(movie._id)}
                             >
@@ -344,6 +389,9 @@ class AddMovieForm extends React.Component {
                     iconClass="fas fa-star"
                     value={rate}
                     type="number"
+                    min="0"
+                    max="9"
+                    step="1"
                   />
 
                   <Input
@@ -373,6 +421,7 @@ class AddMovieForm extends React.Component {
                 <div className="input-container">
                   <label htmlFor="image">Cover Poster</label>
                   <div className="input-icon fas fa-file-image" />
+
                   <input
                     id="image"
                     name="image"
@@ -381,11 +430,13 @@ class AddMovieForm extends React.Component {
                     className="form-control"
                     onChange={this.handleImageChange}
                   />
+
                   {this.getFieldError("image") && (
                     <div className="alert alert-danger">
                       {this.getFieldError("image")}
                     </div>
                   )}
+
                   {imagePreview && (
                     <img
                       src={imagePreview}
@@ -414,15 +465,18 @@ class AddMovieForm extends React.Component {
                   <label>
                     <i className="fas fa-video"></i> Movie Video File
                   </label>
+
                   <input
                     type="file"
                     accept="video/*"
                     onChange={this.handleVideoChange}
                     className="form-control"
                   />
+
                   {this.state.videoFile && (
                     <span className="file-selected-badge">
-                      <i className="fas fa-check"></i> {this.state.videoFile.name}
+                      <i className="fas fa-check"></i>{" "}
+                      {this.state.videoFile.name}
                     </span>
                   )}
                 </div>
@@ -445,7 +499,9 @@ class AddMovieForm extends React.Component {
 
                 <div>
                   <h3>Description</h3>
-                  <p>Write a short summary that helps users understand the movie.</p>
+                  <p>
+                    Write a short summary that helps users understand the movie.
+                  </p>
                 </div>
               </div>
 
