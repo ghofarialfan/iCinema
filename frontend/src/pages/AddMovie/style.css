@@ -430,6 +430,27 @@
 }
 
 /* FILE INPUT */
+.media-file-field,
+.add-movie-file-input {
+  position: relative;
+}
+
+.media-file-button-icon {
+  position: absolute;
+  left: 18px;
+  top: 54px;
+  z-index: 4;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fecaca;
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
+}
+
 .add-movie-page input[type="file"] {
   min-height: 52px !important;
   height: 52px !important;
@@ -437,18 +458,21 @@
   line-height: 52px !important;
   color: rgba(255, 255, 255, 0.75) !important;
   overflow: hidden !important;
+  border-radius: 16px !important;
 }
 
 .add-movie-page input[type="file"]::file-selector-button {
-  margin-right: 14px;
-  min-height: 50px;
-  padding: 0 16px;
+  width: 136px;
+  height: 52px;
+  margin: -1px 14px -1px -15px;
+  padding: 0 18px 0 36px;
   border: none;
-  border-radius: 10px;
+  border-radius: 16px 0 0 16px;
   background: linear-gradient(135deg, #dc2626, #991b1b);
   color: #ffffff;
   font-weight: 800;
-  line-height: 50px;
+  text-align: center;
+  line-height: 52px;
   vertical-align: middle;
   font-family: inherit;
   cursor: pointer;
@@ -465,11 +489,6 @@
   color: #ffffff;
   font-weight: 800;
   font-size: 14px;
-}
-
-.add-movie-file-input label i {
-  margin-right: 8px;
-  color: #dc2626;
 }
 
 .file-selected-badge {

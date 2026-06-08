@@ -683,7 +683,7 @@ class AddMovieForm extends React.Component {
               <section className="add-movie-panel">
                 <div className="add-movie-section-header">
                   <span>
-                    <i className="fas fa-photo-video"></i>
+                    <i className="fas fa-camera"></i>
                   </span>
 
                   <div>
@@ -692,9 +692,11 @@ class AddMovieForm extends React.Component {
                   </div>
                 </div>
 
-                <div className="input-container">
+                <div className="input-container media-file-field">
                   <label htmlFor="image">Cover Poster</label>
-                  <div className="input-icon fas fa-file-image" />
+                  <span className="media-file-button-icon" aria-hidden="true">
+                    <i className="fas fa-file-image"></i>
+                  </span>
 
                   <input
                     id="image"
@@ -737,9 +739,10 @@ class AddMovieForm extends React.Component {
                 />
 
                 <div className="add-movie-file-input">
-                  <label>
-                    <i className="fas fa-video"></i> Movie Video File
-                  </label>
+                  <label>Movie Video File</label>
+                  <span className="media-file-button-icon" aria-hidden="true">
+                    <i className="fas fa-file-video"></i>
+                  </span>
 
                   <input
                     type="file"
