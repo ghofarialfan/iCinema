@@ -24,17 +24,23 @@ function Navbar(props) {
   };
 
   const isAdmin = useMemo(() => {
-    return Boolean(props.user && props.user.role === "admin");
+    const role = props.user?.role || props.user?.user?.role;
+    return role === "admin";
   }, [props.user]);
 
   useEffect(() => {
     const onKeyDown = (event) => {
-      if (event.key === "Escape") setAccountOpen(false);
+      if (event.key === "Escape") {
+        setAccountOpen(false);
+        setIsOpen(false);
+      }
     };
 
     const onPointerDown = (event) => {
       if (!accountRef.current) return;
-      if (!accountRef.current.contains(event.target)) setAccountOpen(false);
+      if (!accountRef.current.contains(event.target)) {
+        setAccountOpen(false);
+      }
     };
 
     document.addEventListener("keydown", onKeyDown);
@@ -106,7 +112,11 @@ function Navbar(props) {
                     Login
                   </NavLink>
 
-                  <NavLink className="nav-primary-button" to="/register" onClick={closeNav}>
+                  <NavLink
+                    className="nav-primary-button"
+                    to="/register"
+                    onClick={closeNav}
+                  >
                     Register
                   </NavLink>
                 </>
@@ -114,7 +124,11 @@ function Navbar(props) {
                 <div className="nav-account" ref={accountRef}>
                   <button
                     type="button"
-                    className={accountOpen ? "nav-account-button is-open" : "nav-account-button"}
+                    className={
+                      accountOpen
+                        ? "nav-account-button is-open"
+                        : "nav-account-button"
+                    }
                     onClick={() => setAccountOpen((prev) => !prev)}
                     aria-haspopup="menu"
                     aria-expanded={accountOpen}
@@ -128,8 +142,20 @@ function Navbar(props) {
                     </span>
                   </button>
 
-                  <div className={accountOpen ? "nav-account-menu is-open" : "nav-account-menu"} role="menu">
-                    <button type="button" className="nav-account-menu-item" onClick={handleSignOut} role="menuitem">
+                  <div
+                    className={
+                      accountOpen
+                        ? "nav-account-menu is-open"
+                        : "nav-account-menu"
+                    }
+                    role="menu"
+                  >
+                    <button
+                      type="button"
+                      className="nav-account-menu-item"
+                      onClick={handleSignOut}
+                      role="menuitem"
+                    >
                       <i className="fas fa-sign-out-alt" aria-hidden="true"></i>
                       Logout
                     </button>
@@ -177,7 +203,11 @@ function Navbar(props) {
                 Login
               </NavLink>
 
-              <NavLink onClick={closeNav} activeClassName="active" to="/register">
+              <NavLink
+                onClick={closeNav}
+                activeClassName="active"
+                to="/register"
+              >
                 <i className="fas fa-user-plus"></i>
                 Register
               </NavLink>
@@ -189,14 +219,22 @@ function Navbar(props) {
             </Link>
           )}
 
-          {props.user && props.user.role === "admin" && (
+          {isAdmin && (
             <>
-              <NavLink onClick={closeNav} activeClassName="active" to="/movies/new">
+              <NavLink
+                onClick={closeNav}
+                activeClassName="active"
+                to="/movies/new"
+              >
                 <i className="fas fa-plus-circle"></i>
                 Manage Movie
               </NavLink>
 
-              <NavLink onClick={closeNav} activeClassName="active" to="/genres/new">
+              <NavLink
+                onClick={closeNav}
+                activeClassName="active"
+                to="/genres/new"
+              >
                 <i className="fas fa-tags"></i>
                 Manage Genre
               </NavLink>
