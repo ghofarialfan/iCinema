@@ -173,3 +173,117 @@
     border-radius: 17px;
   }
 }
+
+/* Fix Add Movie form layout after global input conflict */
+.add-movie-page .input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.add-movie-page .input-container label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffffff !important;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.add-movie-page .input-icon {
+  position: absolute;
+  left: 16px;
+  top: 43px;
+  z-index: 2;
+  color: #fecaca !important;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.add-movie-page .input-container input,
+.add-movie-page .input-container select,
+.add-movie-page .input-container textarea,
+.add-movie-page .form-control {
+  width: 100% !important;
+  min-height: 52px;
+  padding-left: 42px !important;
+  padding-right: 16px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  box-shadow: none !important;
+}
+
+.add-movie-page .input-container textarea,
+.add-movie-page textarea.form-control {
+  min-height: 150px;
+  padding-top: 14px !important;
+  resize: vertical;
+}
+
+.add-movie-page .input-container input::placeholder,
+.add-movie-page .input-container textarea::placeholder,
+.add-movie-page .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.add-movie-page .input-container input:focus,
+.add-movie-page .input-container select:focus,
+.add-movie-page .input-container textarea:focus,
+.add-movie-page .form-control:focus {
+  border-color: rgba(220, 38, 38, 0.75) !important;
+  background: rgba(255, 255, 255, 0.13) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.18) !important;
+}
+
+.add-movie-page .input-container .alert,
+.add-movie-page .alert-danger {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(220, 38, 38, 0.18);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  color: #fecaca;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.add-movie-page .add-movie-form,
+.add-movie-page .add-movie-grid,
+.add-movie-page .add-movie-panel,
+.add-movie-page .add-movie-submit-panel {
+  position: relative;
+  z-index: 2;
+}
+
+.add-movie-page .add-movie-panel {
+  overflow: hidden;
+}
+
+.add-movie-page input[type="file"] {
+  padding: 12px 14px !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.add-movie-page input[type="file"]::file-selector-button {
+  margin-right: 14px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.add-movie-page select {
+  appearance: auto;
+}
+
+@media (max-width: 991px) {
+  .add-movie-page .input-icon {
+    top: 43px;
+  }
+}
