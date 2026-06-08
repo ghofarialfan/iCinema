@@ -212,6 +212,39 @@
   border-bottom: none;
 }
 
+.manage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.manage-edit-btn {
+  min-height: 38px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #bfdbfe;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.manage-edit-btn:hover {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-1px);
+}
+
+.manage-edit-btn i {
+  font-size: 12px;
+}
+
 .manage-delete-btn {
   min-height: 38px;
   padding: 8px 16px;
@@ -478,6 +511,20 @@
   font-weight: 800;
 }
 
+.add-movie-success-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(34, 197, 94, 0.16);
+  border: 1px solid rgba(74, 222, 128, 0.26);
+  color: #bbf7d0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
 .add-movie-page .alert,
 .add-movie-page .alert-danger,
 .add-movie-page .invalid-feedback,
@@ -521,12 +568,36 @@
   font-weight: 600;
 }
 
+.add-movie-submit-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.manage-cancel-btn {
+  min-height: 48px;
+  min-width: 120px;
+  padding: 0 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.manage-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
 .add-movie-submit-button {
   min-width: 180px;
 }
 
-.add-movie-submit-button button,
-.add-movie-submit-panel button {
+.add-movie-submit-button button {
   width: 100%;
   min-height: 48px;
   border-radius: 16px !important;
@@ -538,14 +609,12 @@
   transition: 0.2s ease;
 }
 
-.add-movie-submit-button button:hover,
-.add-movie-submit-panel button:hover {
+.add-movie-submit-button button:hover {
   transform: translateY(-1px);
   box-shadow: 0 22px 50px rgba(220, 38, 38, 0.34);
 }
 
-.add-movie-submit-button button:disabled,
-.add-movie-submit-panel button:disabled {
+.add-movie-submit-button button:disabled {
   opacity: 0.65;
   cursor: not-allowed;
   transform: none;

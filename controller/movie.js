@@ -136,21 +136,68 @@ router.post(
  * Update a movie by its ID.
  * @route PATCH /api/movies/:movieId
  * @param {string} movieId - The ID of the movie to update.
- * @returns {object} A success message and the updated movie object.
+ * @returns {object} A success message and the list of movies.
  * @throws {Error} If the movie is not found, an error occurs while updating it, or validation fails.
  */
-router.patch("/:movieId", checkAuth, checkAdmin, async (req, res) => {
-  try {
-    const updateMovie = await Movie.findByIdAndUpdate(
-      { _id: req.params.movieId },
-      req.body,
-      { new: true }
-    );
-    res.status(200).json({ msg: "movie updated successfully", updateMovie });
-  } catch (err) {
-    res.status(500).json({ err: `Something went wrong: ${err}` });
+router.patch(
+  "/:movieId",
+  checkAuth,
+  checkAdmin,
+  handleUpload,
+  async (req, res) => {
+    try {
+      const { movieId } = req.params;
+      const { title, genre, rate, description, trailerLink, movieLength } =
+        req.body;
+
+      const existingMovie = await Movie.findById(movieId);
+      if (!existingMovie) {
+        return res.status(404).json({ message: "Movie not found" });
+      }
+
+      const duplicateTitle = await Movie.findOne({
+        title,
+        _id: { $ne: movieId },
+      });
+      if (duplicateTitle) {
+        return res.status(400).json({ message: "Movie already exists" });
+      }
+
+      const movieGenre = Array.isArray(genre) ? genre : genre ? [genre] : [];
+      const updates = {
+        title,
+        genre: movieGenre,
+        rate: Number(rate) || 0,
+        description,
+        trailerLink,
+        movieLength,
+      };
+
+      if (req.files?.image) {
+        updates.image =
+          req.files.image[0].path || req.files.image[0].url || "";
+      }
+      if (req.files?.video) {
+        updates.videoUrl =
+          req.files.video[0].path || req.files.video[0].url || "";
+      }
+
+      await Movie.findByIdAndUpdate(movieId, updates, { new: true });
+
+      const movies = await Movie.find().populate({
+        path: "genre",
+        select: "name",
+      });
+      res
+        .status(200)
+        .json({ message: "Movie updated successfully", movies });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ error: "Failed to update movie", message: error.message });
+    }
   }
-});
+);
 
 /**
  * Delete a movie by its ID.
