@@ -28,6 +28,11 @@ class AddMovieForm extends React.Component {
     submitError: null,
     imagePreview: null,
     videoFile: null,
+
+    isUploading: false,
+    uploadProgress: 0,
+    uploadStatus: "",
+    uploadSuccess: false,
   };
 
   componentDidMount() {
@@ -75,12 +80,41 @@ class AddMovieForm extends React.Component {
     const parsedValue = Number(value);
 
     if (Number.isNaN(parsedValue)) return 0;
-
     if (parsedValue < 0) return 9;
-
     if (parsedValue > 9) return 0;
 
     return parsedValue;
+  };
+
+  handleUploadProgress = (progressEvent) => {
+    if (!progressEvent.total) {
+      this.setState({
+        uploadProgress: 55,
+        uploadStatus: "Uploading movie assets...",
+      });
+      return;
+    }
+
+    const percentCompleted = Math.round(
+      (progressEvent.loaded * 100) / progressEvent.total
+    );
+
+    let uploadStatus = "Uploading movie data...";
+
+    if (percentCompleted < 25) {
+      uploadStatus = "Preparing poster and movie files...";
+    } else if (percentCompleted < 60) {
+      uploadStatus = "Uploading assets to server...";
+    } else if (percentCompleted < 95) {
+      uploadStatus = "Finalizing upload process...";
+    } else {
+      uploadStatus = "Processing movie data...";
+    }
+
+    this.setState({
+      uploadProgress: percentCompleted,
+      uploadStatus,
+    });
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -179,7 +213,14 @@ class AddMovieForm extends React.Component {
       return;
     }
 
-    this.setState({ errors: {}, submitError: null });
+    this.setState({
+      errors: {},
+      submitError: null,
+      isUploading: true,
+      uploadProgress: 0,
+      uploadStatus: "Preparing upload...",
+      uploadSuccess: false,
+    });
 
     try {
       const movieData = {
@@ -188,30 +229,50 @@ class AddMovieForm extends React.Component {
         videoFile: this.state.videoFile,
       };
 
-      await this.props.addMovie(movieData, this.props.history);
+      await this.props.addMovie(
+        movieData,
+        this.props.history,
+        this.handleUploadProgress
+      );
 
       if (this._isMounted) {
-        if (this.state.imagePreview) {
-          URL.revokeObjectURL(this.state.imagePreview);
-        }
-
         this.setState({
-          data: {
-            title: "",
-            genre: "",
-            rate: 0,
-            description: "",
-            image: "",
-            video: "",
-            trailerLink: "",
-            movieLength: "",
-          },
-          imageFile: null,
-          videoFile: null,
-          imagePreview: null,
-          errors: {},
-          submitError: null,
+          uploadProgress: 100,
+          uploadStatus: "Upload completed successfully.",
+          uploadSuccess: true,
         });
+
+        await this.props.getMovies();
+
+        setTimeout(() => {
+          if (!this._isMounted) return;
+
+          if (this.state.imagePreview) {
+            URL.revokeObjectURL(this.state.imagePreview);
+          }
+
+          this.setState({
+            data: {
+              title: "",
+              genre: this.props.genres?.[0]?._id || "",
+              rate: 0,
+              description: "",
+              image: "",
+              video: "",
+              trailerLink: "",
+              movieLength: "",
+            },
+            imageFile: null,
+            videoFile: null,
+            imagePreview: null,
+            errors: {},
+            submitError: null,
+            isUploading: false,
+            uploadProgress: 0,
+            uploadStatus: "",
+            uploadSuccess: false,
+          });
+        }, 900);
       }
     } catch (err) {
       const message =
@@ -220,7 +281,13 @@ class AddMovieForm extends React.Component {
         err?.message ||
         "Failed to add movie";
 
-      this.setState({ submitError: message });
+      this.setState({
+        submitError: message,
+        isUploading: false,
+        uploadProgress: 0,
+        uploadStatus: "",
+        uploadSuccess: false,
+      });
     }
   };
 
@@ -236,7 +303,16 @@ class AddMovieForm extends React.Component {
   };
 
   render() {
-    const { data, submitError, imagePreview } = this.state;
+    const {
+      data,
+      submitError,
+      imagePreview,
+      isUploading,
+      uploadProgress,
+      uploadStatus,
+      uploadSuccess,
+    } = this.state;
+
     const { title, genre, rate, description, trailerLink, movieLength } = data;
     const { genres = [], movies = [] } = this.props;
 
@@ -314,6 +390,7 @@ class AddMovieForm extends React.Component {
                               type="button"
                               className="manage-delete-btn"
                               onClick={() => this.handleDelete(movie._id)}
+                              disabled={isUploading}
                             >
                               <i className="fas fa-trash"></i> Delete
                             </button>
@@ -337,6 +414,61 @@ class AddMovieForm extends React.Component {
             <div className="add-movie-error-message">
               <i className="fas fa-exclamation-circle"></i>
               <span>{submitError}</span>
+            </div>
+          )}
+
+          {isUploading && (
+            <div
+              className={
+                uploadSuccess
+                  ? "upload-progress-card upload-success"
+                  : "upload-progress-card"
+              }
+            >
+              <div className="upload-progress-header">
+                <div className="upload-progress-icon">
+                  <i
+                    className={
+                      uploadSuccess
+                        ? "fas fa-check"
+                        : "fas fa-cloud-upload-alt"
+                    }
+                  ></i>
+                </div>
+
+                <div>
+                  <h4>
+                    {uploadSuccess ? "Movie Uploaded" : "Uploading Movie"}
+                  </h4>
+                  <p>{uploadStatus}</p>
+                </div>
+
+                <strong>{uploadProgress}%</strong>
+              </div>
+
+              <div className="upload-progress-track">
+                <div
+                  className="upload-progress-fill"
+                  style={{ width: `${uploadProgress}%` }}
+                ></div>
+              </div>
+
+              <div className="upload-progress-footer">
+                <span>
+                  <i className="fas fa-image"></i>
+                  Poster
+                </span>
+
+                <span>
+                  <i className="fas fa-video"></i>
+                  Movie File
+                </span>
+
+                <span>
+                  <i className="fas fa-database"></i>
+                  Database
+                </span>
+              </div>
             </div>
           )}
 
@@ -429,6 +561,7 @@ class AddMovieForm extends React.Component {
                     accept="image/jpeg,image/png,image/jpg"
                     className="form-control"
                     onChange={this.handleImageChange}
+                    disabled={isUploading}
                   />
 
                   {this.getFieldError("image") && (
@@ -471,6 +604,7 @@ class AddMovieForm extends React.Component {
                     accept="video/*"
                     onChange={this.handleVideoChange}
                     className="form-control"
+                    disabled={isUploading}
                   />
 
                   {this.state.videoFile && (
@@ -527,7 +661,11 @@ class AddMovieForm extends React.Component {
               </div>
 
               <div className="add-movie-submit-button">
-                <Button type="submit" label="Add Movie" />
+                <Button
+                  type="submit"
+                  label={isUploading ? "Uploading..." : "Add Movie"}
+                  disabled={isUploading}
+                />
               </div>
             </section>
           </form>
@@ -539,7 +677,8 @@ class AddMovieForm extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addMovie: (movie, history) => dispatch(addMovie(movie, history)),
+    addMovie: (movie, history, onUploadProgress) =>
+      dispatch(addMovie(movie, history, onUploadProgress)),
     getMovies: () => dispatch(getMovies()),
     deleteMovie: (movieId) => dispatch(deleteMovie(movieId)),
     getGenres: () => dispatch(getGenres()),
