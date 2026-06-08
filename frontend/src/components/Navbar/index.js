@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authAction";
@@ -6,6 +6,8 @@ import "./style.css";
 
 function Navbar(props) {
   const [isOpen, setIsOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef(null);
 
   const toggleNav = () => {
     setIsOpen((prevState) => !prevState);
@@ -13,6 +15,7 @@ function Navbar(props) {
 
   const closeNav = () => {
     setIsOpen(false);
+    setAccountOpen(false);
   };
 
   const handleSignOut = () => {
@@ -20,79 +23,143 @@ function Navbar(props) {
     props.signOut();
   };
 
+  const isAdmin = useMemo(() => {
+    return Boolean(props.user && props.user.role === "admin");
+  }, [props.user]);
+
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setAccountOpen(false);
+    };
+
+    const onPointerDown = (event) => {
+      if (!accountRef.current) return;
+      if (!accountRef.current.contains(event.target)) setAccountOpen(false);
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, []);
+
   return (
     <nav className="nav-wrapper">
-      <div className="nav-container">
-        <Link className="nav-brand" to="/movies" onClick={closeNav}>
-          <span className="nav-brand-icon">
-            <i className="fas fa-film"></i>
-          </span>
-          <span className="nav-brand-text">iCinema</span>
-        </Link>
+      <div className="nav-shell">
+        <div className="nav-surface">
+          <div className="nav-left">
+            <Link className="nav-brand" to="/movies" onClick={closeNav}>
+              <span className="nav-brand-icon" aria-hidden="true">
+                <i className="fas fa-film"></i>
+              </span>
+              <span className="nav-brand-text">iCinema</span>
+            </Link>
 
-        <div className="nav-desktop-menu">
-          <NavLink
-            exact
-            className="nav-link-item"
-            activeClassName="active"
-            to="/movies"
-          >
-            Movies
-          </NavLink>
-
-          {props.user && props.user.role === "admin" && (
-            <>
+            <div className="nav-desktop-menu" aria-label="Main navigation">
               <NavLink
+                exact
                 className="nav-link-item"
                 activeClassName="active"
-                to="/movies/new"
+                to="/movies"
               >
-                Manage Movie
+                <i className="fas fa-home" aria-hidden="true"></i>
+                Movies
               </NavLink>
 
-              <NavLink
-                className="nav-link-item"
-                activeClassName="active"
-                to="/genres/new"
-              >
-                Manage Genre
-              </NavLink>
-            </>
-          )}
-        </div>
+              {isAdmin && (
+                <>
+                  <NavLink
+                    className="nav-link-item"
+                    activeClassName="active"
+                    to="/movies/new"
+                  >
+                    <i className="fas fa-video" aria-hidden="true"></i>
+                    Manage Movie
+                  </NavLink>
 
-        <div className="nav-desktop-actions">
-          {!props.loggedIn ? (
-            <>
-              <NavLink
-                className="nav-action-link"
-                activeClassName="active"
-                to="/login"
-              >
-                Login
-              </NavLink>
+                  <NavLink
+                    className="nav-link-item"
+                    activeClassName="active"
+                    to="/genres/new"
+                  >
+                    <i className="fas fa-tags" aria-hidden="true"></i>
+                    Manage Genre
+                  </NavLink>
+                </>
+              )}
+            </div>
+          </div>
 
-              <NavLink className="nav-primary-button" to="/register">
-                Register
-              </NavLink>
-            </>
-          ) : (
-            <button className="nav-logout-button" onClick={handleSignOut}>
-              <i className="fas fa-sign-out-alt"></i>
-              Logout
+          <div className="nav-right">
+            <NavLink
+              className="nav-icon-button"
+              activeClassName="active"
+              to="/movies"
+              aria-label="Search movies"
+              onClick={closeNav}
+              title="Search"
+            >
+              <i className="fas fa-search" aria-hidden="true"></i>
+            </NavLink>
+
+            <div className="nav-desktop-actions">
+              {!props.loggedIn ? (
+                <>
+                  <NavLink
+                    className="nav-action-link"
+                    activeClassName="active"
+                    to="/login"
+                    onClick={closeNav}
+                  >
+                    Login
+                  </NavLink>
+
+                  <NavLink className="nav-primary-button" to="/register" onClick={closeNav}>
+                    Register
+                  </NavLink>
+                </>
+              ) : (
+                <div className="nav-account" ref={accountRef}>
+                  <button
+                    type="button"
+                    className={accountOpen ? "nav-account-button is-open" : "nav-account-button"}
+                    onClick={() => setAccountOpen((prev) => !prev)}
+                    aria-haspopup="menu"
+                    aria-expanded={accountOpen}
+                  >
+                    <span className="nav-account-icon" aria-hidden="true">
+                      <i className="fas fa-user"></i>
+                    </span>
+                    <span className="nav-account-label">Akun</span>
+                    <span className="nav-account-caret" aria-hidden="true">
+                      <i className="fas fa-chevron-down"></i>
+                    </span>
+                  </button>
+
+                  <div className={accountOpen ? "nav-account-menu is-open" : "nav-account-menu"} role="menu">
+                    <button type="button" className="nav-account-menu-item" onClick={handleSignOut} role="menuitem">
+                      <i className="fas fa-sign-out-alt" aria-hidden="true"></i>
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <button
+              id="burger"
+              className={isOpen ? "ico-btn is-active" : "ico-btn"}
+              onClick={toggleNav}
+              type="button"
+              aria-label="Toggle navigation"
+            >
+              <span className="ico-btn__burger"></span>
             </button>
-          )}
+          </div>
         </div>
-
-        <button
-          id="burger"
-          className={isOpen ? "ico-btn is-active" : "ico-btn"}
-          onClick={toggleNav}
-          type="button"
-          aria-label="Toggle navigation"
-        >
-          <span className="ico-btn__burger"></span>
-        </button>
       </div>
 
       <div className={isOpen ? "slider active" : "slider"}>
