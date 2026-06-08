@@ -1,5 +1,6 @@
 .movies-page {
   min-height: 100vh;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at top left, rgba(220, 38, 38, 0.22), transparent 32%),
     radial-gradient(circle at top right, rgba(37, 99, 235, 0.2), transparent 28%),
@@ -246,6 +247,7 @@
 
 .movies-main {
   min-width: 0;
+  overflow: visible;
 }
 
 .movies-search-card {
@@ -317,6 +319,7 @@
   margin-top: 20px;
   padding: 22px;
   border-radius: 28px;
+  overflow: visible;
 }
 
 .movies-empty-state {
@@ -491,5 +494,9 @@
   .movies-result-summary,
   .movies-table-wrapper {
     border-radius: 22px;
+  }
+
+  .movies-table-wrapper {
+    padding: 18px 12px;
   }
 }
