@@ -11,15 +11,11 @@ iCinema adalah platform manajemen katalog film berbasis web yang dibangun dengan
 
 | Halaman Utama (Katalog) | Dashboard Admin (Manage Movie) |
 | :---: | :---: |
-| <img width="1916" height="912" alt="Screenshot 2026-06-09 235737" src="https://github.com/user-attachments/assets/d78119cf-3ff1-4562-8efa-25f9006546dc" />
-| <img width="762" height="822" alt="Screenshot 2026-06-09 235911" src="https://github.com/user-attachments/assets/56d169d5-7439-4458-866c-b9670da6ecd8" />
-|
+| <img width="1916" height="912" alt="Screenshot 2026-06-09 235737" src="https://github.com/user-attachments/assets/d78119cf-3ff1-4562-8efa-25f9006546dc" />| <img width="762" height="822" alt="Screenshot 2026-06-09 235911" src="https://github.com/user-attachments/assets/56d169d5-7439-4458-866c-b9670da6ecd8" />|
 
 | Interaksi Kartu | Pemutar Video |
 | :---: | :---: |
-| <img width="888" height="881" alt="Screenshot 2026-06-09 235956" src="https://github.com/user-attachments/assets/d6d72811-7566-4c45-9bb2-0e731781eb08" />
-| <img width="617" height="358" alt="Screenshot 2026-06-10 000121" src="https://github.com/user-attachments/assets/dcee4861-99e8-4e75-a040-7db9f4fae2d1" />
-|
+| <img width="888" height="881" alt="Screenshot 2026-06-09 235956" src="https://github.com/user-attachments/assets/d6d72811-7566-4c45-9bb2-0e731781eb08" />| <img width="617" height="358" alt="Screenshot 2026-06-10 000121" src="https://github.com/user-attachments/assets/dcee4861-99e8-4e75-a040-7db9f4fae2d1" />|
 
 ---
 
