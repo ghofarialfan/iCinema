@@ -4,9 +4,19 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - 'README.md'
+      - 'documentation/**'
+      - '.gitignore'
+      - 'LICENSE'
   push:
     branches:
       - main
+    paths-ignore:
+      - 'README.md'
+      - 'documentation/**'
+      - '.gitignore'
+      - 'LICENSE'
 
 concurrency:
   group: ci-${{ github.repository }}-${{ github.ref }}
