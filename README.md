@@ -39,7 +39,7 @@ Dikonfigurasi dalam [cd.yml](file:///d:/BARU/KULIAH/6/PSO/FP/iCinema/.github/wor
 ### **Integrasi Cloud Services**
 Aplikasi ini berjalan dengan memanfaatkan ekosistem cloud yang saling terhubung:
 - **Hosting**: Azure App Service (Platform-as-a-Service).
-- **Database**: MongoDB Atlas (Database-as-a-Service).
+- **Database**: MongoDB (Cosmos DB) (Database-as-a-Service).
 - **Media Storage**: Cloudinary (Media Management-as-a-Service).
 - **Automation**: GitHub Actions (Automation Server).
 
@@ -50,26 +50,38 @@ Aplikasi ini berjalan dengan memanfaatkan ekosistem cloud yang saling terhubung:
 
 ---
 
-## 🛠️ Bagaimana Aplikasi ini Dibuat? (Proses Pengembangan)
+## 🛠️ Bagaimana Aplikasi ini Dibuat? (Arsitektur Teknis)
 
-iCinema dikembangkan dengan metodologi pengembangan web modern:
+iCinema dibangun menggunakan arsitektur **MERN Stack** yang dimodernisasi, dengan pemisahan kekhawatiran (*Separation of Concerns*) yang jelas antara logika server dan antarmuka pengguna.
 
-### **Arsitektur Perangkat Lunak**
-- **MERN Stack**: Dipilih karena efisiensi JavaScript di kedua sisi (Frontend & Backend).
-- **Modular Design**: Kode dibagi menjadi komponen-komponen kecil yang dapat digunakan kembali (*reusable components*), memudahkan pemeliharaan jangka panjang.
+### **1. Arsitektur Backend (Node.js & Express)**
+Backend iCinema dirancang sebagai API server yang skalabel dan aman untuk menangani seluruh logika bisnis.
 
-### **Integrasi Pihak Ketiga**
-- **Cloudinary API**: Digunakan untuk mengatasi masalah penyimpanan server lokal. Dengan Cloudinary, beban server berkurang karena aset gambar dan video di-host secara eksternal dengan optimasi otomatis.
-- **GitHub Actions (CI/CD)**: Kami membangun alur kerja otomatis:
-    - **Linting & Build**: Memastikan kode bersih sebelum di-deploy.
-    - **Auto-Deploy**: Setiap perubahan pada branch `main` akan otomatis di-deploy ke **Azure App Service**.
+- **Modular Controller**: Logika API diorganisir dalam folder `controller/` (seperti [movie.js](file:///d:/BARU/KULIAH/6/PSO/FP/iCinema/controller/movie.js), [user.js](file:///d:/BARU/KULIAH/6/PSO/FP/iCinema/controller/user.js)). Setiap rute memiliki tanggung jawab spesifik, membuat kode lebih mudah dipelihara.
+- **Data Modeling (Mongoose)**: Menggunakan Mongoose untuk mendefinisikan skema data yang ketat di MongoDB. Ini mencakup relasi antara film dan genre, serta enkripsi password pengguna menggunakan **Bcrypt**.
+- **Middleware Security**: 
+    - **JWT (JSON Web Token)**: Digunakan untuk autentikasi sesi pengguna yang *stateless*.
+    - **Admin Guard**: Middleware [checkAdmin.js](file:///d:/BARU/KULIAH/6/PSO/FP/iCinema/middleware/checkAdmin.js) memastikan fungsi CRUD (seperti tambah/hapus film) hanya dapat diakses oleh akun dengan otoritas Administrator.
+- **Media Management**: Integrasi backend dengan **Cloudinary API** melalui middleware `Multer`. Sistem ini mampu menangani unggahan file ganda (gambar & video) secara asinkron tanpa membebani performa server utama.
 
-### **Teknologi Utama:**
-- **Frontend**: React.js, Redux, Redux-Thunk, Joi (Validation), Bootstrap.
-- **Backend**: Node.js, Express, Mongoose, Multer, Bcrypt, JWT.
-- **Database**: MongoDB Atlas.
+### **2. Arsitektur Frontend (React & Redux)**
+Frontend iCinema dibangun sebagai **Single Page Application (SPA)** yang responsif dan interaktif.
 
----
+- **State Management (Redux)**: 
+    - Menggunakan **Redux** sebagai sumber kebenaran tunggal (*Single Source of Truth*). 
+    - **Redux-Thunk** digunakan untuk menangani aksi asinkron, seperti memanggil API backend dan memperbarui UI secara otomatis saat data film bertambah atau dihapus.
+- **Dynamic UI Components**: 
+    - Komponen UI dirancang secara modular (reusable). Contohnya, komponen `MovieCard` yang memiliki logika animasi CSS untuk fitur *flipping*.
+    - **Video Player Integration**: Mengintegrasikan elemen HTML5 Video yang terhubung langsung ke URL streaming Cloudinary di bagian belakang kartu film.
+- **Form Handling & Validation**:
+    - Menggunakan library **Joi** ([schema.js](file:///d:/BARU/KULIAH/6/PSO/FP/iCinema/frontend/src/pages/AddMovie/schema.js)) untuk validasi skema input yang kompleks (seperti rating minimal 0-9 dan kewajiban unggah file).
+    - Fitur **Image Preview** memberikan umpan balik visual instan kepada pengguna sebelum data dikirim ke server.
+- **Responsive Styling**: Menggunakan kombinasi **Bootstrap** dan **Custom CSS** dengan teknik *Flexbox* dan *Grid* untuk memastikan aplikasi tampil sempurna di perangkat seluler maupun desktop.
+
+### **Prinsip Pengembangan yang Diterapkan:**
+- **RESTful API Design**: Mengikuti standar metode HTTP (GET, POST, PATCH, DELETE) yang bersih dan konsisten.
+- **Asynchronous Programming**: Memanfaatkan `async/await` di seluruh aplikasi untuk memastikan UI tidak pernah *freezing* saat memproses data besar atau unggahan media.
+- **Environment Safety**: Memisahkan konfigurasi sensitif menggunakan variabel lingkungan (`.env`) di backend dan rahasia CI/CD di GitHub.
 
 ## 🚀 Memulai (Setup Lokal)
 
