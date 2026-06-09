@@ -1,4 +1,4 @@
-<img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/432fed33-80b8-4f21-871b-96f7077b0fc3" /><img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/10abc692-f828-4af4-a241-86c77a67ebf2" /># 🎬 iCinema: Modern Full-Stack Movie Management System
+<img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/10abc692-f828-4af4-a241-86c77a67ebf2" /># 🎬 iCinema: Modern Full-Stack Movie Management System
 
 iCinema adalah platform manajemen katalog film berbasis web yang dirancang untuk memberikan pengalaman interaktif bagi pengguna dalam menjelajahi film, serta menyediakan alat kontrol yang kuat bagi administrator. Aplikasi ini mengintegrasikan teknologi cloud modern untuk menangani aset media secara efisien.
 
@@ -17,29 +17,36 @@ iCinema adalah platform manajemen katalog film berbasis web yang dirancang untuk
 
 ---
 
-## 🧐 Apa itu iCinema? (Konsep Aplikasi)
-iCinema bukan sekadar daftar film statis. Ini adalah ekosistem di mana:
-- **Pengguna** dapat merasakan antarmuka yang dinamis dengan kartu film yang bisa berputar (flip) untuk melihat detail tanpa berpindah halaman.
-- **Administrator** memiliki kendali penuh atas konten, mulai dari penambahan film, kategori (genre), hingga pengelolaan file video film secara langsung.
+## ⚙️ Bagaimana Aplikasi ini Berjalan? (Deployment & Operasional)
 
----
+iCinema menggunakan pipeline **CI/CD (Continuous Integration & Continuous Deployment)** otomatis untuk memastikan aplikasi selalu dalam kondisi stabil dan terbarui di server produksi.
 
-## ⚙️ Bagaimana Aplikasi ini Berjalan? (Mekanisme Teknis)
+### **Alur Deployment Otomatis**
+Setiap kali pengembang melakukan `git push` ke branch `main`, GitHub Actions akan menjalankan serangkaian proses otomatis yang terbagi menjadi dua tahap utama:
 
-Aplikasi ini beroperasi dengan mengandalkan komunikasi antara tiga entitas utama:
+#### **1. Tahap CI (Continuous Integration)**
+Dikonfigurasi dalam [ci.yml](file:///d:/BARU/KULIAH/6/PSO/FP/iCinema/.github/workflows/ci.yml):
+- **Build Frontend**: GitHub Runner menginstal dependensi Node.js dan menjalankan perintah `npm run build` pada folder frontend. Ini menghasilkan file statis yang dioptimalkan (HTML, CSS, JS).
+- **Packaging**: File build frontend digabungkan dengan kode backend (controller, models, middleware, dll) ke dalam sebuah folder `deployment-package`.
+- **Artifact Upload**: Folder tersebut diunggah sebagai **Artifact**. Ini adalah paket siap pakai yang menjamin kode yang di-deploy adalah kode yang sudah berhasil melalui tahap build.
 
-### **1. Alur Data & API**
-- Saat Admin menambahkan film, data teks (judul, deskripsi) dan data biner (poster, video) dikirim secara bersamaan menggunakan **Multipart Form Data**.
-- **Backend (Express)** menerima file tersebut melalui middleware **Multer** dan secara otomatis meneruskannya ke **Cloudinary Storage**.
-- Cloudinary memberikan respons berupa URL HTTPS permanen yang kemudian disimpan ke **MongoDB**.
+#### **2. Tahap CD (Continuous Deployment)**
+Dikonfigurasi dalam [cd.yml](file:///d:/BARU/KULIAH/6/PSO/FP/iCinema/.github/workflows/cd.yml):
+- **Environment Setup**: GitHub Actions mengambil rahasia (Secrets) seperti `MONGODB_URL`, `JWT_SECRET`, dan kredensial `CLOUDINARY` untuk membuat file `.env` secara dinamis di server.
+- **Deployment ke Azure**: Menggunakan **Azure WebApps Deploy**, paket artifact dikirim ke **Azure App Service**.
+- **Startup**: Azure menjalankan `server.js`, menghubungkan ke database cloud, dan aplikasi iCinema langsung dapat diakses oleh pengguna melalui internet.
 
-### **2. State Management (Redux)**
-- Frontend tidak langsung meminta data ke database. Ia berbicara kepada **Redux Store**. 
-- Setiap perubahan data (tambah/hapus) akan memicu *action* yang memperbarui state global, sehingga UI berubah secara instan tanpa perlu memuat ulang seluruh halaman (Single Page Application).
+### **Integrasi Cloud Services**
+Aplikasi ini berjalan dengan memanfaatkan ekosistem cloud yang saling terhubung:
+- **Hosting**: Azure App Service (Platform-as-a-Service).
+- **Database**: MongoDB Atlas (Database-as-a-Service).
+- **Media Storage**: Cloudinary (Media Management-as-a-Service).
+- **Automation**: GitHub Actions (Automation Server).
 
-### **3. Keamanan & Autentikasi**
-- Setiap permintaan sensitif dilindungi oleh **JWT (JSON Web Token)**. 
-- Sistem membedakan akses antara pengguna biasa (hanya melihat) dan Admin (bisa mengelola) melalui middleware **Role-Based Access Control (RBAC)** di sisi server.
+### **Keuntungan Alur Ini:**
+- **Zero Downtime**: Proses deployment diatur sedemikian rupa agar aplikasi tetap bisa diakses selama update berlangsung.
+- **Consistency**: Kode yang berjalan di komputer pengembang akan sama persis dengan yang berjalan di server Azure karena melalui proses build yang terstandarisasi.
+- **Security**: Kredensial sensitif (API Keys, Database URL) tidak pernah disimpan dalam kode (hardcoded), melainkan dikelola dengan aman melalui **GitHub Secrets**.
 
 ---
 
