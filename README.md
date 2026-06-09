@@ -72,7 +72,14 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
 ---
 
 ## 📝 Kontributor
+<<<<<<< HEAD
 - **Ghofari Alfan** - *Full Stack Developer & DevOps*
 
 ---
 *Proyek ini dikembangkan sebagai tugas besar untuk mata kuliah Pengembangan Sistem Orientasi Objek (PSO).*
+=======
+- **Ghofari Alfan** - 
+
+---
+*Proyek ini dikembangkan sebagai tugas besar untuk mata kuliah PSO.*
+>>>>>>> c5947c3853314afa3e3b4672d2745423dddad9ca
