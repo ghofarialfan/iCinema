@@ -1,4 +1,4 @@
-# 🎬 iCinema: Modern Full-Stack Movie Management System
+<img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/432fed33-80b8-4f21-871b-96f7077b0fc3" /><img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/10abc692-f828-4af4-a241-86c77a67ebf2" /># 🎬 iCinema: Modern Full-Stack Movie Management System
 
 iCinema adalah platform manajemen katalog film berbasis web yang dirancang untuk memberikan pengalaman interaktif bagi pengguna dalam menjelajahi film, serta menyediakan alat kontrol yang kuat bagi administrator. Aplikasi ini mengintegrasikan teknologi cloud modern untuk menangani aset media secara efisien.
 
@@ -9,11 +9,15 @@ iCinema adalah platform manajemen katalog film berbasis web yang dirancang untuk
 
 | Halaman Utama (Katalog) | Dashboard Admin (Manage Movie) |
 | :---: | :---: |
-| ![Main Page](documentation/main-page.png) | ![Admin Page](documentation/admin-page.png) |
+| ![Main Page](<img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/6929d050-fee0-4943-a6cf-9ac203410d67" />
+) | ![Admin Page](<img width="762" height="822" alt="image" src="https://github.com/user-attachments/assets/f6a17d81-c002-431e-be1c-83a6bea42498" />
+) |
 
-| Interaksi Kartu (Flip) | Pemutar Video |
+| Interaksi Saat Memilih Film | Pemutar Video |
 | :---: | :---: |
-| ![Flip Card](documentation/flip-card.png) | ![Video Player](documentation/video-player.png) |
+| ![Interaksi Saat Memilih Film](<img width="888" height="881" alt="image" src="https://github.com/user-attachments/assets/1f909072-dd9f-4b33-93d3-d5871c550bbd" />
+) | ![Video Player](<img width="617" height="358" alt="image" src="https://github.com/user-attachments/assets/a7199b9a-9f93-45dc-b040-5f6234239717" />
+) |
 
 ---
 
