@@ -1,100 +1,73 @@
-# iCinema - Modern Movie Management System
+# 🎬 iCinema: Modern Full-Stack Movie Management System
 
-iCinema adalah aplikasi web manajemen film berbasis MERN Stack yang memungkinkan pengguna untuk menjelajahi katalog film dan administrator untuk mengelola konten dengan fitur unggahan media terintegrasi ke Cloudinary.
+iCinema adalah platform manajemen katalog film berbasis web yang dirancang untuk memberikan pengalaman interaktif bagi pengguna dalam menjelajahi film, serta menyediakan alat kontrol yang kuat bagi administrator. Aplikasi ini mengintegrasikan teknologi cloud modern untuk menangani aset media secara efisien.
 
-## 🚀 Fitur Utama
+---
 
-- **Katalog Film Interaktif**: Tampilan kartu film dengan fitur *flipping* untuk melihat deskripsi dan memutar video.
-- **Manajemen Konten (Admin)**: 
-  - CRUD (Create, Read, Update, Delete) Film dan Genre.
-  - Unggah Poster (Gambar) dan File Film (Video) langsung ke Cloudinary.
-- **Sistem Autentikasi**: Login dan Register menggunakan JWT (JSON Web Token) dengan Role-Based Access Control (Admin & User).
-- **Pencarian & Filter**: Filter film berdasarkan genre dan rating, serta fitur pencarian judul.
-- **Responsive Design**: Dioptimalkan untuk berbagai ukuran layar (Desktop & Mobile).
-- **Otomatisasi CI/CD**: Terintegrasi dengan GitHub Actions untuk pengujian dan penyebaran otomatis ke Azure.
+## 📸 Dokumentasi Visual
+*(Tempatkan tangkapan layar aplikasi Anda di sini untuk memperkuat dokumentasi)*
 
-## 🛠️ Teknologi yang Digunakan
+| Halaman Utama (Katalog) | Dashboard Admin (Manage Movie) |
+| :---: | :---: |
+| ![Main Page](documentation/main-page.png) | ![Admin Page](documentation/admin-page.png) |
 
-### **Frontend**
-- **React.js**: Library UI utama.
-- **Redux & Redux-Thunk**: State management global.
-- **Joi**: Validasi skema di sisi klien.
-- **Bootstrap & CSS3**: Styling dan tata letak.
+| Interaksi Kartu (Flip) | Pemutar Video |
+| :---: | :---: |
+| ![Flip Card](documentation/flip-card.png) | ![Video Player](documentation/video-player.png) |
 
-### **Backend**
-- **Node.js & Express**: Lingkungan server dan framework web.
-- **MongoDB & Mongoose**: Database NoSQL dan pemodelan data.
-- **Multer & Cloudinary Storage**: Manajemen unggahan file media.
-- **Bcrypt.js**: Hashing password untuk keamanan.
+---
 
-### **DevOps**
-- **GitHub Actions**: Alur kerja CI/CD.
-- **Azure App Service**: Hosting aplikasi.
+## 🧐 Apa itu iCinema? (Konsep Aplikasi)
+iCinema bukan sekadar daftar film statis. Ini adalah ekosistem di mana:
+- **Pengguna** dapat merasakan antarmuka yang dinamis dengan kartu film yang bisa berputar (flip) untuk melihat detail tanpa berpindah halaman.
+- **Administrator** memiliki kendali penuh atas konten, mulai dari penambahan film, kategori (genre), hingga pengelolaan file video film secara langsung.
 
-## 📦 Struktur Proyek
+---
 
-```text
-iCinema/
-├── controller/          # Logika API Backend
-├── models/              # Skema Database Mongoose
-├── middleware/          # Autentikasi & Proteksi Rute
-├── utils/               # Utilitas (Cloudinary, MongoDB Config)
-├── frontend/            # Aplikasi React (Frontend)
-│   ├── src/
-│   │   ├── actions/     # Redux Actions
-│   │   ├── components/  # Komponen UI Reusable
-│   │   └── pages/       # Halaman Utama (Movies, AddMovie, dll)
-└── .github/workflows/   # Konfigurasi CI/CD
-```
+## ⚙️ Bagaimana Aplikasi ini Berjalan? (Mekanisme Teknis)
 
-## ⚙️ Persiapan Lokal
+Aplikasi ini beroperasi dengan mengandalkan komunikasi antara tiga entitas utama:
 
-### 1. Prasyarat
-- Node.js installed
-- MongoDB account (Atlas)
-- Cloudinary account
+### **1. Alur Data & API**
+- Saat Admin menambahkan film, data teks (judul, deskripsi) dan data biner (poster, video) dikirim secara bersamaan menggunakan **Multipart Form Data**.
+- **Backend (Express)** menerima file tersebut melalui middleware **Multer** dan secara otomatis meneruskannya ke **Cloudinary Storage**.
+- Cloudinary memberikan respons berupa URL HTTPS permanen yang kemudian disimpan ke **MongoDB**.
 
-### 2. Konfigurasi Environment
-Buat file `.env` di direktori root dan isi variabel berikut:
-```env
-MONGODB_URL=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-```
+### **2. State Management (Redux)**
+- Frontend tidak langsung meminta data ke database. Ia berbicara kepada **Redux Store**. 
+- Setiap perubahan data (tambah/hapus) akan memicu *action* yang memperbarui state global, sehingga UI berubah secara instan tanpa perlu memuat ulang seluruh halaman (Single Page Application).
 
-### 3. Instalasi
-```bash
-# Instal dependensi backend
-npm install
+### **3. Keamanan & Autentikasi**
+- Setiap permintaan sensitif dilindungi oleh **JWT (JSON Web Token)**. 
+- Sistem membedakan akses antara pengguna biasa (hanya melihat) dan Admin (bisa mengelola) melalui middleware **Role-Based Access Control (RBAC)** di sisi server.
 
-# Instal dependensi frontend
-cd frontend
-npm install
-```
+---
 
-### 4. Menjalankan Aplikasi
-```bash
-# Jalankan backend (di root)
-npm run dev
+## 🛠️ Bagaimana Aplikasi ini Dibuat? (Proses Pengembangan)
 
-# Jalankan frontend (di folder frontend)
-npm start
-```
+iCinema dikembangkan dengan metodologi pengembangan web modern:
 
-## 🚢 Deployment
+### **Arsitektur Perangkat Lunak**
+- **MERN Stack**: Dipilih karena efisiensi JavaScript di kedua sisi (Frontend & Backend).
+- **Modular Design**: Kode dibagi menjadi komponen-komponen kecil yang dapat digunakan kembali (*reusable components*), memudahkan pemeliharaan jangka panjang.
 
-Proyek ini dikonfigurasi untuk deployment otomatis ke Azure melalui GitHub Actions. Pastikan untuk mengatur **GitHub Secrets** berikut di repositori Anda:
-- `MONGODB_URL`
-- `JWT_SECRET`
-- `CLOUDINARY_CLOUD_NAME`
-- `CLOUDINARY_API_KEY`
-- `CLOUDINARY_API_SECRET`
-- `AZURE_WEBAPP_PUBLISH_PROFILE`
+### **Integrasi Pihak Ketiga**
+- **Cloudinary API**: Digunakan untuk mengatasi masalah penyimpanan server lokal. Dengan Cloudinary, beban server berkurang karena aset gambar dan video di-host secara eksternal dengan optimasi otomatis.
+- **GitHub Actions (CI/CD)**: Kami membangun alur kerja otomatis:
+    - **Linting & Build**: Memastikan kode bersih sebelum di-deploy.
+    - **Auto-Deploy**: Setiap perubahan pada branch `main` akan otomatis di-deploy ke **Azure App Service**.
 
-## 🤝 Kontribusi
-Kontribusi selalu terbuka! Silakan lakukan *fork* pada repositori ini dan buat *pull request* dengan deskripsi perubahan Anda.
+### **Teknologi Utama:**
+- **Frontend**: React.js, Redux, Redux-Thunk, Joi (Validation), Bootstrap.
+- **Backend**: Node.js, Express, Mongoose, Multer, Bcrypt, JWT.
+- **Database**: MongoDB Atlas.
 
-## 📄 Lisensi
-Didistribusikan di bawah Lisensi MIT. Lihat `LICENSE` untuk informasi lebih lanjut.
+---
+
+## 🚀 Memulai (Setup Lokal)
+
+1. **Clone & Install**:
+   ```bash
+   git clone https://github.com/ghofarialfan/iCinema.git
+   npm install
+   cd frontend && npm install
