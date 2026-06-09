@@ -5,19 +5,15 @@ iCinema adalah platform manajemen katalog film berbasis web yang dirancang untuk
 ---
 
 ## 📸 Dokumentasi Visual
-*(Tempatkan tangkapan layar aplikasi Anda di sini untuk memperkuat dokumentasi)*
 
 | Halaman Utama (Katalog) | Dashboard Admin (Manage Movie) |
 | :---: | :---: |
-| ![Main Page](<img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/6929d050-fee0-4943-a6cf-9ac203410d67" />
-) | ![Admin Page](<img width="762" height="822" alt="image" src="https://github.com/user-attachments/assets/f6a17d81-c002-431e-be1c-83a6bea42498" />
-) |
+| ![Main Page](<img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/6929d050-fee0-4943-a6cf-9ac203410d67" /> | ![Admin Page](<img width="762" height="822" alt="image" src="https://github.com/user-attachments/assets/f6a17d81-c002-431e-be1c-83a6bea42498" />
 
 | Interaksi Saat Memilih Film | Pemutar Video |
 | :---: | :---: |
-| ![Interaksi Saat Memilih Film](<img width="888" height="881" alt="image" src="https://github.com/user-attachments/assets/1f909072-dd9f-4b33-93d3-d5871c550bbd" />
-) | ![Video Player](<img width="617" height="358" alt="image" src="https://github.com/user-attachments/assets/a7199b9a-9f93-45dc-b040-5f6234239717" />
-) |
+| ![Interaksi Saat Memilih Film](<img width="888" height="881" alt="image" src="https://github.com/user-attachments/assets/1f909072-dd9f-4b33-93d3-d5871c550bbd" | ![Video Player](<img width="617" height="358" alt="image" src="https://github.com/user-attachments/assets/a7199b9a-9f93-45dc-b040-5f6234239717" />
+
 
 ---
 
