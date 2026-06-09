@@ -124,9 +124,9 @@ npm run dev
 ---
 
 ## 📝 Kontributor
-- **ferdinan valliandra** -
-- **Faiz Roihan** -
-- **Alfan Ghofari** -
+- **ferdinan valliandra** 
+- **Faiz Roihan** 
+- **Alfan Ghofari** 
 
 ---
-*Proyek ini dikembangkan sebagai tugas besar untuk mata kuliah Pengembangan Sistem Orientasi Objek (PSO).*
+*Proyek ini dikembangkan sebagai tugas besar untuk mata kuliah PSO.*
