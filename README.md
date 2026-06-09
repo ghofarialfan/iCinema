@@ -124,7 +124,9 @@ npm run dev
 ---
 
 ## 📝 Kontributor
-- **Ghofari Alfan** - *Full Stack Developer & DevOps*
+- **ferdinan valliandra** -
+- **Faiz Roihan** -
+- **Alfan Ghofari** -
 
 ---
 *Proyek ini dikembangkan sebagai tugas besar untuk mata kuliah Pengembangan Sistem Orientasi Objek (PSO).*
