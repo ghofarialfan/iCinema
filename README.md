@@ -71,7 +71,7 @@ Frontend iCinema dibangun sebagai **Single Page Application (SPA)** yang respons
     - Menggunakan **Redux** sebagai sumber kebenaran tunggal (*Single Source of Truth*). 
     - **Redux-Thunk** digunakan untuk menangani aksi asinkron, seperti memanggil API backend dan memperbarui UI secara otomatis saat data film bertambah atau dihapus.
 - **Dynamic UI Components**: 
-    - Komponen UI dirancang secara modular (reusable). Contohnya, komponen `MovieCard` yang memiliki logika animasi CSS untuk fitur *flipping*.
+    - Komponen UI dirancang secara modular (reusable). Contohnya, komponen `MovieCard` yang memiliki animasi saat dihover.
     - **Video Player Integration**: Mengintegrasikan elemen HTML5 Video yang terhubung langsung ke URL streaming Cloudinary di bagian belakang kartu film.
 - **Form Handling & Validation**:
     - Menggunakan library **Joi** ([schema.js](file:///d:/BARU/KULIAH/6/PSO/FP/iCinema/frontend/src/pages/AddMovie/schema.js)) untuk validasi skema input yang kompleks (seperti rating minimal 0-9 dan kewajiban unggah file).
@@ -82,11 +82,3 @@ Frontend iCinema dibangun sebagai **Single Page Application (SPA)** yang respons
 - **RESTful API Design**: Mengikuti standar metode HTTP (GET, POST, PATCH, DELETE) yang bersih dan konsisten.
 - **Asynchronous Programming**: Memanfaatkan `async/await` di seluruh aplikasi untuk memastikan UI tidak pernah *freezing* saat memproses data besar atau unggahan media.
 - **Environment Safety**: Memisahkan konfigurasi sensitif menggunakan variabel lingkungan (`.env`) di backend dan rahasia CI/CD di GitHub.
-
-## 🚀 Memulai (Setup Lokal)
-
-1. **Clone & Install**:
-   ```bash
-   git clone https://github.com/ghofarialfan/iCinema.git
-   npm install
-   cd frontend && npm install
