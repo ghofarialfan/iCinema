@@ -50,7 +50,7 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
 
 ### **Frontend (React & Redux)**
 - **State Management**: Menggunakan Redux untuk menjaga sinkronisasi data di seluruh halaman tanpa perlu memuat ulang browser.
-- **Interaktivitas**: Fitur kartu film yang bisa berputar (flip) dan pemutar video terintegrasi memberikan pengalaman menonton trailer yang mulus.
+- **Interaktivitas**: Fitur kartu film ketika di hover menampilkan animasi, kemudian ketika diklik memunculkan sinopsis dan pilihan untuk menonton filmnya.
 - **Validasi (Joi)**: Memastikan setiap data yang dimasukkan (seperti rating atau file media) sesuai dengan format yang diharapkan sebelum dikirim ke server.
 
 ---
