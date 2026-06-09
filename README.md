@@ -1,69 +1,100 @@
-# iCinema
+# iCinema - Modern Movie Management System
 
-A full-stack MERN website for movie theaters that allows users to browse for films and filter them by available categories and ratings, as well as enables administrators to add new films to the list.
-<img width="1438" alt="ss" src="https://user-images.githubusercontent.com/25881325/67157291-7e05dc00-f32a-11e9-8d0e-00e6ecda5b7d.png">
+iCinema adalah aplikasi web manajemen film berbasis MERN Stack yang memungkinkan pengguna untuk menjelajahi katalog film dan administrator untuk mengelola konten dengan fitur unggahan media terintegrasi ke Cloudinary.
 
-<h2>Installation</h2>
-Use the package manager [npm](https://www.npmjs.com/) to install iCinema.
+## 🚀 Fitur Utama
 
-Fork the Project by using:
+- **Katalog Film Interaktif**: Tampilan kartu film dengan fitur *flipping* untuk melihat deskripsi dan memutar video.
+- **Manajemen Konten (Admin)**: 
+  - CRUD (Create, Read, Update, Delete) Film dan Genre.
+  - Unggah Poster (Gambar) dan File Film (Video) langsung ke Cloudinary.
+- **Sistem Autentikasi**: Login dan Register menggunakan JWT (JSON Web Token) dengan Role-Based Access Control (Admin & User).
+- **Pencarian & Filter**: Filter film berdasarkan genre dan rating, serta fitur pencarian judul.
+- **Responsive Design**: Dioptimalkan untuk berbagai ukuran layar (Desktop & Mobile).
+- **Otomatisasi CI/CD**: Terintegrasi dengan GitHub Actions untuk pengujian dan penyebaran otomatis ke Azure.
 
+## 🛠️ Teknologi yang Digunakan
+
+### **Frontend**
+- **React.js**: Library UI utama.
+- **Redux & Redux-Thunk**: State management global.
+- **Joi**: Validasi skema di sisi klien.
+- **Bootstrap & CSS3**: Styling dan tata letak.
+
+### **Backend**
+- **Node.js & Express**: Lingkungan server dan framework web.
+- **MongoDB & Mongoose**: Database NoSQL dan pemodelan data.
+- **Multer & Cloudinary Storage**: Manajemen unggahan file media.
+- **Bcrypt.js**: Hashing password untuk keamanan.
+
+### **DevOps**
+- **GitHub Actions**: Alur kerja CI/CD.
+- **Azure App Service**: Hosting aplikasi.
+
+## 📦 Struktur Proyek
+
+```text
+iCinema/
+├── controller/          # Logika API Backend
+├── models/              # Skema Database Mongoose
+├── middleware/          # Autentikasi & Proteksi Rute
+├── utils/               # Utilitas (Cloudinary, MongoDB Config)
+├── frontend/            # Aplikasi React (Frontend)
+│   ├── src/
+│   │   ├── actions/     # Redux Actions
+│   │   ├── components/  # Komponen UI Reusable
+│   │   └── pages/       # Halaman Utama (Movies, AddMovie, dll)
+└── .github/workflows/   # Konfigurasi CI/CD
+```
+
+## ⚙️ Persiapan Lokal
+
+### 1. Prasyarat
+- Node.js installed
+- MongoDB account (Atlas)
+- Cloudinary account
+
+### 2. Konfigurasi Environment
+Buat file `.env` di direktori root dan isi variabel berikut:
+```env
+MONGODB_URL=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+### 3. Instalasi
 ```bash
-git clone https://github.com/orifmilod/iCinema.git
+# Instal dependensi backend
+npm install
+
+# Instal dependensi frontend
+cd frontend
+npm install
 ```
 
-then cd into the project by using:
-
-```
-cd iCinema
-```
-
-Now, Install the packages by running:
-
+### 4. Menjalankan Aplikasi
 ```bash
-npm run setup
-```
-
-Run project with command
-
-```bash
+# Jalankan backend (di root)
 npm run dev
+
+# Jalankan frontend (di folder frontend)
+npm start
 ```
 
-<h2> Built with  </h2>
-<ul>
-  <li>FrontEnd: <b> React.JS, Redux Library, Bootstrap, HTML/CSS </b></li>
-  <li>Backend:  <b> Node.JS, Express.JS </b> </li>
-  <li>Database: <b> MongoDB, Mongoose </b> </li>
-</ul>
+## 🚢 Deployment
 
-<h2> Features </h2>
-<ul>
-  <li> Sign In / Sign Up / Sign Out the user. </li>
-  <li> Recieving a welcoming email when sign-up using Nodemailer. </li>
-  <li> Add a new movie to the list.</li>
-</ul>
+Proyek ini dikonfigurasi untuk deployment otomatis ke Azure melalui GitHub Actions. Pastikan untuk mengatur **GitHub Secrets** berikut di repositori Anda:
+- `MONGODB_URL`
+- `JWT_SECRET`
+- `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
+- `AZURE_WEBAPP_PUBLISH_PROFILE`
 
-<h2> API </h2>
+## 🤝 Kontribusi
+Kontribusi selalu terbuka! Silakan lakukan *fork* pada repositori ini dan buat *pull request* dengan deskripsi perubahan Anda.
 
-<h4> Users </h4>
-<ul>
-  <li> <b>POST</b> /api/auth/signUp </li>
-  <li> <b>POST</b>  /api/auth/signIn  </li>
-
-   <li> <b>PATCH</b>  /api/users/:userId  </li>
-  <li> <b>DELETE</b>  /api/users/:userId </li>
-</ul>
-
-<h4> Movies </h4>
-<ul>
-  <li> <b>GET</b> /api/movies</li>
-  <li> <b>GET</b> /api/movies/:movieId</li>
-  <li> <b>POST</b> /api/movies/addMovie</li>
-  <li> <b>PATCH</b> /api/movies/:movieId</li>
-</ul>
-
-<h4> Genres </h4>
-<ul>
-  <li> <b>GET</b> /api/genres </li>
-</ul>
+## 📄 Lisensi
+Didistribusikan di bawah Lisensi MIT. Lihat `LICENSE` untuk informasi lebih lanjut.
