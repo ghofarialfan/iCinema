@@ -1,85 +1,69 @@
-# 🎬 iCinema: Modern Full-Stack Movie Management System
+# iCinema
 
-iCinema adalah platform manajemen katalog film berbasis web yang dirancang untuk memberikan pengalaman interaktif bagi pengguna dalam menjelajahi film, serta menyediakan alat kontrol yang kuat bagi administrator. Aplikasi ini mengintegrasikan teknologi cloud modern untuk menangani aset media secara efisien.
+A full-stack MERN website for movie theaters that allows users to browse for films and filter them by available categories and ratings, as well as enables administrators to add new films to the list.
+<img width="1438" alt="ss" src="https://user-images.githubusercontent.com/25881325/67157291-7e05dc00-f32a-11e9-8d0e-00e6ecda5b7d.png">
 
----
+<h2>Installation</h2>
+Use the package manager [npm](https://www.npmjs.com/) to install iCinema.
 
-## 📸 Dokumentasi Visual
+Fork the Project by using:
 
-| Halaman Utama (Katalog) | Dashboard Admin (Manage Movie) |
-| :---: | :---: |
-| ![Main Page](documentation/main-page.png) | ![Admin Page](documentation/admin-page.png) |
+```bash
+git clone https://github.com/orifmilod/iCinema.git
+```
 
-| Interaksi Kartu (Flip) | Pemutar Video |
-| :---: | :---: |
-| ![Flip Card](documentation/flip-card.png) | ![Video Player](documentation/video-player.png) |
+then cd into the project by using:
 
----
+```
+cd iCinema
+```
 
-## ⚙️ Bagaimana Aplikasi ini Berjalan? (Deployment & Operasional)
+Now, Install the packages by running:
 
-iCinema menggunakan pipeline **CI/CD (Continuous Integration & Continuous Deployment)** otomatis untuk memastikan aplikasi selalu dalam kondisi stabil dan terbarui di server produksi.
+```bash
+npm run setup
+```
 
-### **Alur Deployment Otomatis**
-Setiap kali ada perubahan kode pada branch `main`, GitHub Actions akan menjalankan proses berikut:
+Run project with command
 
-#### **1. Tahap CI (Continuous Integration)**
-- **Build Frontend**: GitHub Runner membangun aplikasi React menjadi file statis yang dioptimalkan.
-- **Packaging**: Menggabungkan hasil build frontend dengan seluruh logika backend (controller, models, middleware).
-- **Artifact Upload**: Paket siap pakai disimpan sebagai artifact untuk menjamin konsistensi antara tahap build dan deploy.
+```bash
+npm run dev
+```
 
-#### **2. Tahap CD (Continuous Deployment)**
-- **Environment Setup**: Membuat file `.env` secara dinamis menggunakan rahasia (Secrets) dari GitHub.
-- **Deployment ke Azure**: Mengirimkan paket aplikasi ke **Azure App Service** menggunakan mekanisme *Zero Downtime*.
-- **Startup**: Aplikasi langsung aktif di cloud dan terhubung ke **MongoDB Atlas** serta **Cloudinary**.
+<h2> Built with  </h2>
+<ul>
+  <li>FrontEnd: <b> React.JS, Redux Library, Bootstrap, HTML/CSS </b></li>
+  <li>Backend:  <b> Node.JS, Express.JS </b> </li>
+  <li>Database: <b> MongoDB, Mongoose </b> </li>
+</ul>
 
----
+<h2> Features </h2>
+<ul>
+  <li> Sign In / Sign Up / Sign Out the user. </li>
+  <li> Recieving a welcoming email when sign-up using Nodemailer. </li>
+  <li> Add a new movie to the list.</li>
+</ul>
 
-## 🛠️ Bagaimana Aplikasi ini Dibuat? (Arsitektur Teknis)
+<h2> API </h2>
 
-Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan arsitektur yang modular.
+<h4> Users </h4>
+<ul>
+  <li> <b>POST</b> /api/auth/signUp </li>
+  <li> <b>POST</b>  /api/auth/signIn  </li>
 
-### **Backend (Node.js & Express)**
-- **API Berbasis REST**: Mengelola data menggunakan metode HTTP yang bersih (GET, POST, PATCH, DELETE).
-- **Keamanan (JWT & Bcrypt)**: Melindungi akun pengguna dengan enkripsi password dan token autentikasi yang aman.
-- **Role-Based Access Control (RBAC)**: Membatasi fitur manajemen hanya untuk akun dengan peran Admin.
-- **Cloudinary Integration**: Mengelola penyimpanan file poster dan video secara eksternal melalui API Cloudinary untuk efisiensi beban server.
+   <li> <b>PATCH</b>  /api/users/:userId  </li>
+  <li> <b>DELETE</b>  /api/users/:userId </li>
+</ul>
 
-### **Frontend (React & Redux)**
-- **State Management**: Menggunakan Redux untuk menjaga sinkronisasi data di seluruh halaman tanpa perlu memuat ulang browser.
-- **Interaktivitas**: Fitur kartu film yang bisa berputar (flip) dan pemutar video terintegrasi memberikan pengalaman menonton trailer yang mulus.
-- **Validasi (Joi)**: Memastikan setiap data yang dimasukkan (seperti rating atau file media) sesuai dengan format yang diharapkan sebelum dikirim ke server.
+<h4> Movies </h4>
+<ul>
+  <li> <b>GET</b> /api/movies</li>
+  <li> <b>GET</b> /api/movies/:movieId</li>
+  <li> <b>POST</b> /api/movies/addMovie</li>
+  <li> <b>PATCH</b> /api/movies/:movieId</li>
+</ul>
 
----
-
-## 🚀 Memulai (Setup Lokal)
-
-1. **Clone & Install**:
-   ```bash
-   git clone https://github.com/ghofarialfan/iCinema.git
-   npm install
-   cd frontend && npm install
-   ```
-
-2. **Konfigurasi Environment**:
-   Isi file `.env` dengan kredensial MongoDB dan Cloudinary Anda.
-
-3. **Jalankan**:
-   ```bash
-   npm run dev # Menjalankan Backend & Frontend secara bersamaan
-   ```
-
----
-
-## 📝 Kontributor
-<<<<<<< HEAD
-- **Ghofari Alfan** - *Full Stack Developer & DevOps*
-
----
-*Proyek ini dikembangkan sebagai tugas besar untuk mata kuliah Pengembangan Sistem Orientasi Objek (PSO).*
-=======
-- **Ghofari Alfan** - 
-
----
-*Proyek ini dikembangkan sebagai tugas besar untuk mata kuliah PSO.*
->>>>>>> c5947c3853314afa3e3b4672d2745423dddad9ca
+<h4> Genres </h4>
+<ul>
+  <li> <b>GET</b> /api/genres </li>
+</ul>
