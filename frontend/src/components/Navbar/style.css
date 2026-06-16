@@ -511,3 +511,66 @@
 .nav-wrapper * {
   font-family: inherit !important;
 }
+
+/* FINAL NAVBAR CENTER ALIGNMENT */
+.nav-wrapper {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: 76px !important;
+  z-index: 10000 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 10px 0 !important;
+  background: transparent !important;
+}
+
+.nav-shell {
+  width: min(1320px, calc(100% - 64px)) !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+}
+
+.nav-surface {
+  width: 100% !important;
+  height: 56px !important;
+  margin: 0 auto !important;
+  padding: 0 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+/* supaya sisi kiri dan kanan tetap balance secara visual */
+.nav-left {
+  flex: 1 1 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.nav-right {
+  flex: 1 1 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+.nav-desktop-menu {
+  flex: 0 1 auto !important;
+}
+
+/* responsive */
+@media only screen and (max-width: 768px) {
+  .nav-shell {
+    width: min(100%, calc(100% - 32px)) !important;
+  }
+
+  .nav-surface {
+    height: 54px !important;
+    padding: 0 14px !important;
+  }
+}
