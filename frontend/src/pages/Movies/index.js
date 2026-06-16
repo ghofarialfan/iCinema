@@ -16,11 +16,28 @@ const Movies = (props) => {
   const [currentGenre, setCurrentGenre] = useState("All");
   const [searchFilter, setSearchFilter] = useState("");
   const [rating, setRating] = useState(0);
+  const [featuredIndex, setFeaturedIndex] = useState(0);
 
   useEffect(() => {
     props.getMovies();
     props.getGenres();
   }, [props.loggedIn, props.getMovies, props.getGenres]);
+
+  const movies = props.movies || [];
+  const genres = props.genres || [];
+  const allGenres = [{ name: "All" }, ...genres];
+
+  useEffect(() => {
+    if (!movies || movies.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setFeaturedIndex((prevIndex) =>
+        prevIndex >= movies.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3600);
+
+    return () => clearInterval(interval);
+  }, [movies]);
 
   const handleChange = (name, value) => {
     if (name === "currentGenre") {
@@ -56,11 +73,6 @@ const Movies = (props) => {
     setCurrentPage(page);
   };
 
-  const { loading } = props;
-  const movies = props.movies || [];
-  const genres = props.genres || [];
-  const allGenres = [{ name: "All" }, ...genres];
-
   const filteredMovies = useMemo(() => {
     let result = search(movies, searchFilter, "title");
     result = categorize(result, currentGenre);
@@ -68,11 +80,12 @@ const Movies = (props) => {
     return result;
   }, [movies, searchFilter, currentGenre, rating]);
 
-  const latestMovie = movies.length > 0 ? movies[movies.length - 1] : null;
+  const featuredMovie =
+    movies.length > 0 ? movies[featuredIndex % movies.length] : null;
 
-  const latestMovieGenres =
-    latestMovie && Array.isArray(latestMovie.genre)
-      ? latestMovie.genre
+  const featuredMovieGenres =
+    featuredMovie && Array.isArray(featuredMovie.genre)
+      ? featuredMovie.genre
           .map((genreItem) =>
             typeof genreItem === "object" ? genreItem.name : genreItem
           )
@@ -87,6 +100,8 @@ const Movies = (props) => {
 
   const isFilterActive =
     currentGenre !== "All" || searchFilter.trim() !== "" || Number(rating) > 0;
+
+  const { loading } = props;
 
   if (loading) {
     return (
@@ -123,15 +138,6 @@ const Movies = (props) => {
                 >
                   Explore Collection
                 </button>
-
-                <button
-                  type="button"
-                  className="movies-hero-ghost-button"
-                  onClick={handleResetFilter}
-                  disabled={!isFilterActive}
-                >
-                  {isFilterActive ? "Reset Active Filters" : "Filters Ready"}
-                </button>
               </div>
 
               <div className="movies-hero-stats">
@@ -160,27 +166,30 @@ const Movies = (props) => {
             <div className="movies-featured-card">
               <div className="movies-featured-glow"></div>
 
-              <span className="movies-featured-label">Latest Added</span>
+              <span className="movies-featured-label">Featured Movie</span>
 
-              {latestMovie ? (
+              {featuredMovie ? (
                 <>
-                  <div className="movies-featured-poster">
+                  <div
+                    className="movies-featured-poster"
+                    key={featuredMovie._id || featuredMovie.title}
+                  >
                     <img
-                      src={latestMovie.image}
-                      alt={latestMovie.title || "Latest movie"}
+                      src={featuredMovie.image}
+                      alt={featuredMovie.title || "Featured movie"}
                     />
                     <div className="movies-featured-poster-overlay"></div>
                   </div>
 
                   <div className="movies-featured-content">
-                    <h4>{latestMovie.title || "Untitled Movie"}</h4>
+                    <h4>{featuredMovie.title || "Untitled Movie"}</h4>
 
-                    <p>{latestMovieGenres || "Uncategorized"}</p>
+                    <p>{featuredMovieGenres || "Uncategorized"}</p>
 
                     <div className="movies-featured-meta">
-                      <span>{latestMovie.rate || 0} Rating</span>
+                      <span>{featuredMovie.rate || 0} Rating</span>
                       <span>
-                        {latestMovie.movieLength || "Unknown duration"}
+                        {featuredMovie.movieLength || "Unknown duration"}
                       </span>
                     </div>
                   </div>
@@ -188,7 +197,7 @@ const Movies = (props) => {
               ) : (
                 <div className="movies-featured-empty">
                   <h4>No Movie Yet</h4>
-                  <p>Add movie data to highlight the latest collection here.</p>
+                  <p>Add movie data to highlight the collection here.</p>
                 </div>
               )}
             </div>
