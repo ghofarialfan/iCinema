@@ -18,7 +18,7 @@ class RegisterForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.loggedIn && !prevProps.loggedIn) {
-      this.props.history.push("/");
+      this.props.history.push("/movies");
     }
   }
 
@@ -36,6 +36,7 @@ class RegisterForm extends React.Component {
     const obj = { [name]: value };
     const subSchema = Joi.object({ [name]: this.schema[name] });
     const { error } = subSchema.validate(obj);
+
     return error ? error.details[0].message : null;
   };
 
@@ -99,21 +100,22 @@ class RegisterForm extends React.Component {
     const { email, password, passwordRepeat } = this.state.data;
 
     return (
-      <div className="register-page">
-        <div className="register-background-glow register-background-glow-one"></div>
-        <div className="register-background-glow register-background-glow-two"></div>
+      <main className="register-page">
+        <span className="auth-orb auth-orb-blue"></span>
+        <span className="auth-orb auth-orb-red"></span>
 
         <div className="register-wrapper">
           <section className="register-brand-panel">
+            <div className="register-brand-overlay"></div>
+
             <div className="register-brand-content">
               <span className="register-badge">Join iCinema</span>
 
               <h1>Create Your Cinema Account</h1>
 
               <p>
-                Register to access iCinema features, explore movie collections,
-                and manage your movie experience through a cleaner digital
-                platform.
+                Register to access iCinema features, browse movie collections,
+                and enjoy a cleaner digital cinema experience.
               </p>
 
               <div className="register-feature-list">
@@ -123,7 +125,7 @@ class RegisterForm extends React.Component {
                   </span>
                   <div>
                     <strong>Easy Registration</strong>
-                    <p>Create an account using your email and password.</p>
+                    <p>Create your account using email and password.</p>
                   </div>
                 </div>
 
@@ -133,7 +135,7 @@ class RegisterForm extends React.Component {
                   </span>
                   <div>
                     <strong>Movie Access</strong>
-                    <p>Browse cinema collections with a better experience.</p>
+                    <p>Browse movie collections through a modern interface.</p>
                   </div>
                 </div>
 
@@ -157,6 +159,7 @@ class RegisterForm extends React.Component {
                   <i className="fas fa-user-plus"></i>
                 </div>
 
+                <span>New Account</span>
                 <h2>Register</h2>
                 <p>Create your account to start using iCinema.</p>
               </div>
@@ -223,7 +226,7 @@ class RegisterForm extends React.Component {
             </div>
           </section>
         </div>
-      </div>
+      </main>
     );
   }
 }
