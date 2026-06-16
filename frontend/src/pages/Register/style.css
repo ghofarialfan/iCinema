@@ -1,58 +1,64 @@
+.register-page,
+.register-page * {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
 .register-page {
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at top left, rgba(37, 99, 235, 0.24), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(220, 38, 38, 0.24), transparent 30%),
-    linear-gradient(135deg, #0f172a 0%, #111827 50%, #1e293b 100%);
+  overflow-x: hidden;
+  background: var(--icinema-app-background, linear-gradient(135deg, #0f172a 0%, #111827 50%, #1e293b 100%));
+  background-color: var(--icinema-app-background-color, #0f172a);
   color: #ffffff;
-  padding: 56px 24px;
+  padding: 118px 24px 64px;
 }
 
-.register-background-glow {
-  position: absolute;
+.auth-orb {
+  position: fixed;
+  z-index: 0;
   border-radius: 999px;
-  filter: blur(12px);
-  opacity: 0.5;
   pointer-events: none;
+  filter: blur(16px);
+  opacity: 0.48;
 }
 
-.register-background-glow-one {
-  width: 280px;
-  height: 280px;
-  top: -80px;
-  left: -70px;
-  background: rgba(37, 99, 235, 0.28);
+.auth-orb-blue {
+  width: 300px;
+  height: 300px;
+  top: -90px;
+  left: -90px;
+  background: rgba(37, 99, 235, 0.34);
 }
 
-.register-background-glow-two {
-  width: 320px;
-  height: 320px;
-  right: -100px;
-  bottom: -90px;
-  background: rgba(220, 38, 38, 0.28);
+.auth-orb-red {
+  width: 360px;
+  height: 360px;
+  right: -120px;
+  bottom: -120px;
+  background: rgba(220, 38, 38, 0.34);
 }
 
 .register-wrapper {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1180px;
-  min-height: calc(100vh - 112px);
+  max-width: 1160px;
+  min-height: calc(100vh - 182px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
   align-items: center;
   gap: 32px;
 }
 
 .register-brand-panel {
-  min-height: 660px;
+  position: relative;
+  min-height: 640px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   border-radius: 34px;
-  overflow: hidden;
   background:
     linear-gradient(135deg, rgba(30, 64, 175, 0.86), rgba(185, 28, 28, 0.82)),
     url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80");
@@ -61,30 +67,43 @@
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.36);
 }
 
+.register-brand-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.14), transparent 28%),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.18), transparent);
+  pointer-events: none;
+}
+
 .register-brand-content {
+  position: relative;
+  z-index: 2;
   max-width: 720px;
   padding: 56px 46px;
 }
 
 .register-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 9px 16px;
   margin-bottom: 22px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.7px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+  backdrop-filter: blur(12px);
 }
 
 .register-brand-content h1 {
   margin: 0 0 18px;
   color: #ffffff;
-  font-size: clamp(34px, 5vw, 60px);
+  font-size: clamp(36px, 5vw, 60px);
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.04;
   letter-spacing: -1.3px;
 }
 
@@ -92,8 +111,9 @@
   max-width: 620px;
   margin: 0 0 34px;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.75;
+  font-weight: 600;
 }
 
 .register-feature-list {
@@ -142,6 +162,7 @@
 }
 
 .register-form-panel {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,7 +173,9 @@
   max-width: 480px;
   padding: 34px;
   border-radius: 32px;
-  background: rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 32%),
+    rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.13);
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.32);
   backdrop-filter: blur(18px);
@@ -164,8 +187,8 @@
 }
 
 .register-form-icon {
-  width: 72px;
-  height: 72px;
+  width: 70px;
+  height: 70px;
   margin: 0 auto 18px;
   display: inline-flex;
   align-items: center;
@@ -175,6 +198,16 @@
   color: #ffffff;
   font-size: 30px;
   box-shadow: 0 18px 42px rgba(37, 99, 235, 0.28);
+}
+
+.register-form-header span {
+  display: inline-flex;
+  margin-bottom: 8px;
+  color: #bfdbfe;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
 .register-form-header h2 {
@@ -197,39 +230,34 @@
   margin-top: 10px;
 }
 
-.register-page label {
-  color: #ffffff !important;
-  font-weight: 800;
+.register-page .input-container {
+  margin-bottom: 18px;
+}
+
+.register-page .input-container > label {
+  color: #ffffff;
   font-size: 14px;
+  font-weight: 800;
 }
 
-.register-page input,
-.register-page .form-control {
-  min-height: 48px;
-  border-radius: 16px !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  background: rgba(255, 255, 255, 0.09) !important;
-  color: #ffffff !important;
-  font-weight: 600;
+.register-page .input-container .input-icon {
+  color: #bfdbfe;
 }
 
-.register-page input::placeholder,
-.register-page .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.45) !important;
-}
-
-.register-page input:focus,
-.register-page .form-control:focus {
-  border-color: rgba(37, 99, 235, 0.75) !important;
-  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.18) !important;
-  background: rgba(255, 255, 255, 0.12) !important;
-  color: #ffffff !important;
-}
-
-.register-page .invalid-feedback,
-.register-page .text-danger {
-  color: #fecaca !important;
+.register-page .input-container .form-control {
+  min-height: 54px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+  font-size: 14px;
   font-weight: 700;
+}
+
+.register-page .input-container .form-control:focus {
+  border-color: rgba(37, 99, 235, 0.72);
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.16);
 }
 
 .register-auth-message {
@@ -243,17 +271,18 @@
   border: 1px solid rgba(248, 113, 113, 0.26);
   color: #fecaca;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .register-submit-button {
   width: 100%;
-  min-height: 48px;
+  min-height: 52px;
   margin-top: 18px;
-  border-radius: 16px !important;
+  border-radius: 18px !important;
   border: none !important;
   background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
   color: #ffffff !important;
+  font-size: 14px !important;
   font-weight: 900 !important;
   letter-spacing: 0.2px;
   box-shadow: 0 18px 42px rgba(37, 99, 235, 0.26);
@@ -291,7 +320,7 @@
 
 @media (max-width: 991px) {
   .register-page {
-    padding: 36px 20px;
+    padding: 104px 20px 56px;
   }
 
   .register-wrapper {
@@ -314,7 +343,7 @@
 
 @media (max-width: 576px) {
   .register-page {
-    padding: 24px 14px;
+    padding: 96px 14px 44px;
   }
 
   .register-brand-panel,
