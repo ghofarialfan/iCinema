@@ -28,23 +28,20 @@
 
 .input-field-wrapper .input-icon {
   position: absolute;
-  left: 16px;
+  left: 15px;
   top: 50%;
   z-index: 3;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 9px;
   background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.8);
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 900;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
   line-height: 1;
-  letter-spacing: 0;
   pointer-events: none;
 }
 
@@ -57,7 +54,7 @@
   width: 100%;
   max-width: 100%;
   min-height: 52px;
-  padding: 0 16px 0 48px;
+  padding: 0 16px 0 50px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.09);
@@ -72,7 +69,7 @@
 
 .input-container textarea.form-control {
   min-height: 138px;
-  padding: 15px 16px 15px 48px;
+  padding: 15px 16px 15px 50px;
   resize: vertical;
 }
 

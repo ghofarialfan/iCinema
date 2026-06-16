@@ -13,7 +13,7 @@
 
 .nav-shell {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1180px;
   margin: 0 auto;
 }
 
@@ -24,7 +24,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 18px;
-  background: rgba(15, 23, 42, 0.62);
+  background: rgba(15, 23, 42, 0.66);
   border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(18px);
   border-radius: 999px;
@@ -106,7 +106,6 @@
   white-space: nowrap;
 }
 
-/* Hilangkan icon rusak di navbar */
 .nav-link-item i,
 .nav-action-link i,
 .nav-icon-button i {
@@ -137,27 +136,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.nav-icon-button {
-  width: 38px;
-  height: 38px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  color: rgba(255, 255, 255, 0.78);
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  transition: 0.2s ease;
-}
-
-.nav-icon-button:hover,
-.nav-icon-button.active {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-  text-decoration: none;
 }
 
 .nav-desktop-actions {
@@ -215,7 +193,6 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Class yang dipakai di Navbar/index.js kamu */
 .nav-account-avatar {
   width: 28px;
   height: 28px;
@@ -232,7 +209,6 @@
   line-height: 1;
 }
 
-/* Jaga-jaga kalau class lama masih tersisa dari build sebelumnya */
 .nav-account-icon,
 .nav-account-icon i,
 .nav-account-menu-item i {
@@ -248,7 +224,6 @@
   line-height: 1;
 }
 
-/* Matikan override lama yang bikin teks Account jadi pseudo element */
 .nav-account-label::before,
 .nav-account-label::after {
   content: none !important;
@@ -302,7 +277,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 14px;
   border: none;
   cursor: pointer;
@@ -473,10 +448,6 @@
     display: none;
   }
 
-  .nav-icon-button {
-    display: none;
-  }
-
   .ico-btn {
     display: flex;
   }
@@ -510,7 +481,6 @@
   .nav-brand-icon {
     width: 40px;
     height: 40px;
-    border-radius: 999px;
   }
 
   .nav-brand-text {
@@ -522,7 +492,7 @@
   }
 }
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 961px) {
   .slider {
     display: none !important;
   }
@@ -537,23 +507,7 @@
   }
 }
 
-/* Navbar font consistency */
 .nav-wrapper,
 .nav-wrapper * {
   font-family: inherit !important;
-}
-
-.nav-account-button,
-.nav-account-label,
-.nav-link-item,
-.nav-action-link,
-.nav-primary-button,
-.nav-account-menu-item {
-  font-family: inherit !important;
-  font-weight: 800 !important;
-}
-
-.nav-brand-text {
-  font-family: inherit !important;
-  font-weight: 900 !important;
 }

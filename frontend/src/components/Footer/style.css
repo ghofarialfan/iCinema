@@ -1,21 +1,21 @@
 .footer-wrapper {
   width: 100%;
   background:
-    radial-gradient(circle at top left, rgba(220, 38, 38, 0.18), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.16), transparent 30%),
+    radial-gradient(circle at top left, rgba(220, 38, 38, 0.14), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.13), transparent 30%),
     linear-gradient(135deg, #0f172a 0%, #111827 52%, #1e293b 100%);
   color: #ffffff;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-container {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 42px 32px;
+  padding: 28px 32px;
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
-  gap: 32px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.85fr);
+  gap: 24px;
   align-items: center;
 }
 
@@ -26,81 +26,77 @@
 .footer-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .footer-brand-icon {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 18px;
+  border-radius: 15px;
   overflow: hidden;
   background: #000000;
-  box-shadow: 0 16px 36px rgba(220, 38, 38, 0.28);
+  box-shadow: 0 12px 28px rgba(220, 38, 38, 0.22);
 }
 
 .footer-brand-logo {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 6px;
+  padding: 5px;
   background: #000000;
   display: block;
-}
-
-.footer-brand-icon i {
-  display: none !important;
 }
 
 .footer-brand h4 {
   margin: 0;
   color: #ffffff;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 900;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.4px;
 }
 
 .footer-brand p {
-  margin: 2px 0 0;
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 13px;
-  font-weight: 700;
+  margin: 1px 0 0;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }
 
 .footer-description {
-  max-width: 680px;
+  max-width: 620px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 14px;
-  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 12.5px;
+  line-height: 1.65;
   font-weight: 600;
 }
 
 .footer-info-section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 10px;
 }
 
 .footer-info-card {
-  padding: 18px 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 13px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.075);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(14px);
 }
 
 .footer-info-card span {
   display: block;
-  margin-bottom: 7px;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 12px;
+  margin-bottom: 5px;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 10.5px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.6px;
@@ -109,30 +105,30 @@
 .footer-info-card strong {
   display: block;
   color: #ffffff;
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 900;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .footer-bottom {
-  padding: 18px 32px;
+  padding: 11px 32px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.18);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.16);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .footer-bottom p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11.5px;
   font-weight: 600;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 @media (max-width: 991px) {
   .footer-container {
     grid-template-columns: 1fr;
-    padding: 36px 24px;
+    padding: 26px 24px;
   }
 
   .footer-info-section {
@@ -142,7 +138,7 @@
 
 @media (max-width: 576px) {
   .footer-container {
-    padding: 32px 18px;
+    padding: 24px 18px;
   }
 
   .footer-brand {
@@ -150,12 +146,12 @@
   }
 
   .footer-brand-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 17px;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
   }
 
   .footer-bottom {
-    padding: 16px 18px;
+    padding: 10px 18px;
   }
 }

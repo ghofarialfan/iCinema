@@ -35,22 +35,19 @@ const CardFront = ({
         <div className="movie-hover-shine"></div>
 
         <span className="movie-rating-badge">
-          <i className="fas fa-star"></i>
+          <span aria-hidden="true">⭐</span>
           {rating}
         </span>
 
-        <div className="movie-hover-action">
-          <span>
-            <i className="fas fa-mouse-pointer"></i>
-          </span>
-          <p>Click to view details</p>
+        <div className="movie-hover-action" aria-hidden="true">
+          <span>👆</span>
         </div>
       </div>
 
       <div className="movie-card-content">
         <div className="movie-card-meta">
           <span>
-            <i className="fas fa-clock"></i>
+            <span aria-hidden="true">⏱️</span>
             {duration}
           </span>
         </div>
@@ -70,7 +67,7 @@ const CardFront = ({
           }
           onClick={handleTrailerClick}
         >
-          <i className="fas fa-play"></i>
+          <span aria-hidden="true">▶️</span>
           Watch Trailer
         </a>
       </div>
