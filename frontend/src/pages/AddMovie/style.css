@@ -1149,3 +1149,24 @@
     width: min(100%, calc(100% - 28px)) !important;
   }
 }
+
+/* FINAL ALIGNMENT: manage movie content sejajar dengan navbar */
+.add-movie-container {
+  width: min(1320px, calc(100% - 64px)) !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (max-width: 991px) {
+  .add-movie-container {
+    width: min(100%, calc(100% - 40px)) !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .add-movie-container {
+    width: min(100%, calc(100% - 28px)) !important;
+  }
+}

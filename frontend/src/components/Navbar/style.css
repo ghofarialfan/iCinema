@@ -590,3 +590,15 @@
   width: 100% !important;
   margin: 0 auto !important;
 }
+
+/* FINAL ALIGNMENT: navbar sejajar dengan semua konten utama */
+.nav-shell {
+  width: min(1320px, calc(100% - 64px)) !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+}
+
+.nav-surface {
+  width: 100% !important;
+  margin: 0 auto !important;
+}
