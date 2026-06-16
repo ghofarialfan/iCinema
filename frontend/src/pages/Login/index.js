@@ -106,9 +106,7 @@ class Login extends React.Component {
 
               <div className="login-feature-list">
                 <div className="login-feature-item">
-                  <span>
-                    <i className="fas fa-film"></i>
-                  </span>
+                  <span aria-hidden="true">🎬</span>
                   <div>
                     <strong>Movie Library</strong>
                     <p>Explore curated movies with a modern interface.</p>
@@ -116,9 +114,7 @@ class Login extends React.Component {
                 </div>
 
                 <div className="login-feature-item">
-                  <span>
-                    <i className="fas fa-filter"></i>
-                  </span>
+                  <span aria-hidden="true">⌕</span>
                   <div>
                     <strong>Smart Filtering</strong>
                     <p>Find movies faster using genre and rating filters.</p>
@@ -126,9 +122,7 @@ class Login extends React.Component {
                 </div>
 
                 <div className="login-feature-item">
-                  <span>
-                    <i className="fas fa-lock"></i>
-                  </span>
+                  <span aria-hidden="true">●</span>
                   <div>
                     <strong>Secure Access</strong>
                     <p>Admin features are protected using authenticated access.</p>
@@ -141,8 +135,8 @@ class Login extends React.Component {
           <section className="login-form-panel">
             <div className="login-form-card">
               <div className="login-form-header">
-                <div className="login-form-icon">
-                  <i className="fas fa-user-circle"></i>
+                <div className="login-form-icon" aria-hidden="true">
+                  👤
                 </div>
 
                 <span>Account Access</span>
@@ -156,7 +150,7 @@ class Login extends React.Component {
                   label="Email"
                   type="email"
                   error={errors["email"]}
-                  iconClass="fas fa-envelope"
+                  iconClass="email"
                   onChange={this.handleChange}
                   placeholder="Enter your email address"
                   value={email}
@@ -168,7 +162,7 @@ class Login extends React.Component {
                   type="password"
                   label="Password"
                   error={errors["password"]}
-                  iconClass="fas fa-key"
+                  iconClass="password"
                   onChange={this.handleChange}
                   placeholder="Enter your password"
                   value={password}
@@ -176,7 +170,7 @@ class Login extends React.Component {
 
                 {authMessage && (
                   <div className="login-auth-message">
-                    <i className="fas fa-exclamation-circle"></i>
+                    <span aria-hidden="true">!</span>
                     <span>{authMessage}</span>
                   </div>
                 )}
