@@ -622,3 +622,76 @@
 .nav-wrapper {
   z-index: 10000;
 }
+
+/* FINAL FIX: make long movie detail content fully scrollable */
+.movie-detail-overlay {
+  align-items: center !important;
+  overflow-y: auto !important;
+  padding: 28px !important;
+}
+
+.movie-detail-panel {
+  max-height: calc(100dvh - 56px) !important;
+  overflow: hidden !important;
+}
+
+.movie-detail-content {
+  max-height: calc(100dvh - 56px) !important;
+  overflow-y: auto !important;
+  padding-bottom: 42px !important;
+}
+
+/* Jangan bikin action button sticky, supaya bisa discroll normal sampai bawah */
+.movie-detail-actions {
+  position: relative !important;
+  bottom: auto !important;
+  z-index: 5 !important;
+  margin: 24px 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* Summary tetap punya batas tinggi, tapi scroll-nya lebih nyaman */
+.movie-detail-summary p {
+  max-height: 210px !important;
+  overflow-y: auto !important;
+}
+
+/* Ready to Watch tidak menutup tombol bawah */
+.movie-detail-watch-card {
+  margin-bottom: 22px !important;
+}
+
+/* Tombol bawah selalu terlihat saat sudah discroll sampai bawah */
+.movie-detail-trailer,
+.movie-detail-back {
+  min-height: 48px !important;
+  flex: 1 1 180px !important;
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+  .movie-detail-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .movie-detail-panel {
+    max-height: 94dvh !important;
+    overflow: hidden !important;
+  }
+
+  .movie-detail-content {
+    max-height: calc(94dvh - 220px) !important;
+    overflow-y: auto !important;
+    padding-bottom: 34px !important;
+  }
+
+  .movie-detail-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    margin: 22px 0 0 !important;
+    padding: 0 !important;
+  }
+}
