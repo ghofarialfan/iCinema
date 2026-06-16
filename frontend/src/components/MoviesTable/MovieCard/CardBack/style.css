@@ -933,3 +933,45 @@
     padding: 18px 22px 24px !important;
   }
 }
+
+/* FINAL SPACING FIX: give action buttons more breathing room */
+.movie-detail-content {
+  padding-bottom: 34px !important;
+}
+
+.movie-detail-actions {
+  bottom: 18px !important;
+  margin: 28px -42px 18px !important;
+  padding: 20px 42px 26px !important;
+  border-radius: 0 0 28px 0 !important;
+}
+
+/* kasih jarak ekstra antara Ready to Watch dan tombol bawah */
+.movie-detail-watch-card {
+  margin-bottom: 34px !important;
+}
+
+/* Safari safe area agar tombol tidak mepet bawah */
+.movie-detail-actions::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 6px;
+  flex-basis: 100%;
+}
+
+@media (max-width: 768px) {
+  .movie-detail-content {
+    padding-bottom: 34px !important;
+  }
+
+  .movie-detail-actions {
+    bottom: 16px !important;
+    margin: 26px -22px 18px !important;
+    padding: 18px 22px 28px !important;
+  }
+
+  .movie-detail-watch-card {
+    margin-bottom: 30px !important;
+  }
+}
