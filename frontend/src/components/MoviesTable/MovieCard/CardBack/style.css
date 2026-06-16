@@ -805,3 +805,131 @@
     margin-top: 24px !important;
   }
 }
+
+/* FINAL FIX: summary scroll + movie detail scroll + action buttons always visible */
+.movie-detail-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  padding: 28px !important;
+}
+
+.movie-detail-panel {
+  width: min(980px, calc(100vw - 56px)) !important;
+  height: min(760px, calc(100dvh - 56px)) !important;
+  max-height: calc(100dvh - 56px) !important;
+  display: grid !important;
+  grid-template-columns: 360px minmax(0, 1fr) !important;
+  overflow: hidden !important;
+  border-radius: 34px !important;
+}
+
+.movie-detail-poster {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: hidden !important;
+}
+
+.movie-detail-content {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 46px 42px 0 !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Summary tetap bisa scroll sendiri */
+.movie-detail-summary p {
+  max-height: 190px !important;
+  overflow-y: auto !important;
+  padding-right: 8px !important;
+}
+
+/* Ready to Watch diberi jarak agar tidak nabrak tombol bawah */
+.movie-detail-watch-card {
+  margin-bottom: 24px !important;
+}
+
+/* Tombol dibuat selalu terlihat di bawah area kanan */
+.movie-detail-actions {
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 20 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin: 24px -42px 0 !important;
+  padding: 18px 42px 22px !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(17, 24, 39, 0),
+      rgba(17, 24, 39, 0.92) 24%,
+      rgba(17, 24, 39, 1) 100%
+    ) !important;
+  backdrop-filter: blur(14px) !important;
+}
+
+.movie-detail-trailer,
+.movie-detail-back {
+  flex: 1 1 180px !important;
+  min-height: 50px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Biar scroll area kanan punya ruang aman terakhir */
+.movie-detail-content::after {
+  content: "";
+  display: block;
+  height: 18px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .movie-detail-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .movie-detail-panel {
+    width: 100% !important;
+    height: 94dvh !important;
+    max-height: 94dvh !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 220px minmax(0, 1fr) !important;
+    border-radius: 30px 30px 0 0 !important;
+  }
+
+  .movie-detail-poster {
+    height: 220px !important;
+    min-height: 220px !important;
+    max-height: 220px !important;
+  }
+
+  .movie-detail-content {
+    height: 100% !important;
+    overflow-y: auto !important;
+    padding: 26px 22px 0 !important;
+  }
+
+  .movie-detail-summary p {
+    max-height: 150px !important;
+    overflow-y: auto !important;
+  }
+
+  .movie-detail-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    margin: 22px -22px 0 !important;
+    padding: 18px 22px 24px !important;
+  }
+}
