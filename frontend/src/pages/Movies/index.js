@@ -80,7 +80,10 @@ const Movies = (props) => {
           .join(", ")
       : "No genre available";
 
-  const quickGenres = allGenres.slice(0, 5);
+  const topRatedMovie =
+    movies.length > 0
+      ? [...movies].sort((a, b) => Number(b.rate || 0) - Number(a.rate || 0))[0]
+      : null;
 
   const isFilterActive =
     currentGenre !== "All" || searchFilter.trim() !== "" || Number(rating) > 0;
@@ -107,22 +110,10 @@ const Movies = (props) => {
               <h1>Discover Movies That Match Your Taste</h1>
 
               <p>
-                Browse film collections, explore genres, and filter movies based
-                on your preferred rating through a cleaner and more interactive
-                viewing experience.
+                Explore a curated movie collection with genre filtering, rating
+                preference, trailer access, and interactive movie details in one
+                cleaner browsing experience.
               </p>
-
-              <div className="movies-hero-search">
-                <Input
-                  onChange={(event) =>
-                    handleChange("searchFilter", event.target.value)
-                  }
-                  label=""
-                  iconClass="fas fa-search"
-                  placeholder="Search movie title..."
-                  value={searchFilter}
-                />
-              </div>
 
               <div className="movies-hero-actions">
                 <button
@@ -135,35 +126,12 @@ const Movies = (props) => {
 
                 <button
                   type="button"
-                  className={
-                    isFilterActive
-                      ? "movies-hero-secondary-button active"
-                      : "movies-hero-secondary-button"
-                  }
+                  className="movies-hero-ghost-button"
                   onClick={handleResetFilter}
                   disabled={!isFilterActive}
                 >
-                  Clear Filters
+                  {isFilterActive ? "Reset Active Filters" : "Filters Ready"}
                 </button>
-              </div>
-
-              <div className="movies-hero-quick-genres">
-                {quickGenres.map((genreItem) => (
-                  <button
-                    key={genreItem.name}
-                    type="button"
-                    className={
-                      currentGenre === genreItem.name
-                        ? "movies-quick-genre active"
-                        : "movies-quick-genre"
-                    }
-                    onClick={() =>
-                      handleChange("currentGenre", genreItem.name)
-                    }
-                  >
-                    {genreItem.name}
-                  </button>
-                ))}
               </div>
 
               <div className="movies-hero-stats">
@@ -174,17 +142,24 @@ const Movies = (props) => {
 
                 <div className="movies-stat-card">
                   <strong>{genres.length}</strong>
-                  <span>Genres</span>
+                  <span>Active Genres</span>
                 </div>
 
                 <div className="movies-stat-card">
                   <strong>{filteredMovies.length}</strong>
-                  <span>Results</span>
+                  <span>Matched Results</span>
+                </div>
+
+                <div className="movies-stat-card">
+                  <strong>{topRatedMovie ? topRatedMovie.rate || 0 : 0}</strong>
+                  <span>Top Rating</span>
                 </div>
               </div>
             </div>
 
             <div className="movies-featured-card">
+              <div className="movies-featured-glow"></div>
+
               <span className="movies-featured-label">Latest Added</span>
 
               {latestMovie ? (
@@ -204,7 +179,9 @@ const Movies = (props) => {
 
                     <div className="movies-featured-meta">
                       <span>{latestMovie.rate || 0} Rating</span>
-                      <span>{latestMovie.movieLength || "Unknown duration"}</span>
+                      <span>
+                        {latestMovie.movieLength || "Unknown duration"}
+                      </span>
                     </div>
                   </div>
                 </>
@@ -224,7 +201,7 @@ const Movies = (props) => {
               <div className="movies-filter-header">
                 <div>
                   <h4>Filters</h4>
-                  <p>Refine movies by genre and rating.</p>
+                  <p>Refine movies by genre and minimum rating.</p>
                 </div>
 
                 <div className="movies-filter-icon">
@@ -277,6 +254,7 @@ const Movies = (props) => {
           <main className="movies-main">
             <section className="movies-search-card">
               <div className="movies-search-info">
+                <span className="movies-section-kicker">Browse Collection</span>
                 <h3>Movie Collection</h3>
                 <p>
                   Search movie titles and combine filters to find the most
