@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authAction";
+import icinemaLogo from "../../images/iCinema_Logo.jpeg";
 import "./style.css";
 
 function Navbar(props) {
@@ -59,7 +60,11 @@ function Navbar(props) {
           <div className="nav-left">
             <Link className="nav-brand" to="/movies" onClick={closeNav}>
               <span className="nav-brand-icon" aria-hidden="true">
-                <i className="fas fa-film"></i>
+                <img
+                  src={icinemaLogo}
+                  alt="iCinema Logo"
+                  className="nav-brand-logo"
+                />
               </span>
               <span className="nav-brand-text">iCinema</span>
             </Link>
