@@ -106,10 +106,18 @@
   white-space: nowrap;
 }
 
-/* Hide broken FontAwesome icons in navbar */
+/* Hilangkan icon rusak di navbar */
 .nav-link-item i,
-.nav-action-link i {
+.nav-action-link i,
+.nav-icon-button i {
   display: none !important;
+}
+
+.nav-link-item::before,
+.nav-link-item::after,
+.nav-action-link::before,
+.nav-action-link::after {
+  content: none !important;
 }
 
 .nav-link-item:hover,
@@ -207,8 +215,8 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Replace broken account icon with clean letter avatar */
-.nav-account-icon {
+/* Class yang dipakai di Navbar/index.js kamu */
+.nav-account-avatar {
   width: 28px;
   height: 28px;
   flex: 0 0 auto;
@@ -219,58 +227,50 @@
   background: rgba(255, 255, 255, 0.11);
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: #ffffff;
-  font-size: 0;
-}
-
-.nav-account-icon i {
-  display: none !important;
-}
-
-.nav-account-icon::before {
-  content: "A";
-  color: #ffffff;
   font-size: 12px;
   font-weight: 900;
   line-height: 1;
 }
 
-/* Rename Akun to Account from CSS */
-.nav-account-label {
-  line-height: 1;
-  font-size: 0;
+/* Jaga-jaga kalau class lama masih tersisa dari build sebelumnya */
+.nav-account-icon,
+.nav-account-icon i,
+.nav-account-menu-item i {
+  display: none !important;
 }
 
-.nav-account-label::after {
-  content: "Account";
+.nav-account-label {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 14px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.9);
+  line-height: 1;
 }
 
-/* Replace broken chevron icon with clean caret */
+/* Matikan override lama yang bikin teks Account jadi pseudo element */
+.nav-account-label::before,
+.nav-account-label::after {
+  content: none !important;
+}
+
 .nav-account-caret {
   width: 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: rgba(255, 255, 255, 0.72);
-  font-size: 0;
-  line-height: 1;
-}
-
-.nav-account-caret i {
-  display: none !important;
-}
-
-.nav-account-caret::before {
-  content: "▾";
   font-size: 13px;
   font-weight: 900;
   line-height: 1;
   transition: transform 0.2s ease;
 }
 
-.nav-account-button.is-open .nav-account-caret::before {
+.nav-account-caret i {
+  display: none !important;
+}
+
+.nav-account-button.is-open .nav-account-caret {
   transform: rotate(180deg);
 }
 
@@ -311,10 +311,6 @@
   font-size: 14px;
   font-weight: 900;
   transition: 0.2s ease;
-}
-
-.nav-account-menu-item i {
-  display: none !important;
 }
 
 .nav-account-menu-item:hover {
