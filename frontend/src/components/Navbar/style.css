@@ -602,3 +602,25 @@
   width: 100% !important;
   margin: 0 auto !important;
 }
+
+/* FINAL NAVBAR RIGHT EDGE FIX */
+.nav-shell {
+  width: min(1320px, calc(100% - 64px)) !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+}
+
+/* Kunci kiri tetap sejajar, pendekkan kanan sedikit */
+.nav-surface {
+  width: calc(100% - 34px) !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+/* Responsive tetap aman */
+@media only screen and (max-width: 991px) {
+  .nav-surface {
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+}
