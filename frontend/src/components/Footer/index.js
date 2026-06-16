@@ -1,4 +1,5 @@
 import React from "react";
+import icinemaLogo from "../../images/iCinema_Logo.jpeg";
 import "./style.css";
 
 export default function Footer() {
@@ -8,8 +9,13 @@ export default function Footer() {
         <div className="footer-brand-section">
           <div className="footer-brand">
             <span className="footer-brand-icon">
-              <i className="fas fa-film"></i>
+              <img
+                src={icinemaLogo}
+                alt="iCinema Logo"
+                className="footer-brand-logo"
+              />
             </span>
+
             <div>
               <h4>iCinema</h4>
               <p>Web Application</p>
