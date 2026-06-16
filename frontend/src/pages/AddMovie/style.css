@@ -893,23 +893,47 @@
   }
 }
 
-.add-movie-page i,
-.add-movie-page .fa,
-.add-movie-page .fas,
-.add-movie-page .far,
-.add-movie-page .fab {
-  display: none !important;
+/* Restore section icons, but keep file upload button clean */
+.add-movie-page .add-movie-section-icon,
+.add-movie-page .add-movie-hero-icon,
+.add-movie-page .manage-section-icon,
+.add-movie-page .form-section-icon {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
-.add-movie-page .custom-file-label::before,
-.add-movie-page .custom-file-label::after,
-.add-movie-page .file-label::before,
-.add-movie-page .file-label::after,
-.add-movie-page label[for*="file"]::before,
-.add-movie-page label[for*="file"]::after {
-  content: none !important;
+/* Only hide broken FontAwesome inside file upload buttons */
+.add-movie-page .custom-file-label i,
+.add-movie-page .file-label i,
+.add-movie-page .file-upload-button i,
+.add-movie-page .upload-button i,
+.add-movie-page label[for*="image"] i,
+.add-movie-page label[for*="video"] i,
+.add-movie-page label[for*="file"] i {
+  display: none !important;
 }
 
 .add-movie-page input[type="file"]::file-selector-button {
   font-family: inherit;
+}
+
+.add-movie-page .input-field-wrapper {
+  position: relative !important;
+}
+
+.add-movie-page .input-field-wrapper .input-icon {
+  left: 15px !important;
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+}
+
+.add-movie-page .input-field-wrapper.is-textarea .input-icon {
+  top: 18px !important;
+  transform: none !important;
+}
+
+.add-movie-page .form-control {
+  padding-left: 52px !important;
 }

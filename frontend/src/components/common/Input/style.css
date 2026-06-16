@@ -101,3 +101,17 @@
   font-size: 13px;
   font-weight: 800;
 }
+
+.input-field-wrapper .input-icon {
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.input-field-wrapper.is-textarea .input-icon {
+  top: 18px !important;
+  transform: none !important;
+}
