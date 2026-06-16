@@ -6,17 +6,29 @@ const getSafeIcon = (iconClass, type, name, placeholder) => {
     placeholder || ""
   }`.toLowerCase();
 
-  if (key.includes("envelope") || key.includes("email")) return "✉";
-  if (key.includes("key") || key.includes("lock") || key.includes("password")) return "●";
-  if (key.includes("search")) return "⌕";
-  if (key.includes("film") || key.includes("movie") || key.includes("title")) return "🎬";
-  if (key.includes("star") || key.includes("rating")) return "★";
-  if (key.includes("clock") || key.includes("time") || key.includes("length") || key.includes("duration")) return "⏱";
-  if (key.includes("link") || key.includes("trailer") || key.includes("youtube")) return "🔗";
-  if (key.includes("genre") || key.includes("tag")) return "▾";
-  if (key.includes("user")) return "👤";
+  if (key.includes("email") || key.includes("envelope")) return "E";
+  if (key.includes("password") || key.includes("key") || key.includes("lock"))
+    return "P";
+  if (key.includes("search")) return "S";
+  if (key.includes("rating") || key.includes("star")) return "R";
+  if (
+    key.includes("duration") ||
+    key.includes("length") ||
+    key.includes("time") ||
+    key.includes("clock")
+  )
+    return "T";
+  if (
+    key.includes("trailer") ||
+    key.includes("youtube") ||
+    key.includes("link")
+  )
+    return "L";
+  if (key.includes("genre") || key.includes("tag")) return "G";
+  if (key.includes("title") || key.includes("movie") || key.includes("film"))
+    return "M";
 
-  return "•";
+  return "I";
 };
 
 const Input = ({
