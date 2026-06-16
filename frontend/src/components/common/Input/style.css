@@ -32,19 +32,20 @@
   top: 50%;
   z-index: 3;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: #fecaca;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 900;
   line-height: 1;
   pointer-events: none;
+  opacity: 0.95;
 }
 
-.input-field-wrapper textarea + .input-icon,
-.input-field-wrapper textarea ~ .input-icon {
+.input-field-wrapper.is-textarea .input-icon {
   top: 18px;
   transform: none;
 }
