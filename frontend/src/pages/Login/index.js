@@ -141,11 +141,11 @@ class Login extends React.Component {
           <section className="login-form-panel">
             <div className="login-form-card">
               <div className="login-form-header">
-                <div className="login-form-icon" aria-hidden="true">
-                  A
+                <div className="auth-header-icon login-header-icon" aria-hidden="true">
+                  🔐
                 </div>
 
-                <span>Account Access</span>
+                <span className="auth-header-kicker">Secure Account Access</span>
                 <h2>Login</h2>
                 <p>Enter your credentials to access your iCinema account.</p>
               </div>

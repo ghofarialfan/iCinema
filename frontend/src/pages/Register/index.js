@@ -155,11 +155,11 @@ class RegisterForm extends React.Component {
           <section className="register-form-panel">
             <div className="register-form-card">
               <div className="register-form-header">
-                <div className="register-form-icon" aria-hidden="true">
-                  R
+                <div className="auth-header-icon register-header-icon" aria-hidden="true">
+                  ✨
                 </div>
 
-                <span>New Account</span>
+                <span className="auth-header-kicker">Create New Account</span>
                 <h2>Register</h2>
                 <p>Create your account to start using iCinema.</p>
               </div>
