@@ -41,6 +41,17 @@ const Movies = (props) => {
     setCurrentPage(1);
   };
 
+  const handleExploreCollection = () => {
+    const collectionSection = document.querySelector(".movies-layout");
+
+    if (collectionSection) {
+      collectionSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   const onPageChange = (page) => {
     setCurrentPage(page);
   };
@@ -56,6 +67,20 @@ const Movies = (props) => {
     result = filterRating(result, Number(rating));
     return result;
   }, [movies, searchFilter, currentGenre, rating]);
+
+  const latestMovie = movies.length > 0 ? movies[movies.length - 1] : null;
+
+  const latestMovieGenres =
+    latestMovie && Array.isArray(latestMovie.genre)
+      ? latestMovie.genre
+          .map((genreItem) =>
+            typeof genreItem === "object" ? genreItem.name : genreItem
+          )
+          .filter(Boolean)
+          .join(", ")
+      : "No genre available";
+
+  const quickGenres = allGenres.slice(0, 5);
 
   const isFilterActive =
     currentGenre !== "All" || searchFilter.trim() !== "" || Number(rating) > 0;
@@ -76,31 +101,119 @@ const Movies = (props) => {
       <div className="movies-container">
         <section className="movies-hero">
           <div className="movies-hero-content">
-            <span className="movies-hero-badge">iCinema Movie Library</span>
+            <div className="movies-hero-main">
+              <span className="movies-hero-badge">iCinema Movie Library</span>
 
-            <h1>Discover Movies That Match Your Taste</h1>
+              <h1>Discover Movies That Match Your Taste</h1>
 
-            <p>
-              Browse film collections, explore genres, and filter movies based
-              on your preferred rating through a cleaner and more interactive
-              viewing experience.
-            </p>
+              <p>
+                Browse film collections, explore genres, and filter movies based
+                on your preferred rating through a cleaner and more interactive
+                viewing experience.
+              </p>
 
-            <div className="movies-hero-stats">
-              <div className="movies-stat-card">
-                <strong>{movies.length}</strong>
-                <span>Total Movies</span>
+              <div className="movies-hero-search">
+                <Input
+                  onChange={(event) =>
+                    handleChange("searchFilter", event.target.value)
+                  }
+                  label=""
+                  iconClass="fas fa-search"
+                  placeholder="Search movie title..."
+                  value={searchFilter}
+                />
               </div>
 
-              <div className="movies-stat-card">
-                <strong>{genres.length}</strong>
-                <span>Genres</span>
+              <div className="movies-hero-actions">
+                <button
+                  type="button"
+                  className="movies-hero-primary-button"
+                  onClick={handleExploreCollection}
+                >
+                  Explore Collection
+                </button>
+
+                <button
+                  type="button"
+                  className={
+                    isFilterActive
+                      ? "movies-hero-secondary-button active"
+                      : "movies-hero-secondary-button"
+                  }
+                  onClick={handleResetFilter}
+                  disabled={!isFilterActive}
+                >
+                  Clear Filters
+                </button>
               </div>
 
-              <div className="movies-stat-card">
-                <strong>{filteredMovies.length}</strong>
-                <span>Results</span>
+              <div className="movies-hero-quick-genres">
+                {quickGenres.map((genreItem) => (
+                  <button
+                    key={genreItem.name}
+                    type="button"
+                    className={
+                      currentGenre === genreItem.name
+                        ? "movies-quick-genre active"
+                        : "movies-quick-genre"
+                    }
+                    onClick={() =>
+                      handleChange("currentGenre", genreItem.name)
+                    }
+                  >
+                    {genreItem.name}
+                  </button>
+                ))}
               </div>
+
+              <div className="movies-hero-stats">
+                <div className="movies-stat-card">
+                  <strong>{movies.length}</strong>
+                  <span>Total Movies</span>
+                </div>
+
+                <div className="movies-stat-card">
+                  <strong>{genres.length}</strong>
+                  <span>Genres</span>
+                </div>
+
+                <div className="movies-stat-card">
+                  <strong>{filteredMovies.length}</strong>
+                  <span>Results</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="movies-featured-card">
+              <span className="movies-featured-label">Latest Added</span>
+
+              {latestMovie ? (
+                <>
+                  <div className="movies-featured-poster">
+                    <img
+                      src={latestMovie.image}
+                      alt={latestMovie.title || "Latest movie"}
+                    />
+                    <div className="movies-featured-poster-overlay"></div>
+                  </div>
+
+                  <div className="movies-featured-content">
+                    <h4>{latestMovie.title || "Untitled Movie"}</h4>
+
+                    <p>{latestMovieGenres || "Uncategorized"}</p>
+
+                    <div className="movies-featured-meta">
+                      <span>{latestMovie.rate || 0} Rating</span>
+                      <span>{latestMovie.movieLength || "Unknown duration"}</span>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="movies-featured-empty">
+                  <h4>No Movie Yet</h4>
+                  <p>Add movie data to highlight the latest collection here.</p>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -179,6 +292,7 @@ const Movies = (props) => {
                   label="Search Movie"
                   iconClass="fas fa-search"
                   placeholder="Search movie title..."
+                  value={searchFilter}
                 />
               </div>
             </section>
