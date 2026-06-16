@@ -1008,3 +1008,67 @@
 .movie-detail-back {
   gap: 9px !important;
 }
+
+/* FINAL FIX: safe icons for movie detail */
+.movie-detail-close,
+.movie-player-close {
+  font-family: Arial, sans-serif !important;
+  font-size: 28px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+
+.movie-inline-emoji {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  color: inherit !important;
+}
+
+.movie-button-emoji {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-family: Arial, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+
+.movie-watch-play-button .movie-button-emoji {
+  background: rgba(220, 38, 38, 0.95);
+  box-shadow: 0 10px 24px rgba(220, 38, 38, 0.28);
+}
+
+.movie-detail-trailer .movie-button-emoji,
+.movie-detail-back .movie-button-emoji {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.movie-watch-play-button,
+.movie-detail-trailer,
+.movie-detail-back {
+  font-family: inherit !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+}
+
+.movie-watch-play-button i,
+.movie-detail-trailer i,
+.movie-detail-back i,
+.movie-detail-close i,
+.movie-player-close i,
+.movie-detail-meta i,
+.movie-detail-rating i {
+  display: none !important;
+}

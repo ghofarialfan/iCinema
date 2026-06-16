@@ -44,7 +44,7 @@ const MovieDetailPanel = ({
           onClick={onClose}
           aria-label="Close movie details"
         >
-          <i className="fas fa-times"></i>
+          ×
         </button>
 
         <div className="movie-detail-poster">
@@ -52,7 +52,9 @@ const MovieDetailPanel = ({
           <div className="movie-detail-poster-overlay"></div>
 
           <span className="movie-detail-rating">
-            <i className="fas fa-star"></i>
+            <span className="movie-inline-emoji" aria-hidden="true">
+              ★
+            </span>
             {rate || "N/A"}
           </span>
         </div>
@@ -64,12 +66,16 @@ const MovieDetailPanel = ({
 
           <div className="movie-detail-meta">
             <span>
-              <i className="fas fa-clock"></i>
+              <span className="movie-inline-emoji" aria-hidden="true">
+                ⏱
+              </span>
               {movieLength || "Unknown duration"}
             </span>
 
             <span>
-              <i className="fas fa-tags"></i>
+              <span className="movie-inline-emoji" aria-hidden="true">
+                🏷
+              </span>
               {genres}
             </span>
           </div>
@@ -93,8 +99,8 @@ const MovieDetailPanel = ({
                   className="movie-watch-play-button"
                   onClick={openPlayer}
                 >
-                  <span>
-                    <i className="fas fa-play"></i>
+                  <span className="movie-button-emoji" aria-hidden="true">
+                    ▶
                   </span>
                   Play Movie
                 </button>
@@ -122,12 +128,16 @@ const MovieDetailPanel = ({
                   : "movie-detail-trailer disabled"
               }
             >
-              <i className="fas fa-play"></i>
+              <span className="movie-button-emoji" aria-hidden="true">
+                ▶
+              </span>
               Watch Trailer
             </a>
 
             <button type="button" onClick={onClose} className="movie-detail-back">
-              <i className="fas fa-arrow-left"></i>
+              <span className="movie-button-emoji" aria-hidden="true">
+                ←
+              </span>
               Back to Movies
             </button>
           </div>
@@ -143,7 +153,7 @@ const MovieDetailPanel = ({
               onClick={closePlayer}
               aria-label="Close movie player"
             >
-              <i className="fas fa-times"></i>
+              ×
             </button>
 
             <div className="movie-player-header">
