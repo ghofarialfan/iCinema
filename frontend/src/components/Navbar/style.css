@@ -47,16 +47,24 @@
 }
 
 .nav-brand-icon {
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: linear-gradient(135deg, #dc2626, #991b1b);
+  overflow: hidden;
+  background: #000000;
   color: #ffffff;
-  font-size: 14px;
   box-shadow: 0 14px 30px rgba(220, 38, 38, 0.25);
+}
+
+.nav-brand-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .nav-brand-text {
@@ -458,18 +466,10 @@
 }
 
 @media only screen and (max-width: 576px) {
-  .nav-wrapper {
-    height: 70px;
-  }
-
-  .nav-container {
-    padding: 0 16px;
-  }
-
   .nav-brand-icon {
     width: 40px;
     height: 40px;
-    border-radius: 14px;
+    border-radius: 999px;
   }
 
   .nav-brand-text {
