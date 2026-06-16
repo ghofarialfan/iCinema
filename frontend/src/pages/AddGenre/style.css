@@ -519,3 +519,33 @@
   letter-spacing: 0 !important;
   line-height: 1 !important;
 }
+
+/* Final fix for Add Genre button typography */
+.add-genre-page button[type="submit"],
+.add-genre-page .add-genre-submit-button,
+.add-genre-page .submit-button,
+.add-genre-page .add-genre-submit-panel button {
+  min-width: 190px !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  padding: 0 28px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 18px !important;
+  font-family: inherit !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+.add-genre-page button[type="submit"] *,
+.add-genre-page .add-genre-submit-button *,
+.add-genre-page .submit-button *,
+.add-genre-page .add-genre-submit-panel button * {
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
