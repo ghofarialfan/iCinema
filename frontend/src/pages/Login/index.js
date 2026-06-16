@@ -18,7 +18,7 @@ class Login extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.loggedIn && !prevProps.loggedIn) {
-      this.props.history.push("/");
+      this.props.history.push("/movies");
     }
   }
 
@@ -39,6 +39,7 @@ class Login extends React.Component {
 
     const data = { ...this.state.data };
     data[input.name] = input.value;
+
     this.setState({ data, errors });
   };
 
@@ -47,6 +48,7 @@ class Login extends React.Component {
     const obj = { [name]: value };
     const subSchema = Joi.object({ [name]: this.schema[name] });
     const { error } = subSchema.validate(obj);
+
     return error ? error.details[0].message : null;
   };
 
@@ -84,20 +86,22 @@ class Login extends React.Component {
     const { authMessage } = this.props;
 
     return (
-      <div className="login-page">
-        <div className="login-background-glow login-background-glow-one"></div>
-        <div className="login-background-glow login-background-glow-two"></div>
+      <main className="login-page">
+        <span className="auth-orb auth-orb-red"></span>
+        <span className="auth-orb auth-orb-blue"></span>
 
         <div className="login-wrapper">
           <section className="login-brand-panel">
+            <div className="login-brand-overlay"></div>
+
             <div className="login-brand-content">
               <span className="login-badge">iCinema Platform</span>
 
               <h1>Welcome Back to iCinema</h1>
 
               <p>
-                Sign in to continue managing your movie experience, explore
-                collections, and access personalized cinema features.
+                Sign in to continue exploring movie collections, managing admin
+                content, and enjoying a cleaner cinema browsing experience.
               </p>
 
               <div className="login-feature-list">
@@ -107,17 +111,17 @@ class Login extends React.Component {
                   </span>
                   <div>
                     <strong>Movie Library</strong>
-                    <p>Explore and manage movie collections.</p>
+                    <p>Explore curated movies with a modern interface.</p>
                   </div>
                 </div>
 
                 <div className="login-feature-item">
                   <span>
-                    <i className="fas fa-star"></i>
+                    <i className="fas fa-filter"></i>
                   </span>
                   <div>
                     <strong>Smart Filtering</strong>
-                    <p>Find movies based on genres and ratings.</p>
+                    <p>Find movies faster using genre and rating filters.</p>
                   </div>
                 </div>
 
@@ -127,7 +131,7 @@ class Login extends React.Component {
                   </span>
                   <div>
                     <strong>Secure Access</strong>
-                    <p>Authentication is handled using token-based access.</p>
+                    <p>Admin features are protected using authenticated access.</p>
                   </div>
                 </div>
               </div>
@@ -141,8 +145,9 @@ class Login extends React.Component {
                   <i className="fas fa-user-circle"></i>
                 </div>
 
+                <span>Account Access</span>
                 <h2>Login</h2>
-                <p>Enter your account credentials to access iCinema.</p>
+                <p>Enter your credentials to access your iCinema account.</p>
               </div>
 
               <form onSubmit={this.handleSubmit} className="login-form">
@@ -177,20 +182,24 @@ class Login extends React.Component {
                 )}
 
                 <div className="login-button-wrapper">
-                  <Button disabled={this.validate()} type="submit" label="Login" />
+                  <Button
+                    disabled={this.validate()}
+                    type="submit"
+                    label="Login"
+                  />
                 </div>
               </form>
 
               <div className="login-footer-note">
                 <p>
-                  Admin access is required for managing movie data and system
+                  Admin access is required to manage movies, genres, and system
                   content.
                 </p>
               </div>
             </div>
           </section>
         </div>
-      </div>
+      </main>
     );
   }
 }
