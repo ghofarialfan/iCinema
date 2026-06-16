@@ -975,3 +975,36 @@
     margin-bottom: 30px !important;
   }
 }
+
+/* FINAL FIX: movie detail button typography */
+.movie-watch-play-button,
+.movie-detail-trailer,
+.movie-detail-back,
+.movie-player-close,
+.movie-detail-close {
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.movie-watch-play-button span,
+.movie-detail-trailer span,
+.movie-detail-back span,
+.movie-watch-play-button i,
+.movie-detail-trailer i,
+.movie-detail-back i {
+  font-family: inherit !important;
+  line-height: 1 !important;
+}
+
+.movie-watch-play-button {
+  gap: 10px !important;
+}
+
+.movie-detail-trailer,
+.movie-detail-back {
+  gap: 9px !important;
+}

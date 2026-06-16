@@ -549,3 +549,20 @@
   line-height: 1 !important;
   white-space: nowrap !important;
 }
+
+/* Make Delete button text match the general app font */
+.add-genre-page .manage-delete-btn,
+.add-genre-page .manage-actions button,
+.add-genre-page button {
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.add-genre-page .manage-delete-btn i {
+  font-size: 14px !important;
+  line-height: 1 !important;
+}

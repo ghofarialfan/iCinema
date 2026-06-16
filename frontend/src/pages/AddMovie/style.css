@@ -1097,3 +1097,40 @@
 .add-movie-page .media-file-button-icon {
   display: none !important;
 }
+
+/* FINAL FIX: genre select icon should use emoji, not broken FontAwesome */
+.add-movie-page .add-movie-form-grid .input-container:nth-child(2) .input-icon,
+.add-movie-page .add-movie-form-grid .input-container:nth-child(2) i,
+.add-movie-page .add-movie-form-grid .input-container:nth-child(2) .fa,
+.add-movie-page .add-movie-form-grid .input-container:nth-child(2) .fas {
+  font-size: 0 !important;
+  color: transparent !important;
+}
+
+.add-movie-page .add-movie-form-grid .input-container:nth-child(2) .input-icon::before,
+.add-movie-page .add-movie-form-grid .input-container:nth-child(2) i::before,
+.add-movie-page .add-movie-form-grid .input-container:nth-child(2) .fa::before,
+.add-movie-page .add-movie-form-grid .input-container:nth-child(2) .fas::before {
+  content: "🏷️" !important;
+  font-size: 18px !important;
+  color: #ffffff !important;
+}
+
+/* Make Edit and Delete button text match the general app font */
+.add-movie-page .manage-edit-btn,
+.add-movie-page .manage-delete-btn,
+.add-movie-page .manage-cancel-btn,
+.add-movie-page .manage-actions button {
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.add-movie-page .manage-edit-btn i,
+.add-movie-page .manage-delete-btn i {
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
