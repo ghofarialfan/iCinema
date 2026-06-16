@@ -106,7 +106,9 @@ class Login extends React.Component {
 
               <div className="login-feature-list">
                 <div className="login-feature-item">
-                  <span aria-hidden="true">🎬</span>
+                  <span className="auth-feature-icon" aria-hidden="true">
+                    M
+                  </span>
                   <div>
                     <strong>Movie Library</strong>
                     <p>Explore curated movies with a modern interface.</p>
@@ -114,7 +116,9 @@ class Login extends React.Component {
                 </div>
 
                 <div className="login-feature-item">
-                  <span aria-hidden="true">⌕</span>
+                  <span className="auth-feature-icon" aria-hidden="true">
+                    F
+                  </span>
                   <div>
                     <strong>Smart Filtering</strong>
                     <p>Find movies faster using genre and rating filters.</p>
@@ -122,7 +126,9 @@ class Login extends React.Component {
                 </div>
 
                 <div className="login-feature-item">
-                  <span aria-hidden="true">●</span>
+                  <span className="auth-feature-icon" aria-hidden="true">
+                    S
+                  </span>
                   <div>
                     <strong>Secure Access</strong>
                     <p>Admin features are protected using authenticated access.</p>
@@ -136,7 +142,7 @@ class Login extends React.Component {
             <div className="login-form-card">
               <div className="login-form-header">
                 <div className="login-form-icon" aria-hidden="true">
-                  👤
+                  A
                 </div>
 
                 <span>Account Access</span>
@@ -170,7 +176,9 @@ class Login extends React.Component {
 
                 {authMessage && (
                   <div className="login-auth-message">
-                    <span aria-hidden="true">!</span>
+                    <span className="auth-alert-icon" aria-hidden="true">
+                      !
+                    </span>
                     <span>{authMessage}</span>
                   </div>
                 )}
