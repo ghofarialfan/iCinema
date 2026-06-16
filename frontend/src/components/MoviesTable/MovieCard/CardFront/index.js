@@ -38,10 +38,6 @@ const CardFront = ({
           <span aria-hidden="true">⭐</span>
           {rating}
         </span>
-
-        <div className="movie-hover-action" aria-hidden="true">
-          <span>👆</span>
-        </div>
       </div>
 
       <div className="movie-card-content">

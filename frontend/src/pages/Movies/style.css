@@ -855,3 +855,22 @@
     padding: 18px 12px;
   }
 }
+
+.movies-search-card .input-container {
+  margin: 0;
+}
+
+.movies-search-card .input-field-wrapper {
+  position: relative;
+}
+
+.movies-search-card .input-field-wrapper .input-icon {
+  left: 15px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.movies-search-card input,
+.movies-search-card .form-control {
+  padding-left: 52px !important;
+}

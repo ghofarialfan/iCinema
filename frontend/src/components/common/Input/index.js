@@ -1,16 +1,17 @@
 import React from "react";
 import "./style.css";
 
-const getSafeIcon = (iconClass, type, name, placeholder) => {
+const getSafeIcon = (iconClass, type, name, placeholder, label) => {
   const key = `${iconClass || ""} ${type || ""} ${name || ""} ${
     placeholder || ""
-  }`.toLowerCase();
+  } ${label || ""}`.toLowerCase();
 
   if (key.includes("email") || key.includes("envelope")) return "✉️";
   if (key.includes("password") || key.includes("key") || key.includes("lock"))
     return "🔒";
   if (key.includes("search")) return "🔍";
-  if (key.includes("rating") || key.includes("star")) return "⭐";
+  if (key.includes("rating") || key.includes("rate") || key.includes("star"))
+    return "⭐";
   if (
     key.includes("duration") ||
     key.includes("length") ||
@@ -24,12 +25,18 @@ const getSafeIcon = (iconClass, type, name, placeholder) => {
     key.includes("link")
   )
     return "🔗";
-  if (key.includes("genre") || key.includes("tag")) return "🏷️";
+  if (key.includes("genre") || key.includes("category") || key.includes("tag"))
+    return "🏷️";
+  if (
+    key.includes("description") ||
+    key.includes("summary") ||
+    key.includes("synopsis")
+  )
+    return "📝";
   if (key.includes("title") || key.includes("movie") || key.includes("film"))
     return "🎬";
-  if (key.includes("description") || key.includes("summary")) return "📝";
 
-  return "•";
+  return "";
 };
 
 const Input = ({
@@ -42,7 +49,7 @@ const Input = ({
   ...rest
 }) => {
   const isTextarea = type === "textarea";
-  const icon = getSafeIcon(iconClass, type, name, placeholder);
+  const icon = getSafeIcon(iconClass, type, name, placeholder, label);
 
   const commonProps = {
     id: name,
@@ -57,9 +64,11 @@ const Input = ({
       {label && <label htmlFor={name}>{label}</label>}
 
       <div className={`input-field-wrapper ${isTextarea ? "is-textarea" : ""}`}>
-        <span className="input-icon" aria-hidden="true">
-          {icon}
-        </span>
+        {icon && (
+          <span className="input-icon" aria-hidden="true">
+            {icon}
+          </span>
+        )}
 
         {isTextarea ? (
           <textarea {...commonProps} />

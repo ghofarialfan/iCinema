@@ -892,3 +892,24 @@
     border-radius: 17px;
   }
 }
+
+.add-movie-page i,
+.add-movie-page .fa,
+.add-movie-page .fas,
+.add-movie-page .far,
+.add-movie-page .fab {
+  display: none !important;
+}
+
+.add-movie-page .custom-file-label::before,
+.add-movie-page .custom-file-label::after,
+.add-movie-page .file-label::before,
+.add-movie-page .file-label::after,
+.add-movie-page label[for*="file"]::before,
+.add-movie-page label[for*="file"]::after {
+  content: none !important;
+}
+
+.add-movie-page input[type="file"]::file-selector-button {
+  font-family: inherit;
+}

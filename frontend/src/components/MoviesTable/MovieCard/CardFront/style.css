@@ -81,41 +81,6 @@
   backface-visibility: hidden;
 }
 
-.movie-hover-action {
-  position: absolute;
-  left: 50%;
-  top: 46%;
-  transform: translate(-50%, -50%) scale(0.9);
-  opacity: 0;
-  width: 52px;
-  height: 52px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  background: rgba(15, 23, 42, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(14px);
-  transition: 0.28s ease;
-}
-
-.card-wrapper:hover .movie-hover-action {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.movie-hover-action span {
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 13px;
-  background: rgba(220, 38, 38, 0.24);
-  color: #ffffff;
-  font-size: 16px;
-}
-
 .movie-card-content {
   position: absolute;
   left: 0;
@@ -197,4 +162,8 @@
   opacity: 0.55;
   pointer-events: none;
   box-shadow: none;
+}
+
+.movie-hover-action {
+  display: none !important;
 }

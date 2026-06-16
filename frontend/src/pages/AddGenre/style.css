@@ -474,3 +474,21 @@
     font-size: 34px;
   }
 }
+
+.add-genre-page i,
+.add-genre-page .fa,
+.add-genre-page .fas,
+.add-genre-page .far,
+.add-genre-page .fab {
+  display: none !important;
+}
+
+.add-genre-page .input-field-wrapper .input-icon {
+  left: 15px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.add-genre-page .form-control {
+  padding-left: 52px !important;
+}
