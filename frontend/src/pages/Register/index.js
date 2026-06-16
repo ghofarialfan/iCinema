@@ -120,7 +120,9 @@ class RegisterForm extends React.Component {
 
               <div className="register-feature-list">
                 <div className="register-feature-item">
-                  <span aria-hidden="true">+</span>
+                  <span className="auth-feature-icon" aria-hidden="true">
+                    R
+                  </span>
                   <div>
                     <strong>Easy Registration</strong>
                     <p>Create your account using email and password.</p>
@@ -128,7 +130,9 @@ class RegisterForm extends React.Component {
                 </div>
 
                 <div className="register-feature-item">
-                  <span aria-hidden="true">🎬</span>
+                  <span className="auth-feature-icon" aria-hidden="true">
+                    M
+                  </span>
                   <div>
                     <strong>Movie Access</strong>
                     <p>Browse movie collections through a modern interface.</p>
@@ -136,7 +140,9 @@ class RegisterForm extends React.Component {
                 </div>
 
                 <div className="register-feature-item">
-                  <span aria-hidden="true">✓</span>
+                  <span className="auth-feature-icon" aria-hidden="true">
+                    S
+                  </span>
                   <div>
                     <strong>Secure Account</strong>
                     <p>Your account is protected using authentication flow.</p>
@@ -150,7 +156,7 @@ class RegisterForm extends React.Component {
             <div className="register-form-card">
               <div className="register-form-header">
                 <div className="register-form-icon" aria-hidden="true">
-                  +
+                  R
                 </div>
 
                 <span>New Account</span>
@@ -195,7 +201,9 @@ class RegisterForm extends React.Component {
 
                 {(authMessage || passwordError) && (
                   <div className="register-auth-message">
-                    <span aria-hidden="true">!</span>
+                    <span className="auth-alert-icon" aria-hidden="true">
+                      !
+                    </span>
                     <span>
                       {authMessage} {passwordError}
                     </span>
