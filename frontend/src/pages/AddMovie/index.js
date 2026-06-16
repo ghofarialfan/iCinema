@@ -767,8 +767,10 @@ class AddMovieForm extends React.Component {
                     />
 
                     <label htmlFor="video" className="custom-file-button">
-                      <span aria-hidden="true">🎥</span>
-                      Choose File
+                      <span className="file-upload-emoji" aria-hidden="true">
+                        🎥
+                      </span>
+                      <span className="file-upload-text">Choose File</span>
                     </label>
 
                     <span className="custom-file-name">

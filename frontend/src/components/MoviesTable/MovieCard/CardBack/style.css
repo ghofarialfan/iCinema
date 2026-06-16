@@ -695,3 +695,113 @@
     padding: 0 !important;
   }
 }
+
+/* FINAL SAFARI FIX: make right movie detail content truly scrollable */
+.movie-detail-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  padding: 28px !important;
+}
+
+.movie-detail-panel {
+  width: min(980px, calc(100vw - 56px)) !important;
+  height: min(760px, calc(100dvh - 56px)) !important;
+  max-height: calc(100dvh - 56px) !important;
+  display: grid !important;
+  grid-template-columns: 360px minmax(0, 1fr) !important;
+  overflow: hidden !important;
+  border-radius: 34px !important;
+}
+
+.movie-detail-poster {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: hidden !important;
+}
+
+.movie-detail-content {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 46px 42px 120px !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Jangan biarkan Summary scroll mengambil semua scroll utama */
+.movie-detail-summary p {
+  max-height: none !important;
+  overflow: visible !important;
+  padding-right: 0 !important;
+}
+
+/* Tombol bawah harus ikut konten, bukan sticky dan bukan kepotong */
+.movie-detail-actions {
+  position: static !important;
+  bottom: auto !important;
+  z-index: 5 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin: 26px 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+.movie-detail-trailer,
+.movie-detail-back {
+  flex: 1 1 180px !important;
+  min-height: 50px !important;
+}
+
+/* Player tetap paling atas */
+.movie-fullscreen-player {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483002 !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .movie-detail-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .movie-detail-panel {
+    width: 100% !important;
+    height: 94dvh !important;
+    max-height: 94dvh !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 220px minmax(0, 1fr) !important;
+    border-radius: 30px 30px 0 0 !important;
+  }
+
+  .movie-detail-poster {
+    height: 220px !important;
+    min-height: 220px !important;
+    max-height: 220px !important;
+  }
+
+  .movie-detail-content {
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 26px 22px 110px !important;
+  }
+
+  .movie-detail-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    margin-top: 24px !important;
+  }
+}
