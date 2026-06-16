@@ -120,9 +120,7 @@ class RegisterForm extends React.Component {
 
               <div className="register-feature-list">
                 <div className="register-feature-item">
-                  <span>
-                    <i className="fas fa-user-plus"></i>
-                  </span>
+                  <span aria-hidden="true">+</span>
                   <div>
                     <strong>Easy Registration</strong>
                     <p>Create your account using email and password.</p>
@@ -130,9 +128,7 @@ class RegisterForm extends React.Component {
                 </div>
 
                 <div className="register-feature-item">
-                  <span>
-                    <i className="fas fa-film"></i>
-                  </span>
+                  <span aria-hidden="true">🎬</span>
                   <div>
                     <strong>Movie Access</strong>
                     <p>Browse movie collections through a modern interface.</p>
@@ -140,9 +136,7 @@ class RegisterForm extends React.Component {
                 </div>
 
                 <div className="register-feature-item">
-                  <span>
-                    <i className="fas fa-shield-alt"></i>
-                  </span>
+                  <span aria-hidden="true">✓</span>
                   <div>
                     <strong>Secure Account</strong>
                     <p>Your account is protected using authentication flow.</p>
@@ -155,8 +149,8 @@ class RegisterForm extends React.Component {
           <section className="register-form-panel">
             <div className="register-form-card">
               <div className="register-form-header">
-                <div className="register-form-icon">
-                  <i className="fas fa-user-plus"></i>
+                <div className="register-form-icon" aria-hidden="true">
+                  +
                 </div>
 
                 <span>New Account</span>
@@ -170,7 +164,7 @@ class RegisterForm extends React.Component {
                   label="Email"
                   type="email"
                   error={errors["email"]}
-                  iconClass="fas fa-envelope"
+                  iconClass="email"
                   onChange={this.handleChange}
                   placeholder="Enter your email address"
                   value={email}
@@ -182,7 +176,7 @@ class RegisterForm extends React.Component {
                   label="Password"
                   type="password"
                   error={errors["password"]}
-                  iconClass="fas fa-key"
+                  iconClass="password"
                   onChange={this.handleChange}
                   placeholder="Create your password"
                   value={password}
@@ -193,7 +187,7 @@ class RegisterForm extends React.Component {
                   type="password"
                   label="Repeat Password"
                   error={errors["passwordRepeat"]}
-                  iconClass="fas fa-key"
+                  iconClass="password"
                   onChange={this.handleChange}
                   placeholder="Repeat your password"
                   value={passwordRepeat}
@@ -201,7 +195,7 @@ class RegisterForm extends React.Component {
 
                 {(authMessage || passwordError) && (
                   <div className="register-auth-message">
-                    <i className="fas fa-exclamation-circle"></i>
+                    <span aria-hidden="true">!</span>
                     <span>
                       {authMessage} {passwordError}
                     </span>
