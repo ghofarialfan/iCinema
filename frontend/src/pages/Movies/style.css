@@ -889,3 +889,33 @@
     width: min(100%, calc(100% - 28px)) !important;
   }
 }
+
+/* FINAL ALIGNMENT: movies page content sejajar dengan navbar */
+.movies-container {
+  width: min(1320px, calc(100% - 64px)) !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.movies-layout {
+  grid-template-columns: 300px minmax(0, 1fr) !important;
+  gap: 28px !important;
+}
+
+@media (max-width: 991px) {
+  .movies-container {
+    width: min(100%, calc(100% - 40px)) !important;
+  }
+
+  .movies-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .movies-container {
+    width: min(100%, calc(100% - 28px)) !important;
+  }
+}
