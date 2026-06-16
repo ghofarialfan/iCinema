@@ -50,3 +50,11 @@
     transform: none;
   }
 }
+
+body.movie-detail-open {
+  overflow: hidden !important;
+}
+
+.card-container {
+  isolation: isolate;
+}

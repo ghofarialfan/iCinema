@@ -594,3 +594,31 @@
 .movie-player-container {
   z-index: 1000002 !important;
 }
+
+.movie-detail-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  isolation: isolate;
+}
+
+.movie-detail-panel {
+  position: relative !important;
+  z-index: 2147483001 !important;
+}
+
+.movie-fullscreen-player {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483002 !important;
+}
+
+.movie-player-container {
+  position: relative !important;
+  z-index: 2147483003 !important;
+}
+
+.footer-wrapper,
+.nav-wrapper {
+  z-index: 10000;
+}

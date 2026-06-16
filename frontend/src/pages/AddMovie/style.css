@@ -937,3 +937,75 @@
 .add-movie-page .form-control {
   padding-left: 52px !important;
 }
+
+.add-movie-page .custom-file-upload {
+  width: 100%;
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.add-movie-page .custom-file-input {
+  display: none !important;
+}
+
+.add-movie-page .custom-file-button {
+  height: 52px;
+  min-width: 150px;
+  margin: 0;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  border-radius: 0;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: #ffffff;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  transition: 0.2s ease;
+}
+
+.add-movie-page .custom-file-button:hover {
+  filter: brightness(1.08);
+}
+
+.add-movie-page .custom-file-button span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.add-movie-page .custom-file-name {
+  min-width: 0;
+  padding: 0 16px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.add-movie-page .add-movie-submit-button button,
+.add-movie-page .add-movie-submit-panel button,
+.add-movie-page button[type="submit"] {
+  font-family: inherit !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+}

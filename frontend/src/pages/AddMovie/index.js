@@ -691,22 +691,34 @@ class AddMovieForm extends React.Component {
                     <p>Upload a poster image and add a trailer link.</p>
                   </div>
                 </div>
-
+                
                 <div className="input-container media-file-field">
                   <label htmlFor="image">Cover Poster</label>
-                  <span className="media-file-button-icon" aria-hidden="true">
-                    <i className="fas fa-file-image"></i>
-                  </span>
 
-                  <input
-                    id="image"
-                    name="image"
-                    type="file"
-                    accept="image/jpeg,image/png,image/jpg"
-                    className="form-control"
-                    onChange={this.handleImageChange}
-                    disabled={isUploading}
-                  />
+                  <div className="custom-file-upload">
+                    <input
+                      id="image"
+                      name="image"
+                      type="file"
+                      accept="image/jpeg,image/png,image/jpg"
+                      className="custom-file-input"
+                      onChange={this.handleImageChange}
+                      disabled={isUploading}
+                    />
+
+                    <label htmlFor="image" className="custom-file-button">
+                      <span aria-hidden="true">🖼️</span>
+                      Choose File
+                    </label>
+
+                    <span className="custom-file-name">
+                      {this.state.imageFile
+                        ? this.state.imageFile.name
+                        : imagePreview
+                        ? "Current poster selected"
+                        : "No file selected"}
+                    </span>
+                  </div>
 
                   {this.getFieldError("image") && (
                     <div className="alert alert-danger">
@@ -739,30 +751,32 @@ class AddMovieForm extends React.Component {
                 />
 
                 <div className="add-movie-file-input">
-                  <label>Movie Video File</label>
-                  <span className="media-file-button-icon" aria-hidden="true">
-                    <i className="fas fa-file-video"></i>
-                  </span>
+                  <label htmlFor="video">Movie Video File</label>
 
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={this.handleVideoChange}
-                    className="form-control"
-                    disabled={isUploading}
-                  />
+                  <div className="custom-file-upload">
+                    <input
+                      id="video"
+                      name="video"
+                      type="file"
+                      accept="video/*"
+                      onChange={this.handleVideoChange}
+                      className="custom-file-input"
+                      disabled={isUploading}
+                    />
 
-                  {videoFile && (
-                    <span className="file-selected-badge">
-                      <i className="fas fa-check"></i> {videoFile.name}
+                    <label htmlFor="video" className="custom-file-button">
+                      <span aria-hidden="true">🎥</span>
+                      Choose File
+                    </label>
+
+                    <span className="custom-file-name">
+                      {videoFile
+                        ? videoFile.name
+                        : existingVideoUrl && isEditing
+                        ? "Current video kept"
+                        : "No file selected"}
                     </span>
-                  )}
-
-                  {!videoFile && existingVideoUrl && isEditing && (
-                    <span className="file-selected-badge">
-                      <i className="fas fa-check"></i> Current video kept
-                    </span>
-                  )}
+                  </div>
                 </div>
 
                 <div className="add-movie-helper-card">

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 
 import FlippingCardFront from "./CardFront";
 import MovieDetailPanel from "./CardBack";
@@ -26,6 +27,32 @@ export default function MovieCard({ movie }) {
     setIsDetailOpen(false);
   };
 
+  useEffect(() => {
+    if (isDetailOpen) {
+      document.body.classList.add("movie-detail-open");
+    } else {
+      document.body.classList.remove("movie-detail-open");
+    }
+
+    return () => {
+      document.body.classList.remove("movie-detail-open");
+    };
+  }, [isDetailOpen]);
+
+  const detailModal = (
+    <MovieDetailPanel
+      title={title}
+      rate={rate}
+      genre={genre}
+      coverImage={image}
+      description={description}
+      trailerLink={trailerLink}
+      videoUrl={videoUrl}
+      movieLength={movieLength}
+      onClose={closeDetail}
+    />
+  );
+
   return (
     <>
       <div className="card-container" onClick={openDetail}>
@@ -41,19 +68,7 @@ export default function MovieCard({ movie }) {
         </div>
       </div>
 
-      {isDetailOpen && (
-        <MovieDetailPanel
-          title={title}
-          rate={rate}
-          genre={genre}
-          coverImage={image}
-          description={description}
-          trailerLink={trailerLink}
-          videoUrl={videoUrl}
-          movieLength={movieLength}
-          onClose={closeDetail}
-        />
-      )}
+      {isDetailOpen && ReactDOM.createPortal(detailModal, document.body)}
     </>
   );
 }

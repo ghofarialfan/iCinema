@@ -10,8 +10,19 @@ const getSafeIcon = (iconClass, type, name, placeholder, label) => {
   if (key.includes("password") || key.includes("key") || key.includes("lock"))
     return "🔒";
   if (key.includes("search")) return "🔍";
+
+  // Genre harus dicek sebelum movie/film supaya tidak salah icon
+  if (
+    key.includes("genre") ||
+    key.includes("category") ||
+    key.includes("categories") ||
+    key.includes("tag")
+  )
+    return "🏷️";
+
   if (key.includes("rating") || key.includes("rate") || key.includes("star"))
     return "⭐";
+
   if (
     key.includes("duration") ||
     key.includes("length") ||
@@ -19,20 +30,21 @@ const getSafeIcon = (iconClass, type, name, placeholder, label) => {
     key.includes("clock")
   )
     return "⏱️";
+
   if (
     key.includes("trailer") ||
     key.includes("youtube") ||
     key.includes("link")
   )
     return "🔗";
-  if (key.includes("genre") || key.includes("category") || key.includes("tag"))
-    return "🏷️";
+
   if (
     key.includes("description") ||
     key.includes("summary") ||
     key.includes("synopsis")
   )
     return "📝";
+
   if (key.includes("title") || key.includes("movie") || key.includes("film"))
     return "🎬";
 
