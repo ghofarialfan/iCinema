@@ -76,7 +76,6 @@ function Navbar(props) {
                 activeClassName="active"
                 to="/movies"
               >
-                <i className="fas fa-home" aria-hidden="true"></i>
                 Movies
               </NavLink>
 
@@ -87,7 +86,6 @@ function Navbar(props) {
                     activeClassName="active"
                     to="/movies/new"
                   >
-                    <i className="fas fa-video" aria-hidden="true"></i>
                     Manage Movie
                   </NavLink>
 
@@ -96,7 +94,6 @@ function Navbar(props) {
                     activeClassName="active"
                     to="/genres/new"
                   >
-                    <i className="fas fa-tags" aria-hidden="true"></i>
                     Manage Genre
                   </NavLink>
                 </>
@@ -138,12 +135,12 @@ function Navbar(props) {
                     aria-haspopup="menu"
                     aria-expanded={accountOpen}
                   >
-                    <span className="nav-account-icon" aria-hidden="true">
-                      <i className="fas fa-user"></i>
+                    <span className="nav-account-avatar" aria-hidden="true">
+                      A
                     </span>
-                    <span className="nav-account-label">Akun</span>
+                    <span className="nav-account-label">Account</span>
                     <span className="nav-account-caret" aria-hidden="true">
-                      <i className="fas fa-chevron-down"></i>
+                      ▾
                     </span>
                   </button>
 
@@ -161,7 +158,6 @@ function Navbar(props) {
                       onClick={handleSignOut}
                       role="menuitem"
                     >
-                      <i className="fas fa-sign-out-alt" aria-hidden="true"></i>
                       Logout
                     </button>
                   </div>
@@ -197,14 +193,12 @@ function Navbar(props) {
             activeClassName="active"
             to="/movies"
           >
-            <i className="fas fa-home"></i>
-            Home
+            Movies
           </NavLink>
 
           {!props.loggedIn ? (
             <>
               <NavLink onClick={closeNav} activeClassName="active" to="/login">
-                <i className="fas fa-sign-in-alt"></i>
                 Login
               </NavLink>
 
@@ -213,14 +207,12 @@ function Navbar(props) {
                 activeClassName="active"
                 to="/register"
               >
-                <i className="fas fa-user-plus"></i>
                 Register
               </NavLink>
             </>
           ) : (
             <Link onClick={handleSignOut} to="/#">
-              <i className="fas fa-sign-out-alt"></i>
-              Log out
+              Logout
             </Link>
           )}
 
@@ -231,7 +223,6 @@ function Navbar(props) {
                 activeClassName="active"
                 to="/movies/new"
               >
-                <i className="fas fa-plus-circle"></i>
                 Manage Movie
               </NavLink>
 
@@ -240,7 +231,6 @@ function Navbar(props) {
                 activeClassName="active"
                 to="/genres/new"
               >
-                <i className="fas fa-tags"></i>
                 Manage Genre
               </NavLink>
             </>
