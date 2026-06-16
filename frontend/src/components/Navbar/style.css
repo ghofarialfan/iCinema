@@ -574,3 +574,19 @@
     padding: 0 14px !important;
   }
 }
+
+/* FINAL: align navbar width with main page content */
+.nav-wrapper {
+  padding: 10px 0 !important;
+}
+
+.nav-shell {
+  width: min(1128px, calc(100% - 48px)) !important;
+  max-width: 1128px !important;
+  margin: 0 auto !important;
+}
+
+.nav-surface {
+  width: 100% !important;
+  margin: 0 auto !important;
+}

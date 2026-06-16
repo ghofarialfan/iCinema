@@ -566,3 +566,18 @@
   font-size: 14px !important;
   line-height: 1 !important;
 }
+
+/* FINAL: align manage genre content with navbar */
+.add-genre-container {
+  width: min(1128px, calc(100% - 48px)) !important;
+  max-width: 1128px !important;
+  margin: 0 auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (max-width: 576px) {
+  .add-genre-container {
+    width: min(100%, calc(100% - 28px)) !important;
+  }
+}
