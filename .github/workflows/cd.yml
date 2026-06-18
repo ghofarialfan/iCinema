@@ -46,4 +46,3 @@ jobs:
           slot-name: Production
           package: deployment-package
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          clean-remote-assets: false

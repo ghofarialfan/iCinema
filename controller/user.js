@@ -12,7 +12,7 @@ const router = express.Router();
 router.patch("/:userId", async (req, res) => {
   try {
     const updateUser = await User.findByIdAndUpdate(
-      { _id: req.params.userId },
+      req.params.userId,
       req.body,
       { new: true }
     );
