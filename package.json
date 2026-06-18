@@ -2,14 +2,14 @@
   "name": "icinema",
   "version": "1.0.0",
   "description": "Website for movie theaters.",
-  "main": "server.js",
+  "main": "bootstrap.js",
   "type": "module",
   "scripts": {
     "setup": "npm install && npm run setup-frontend",
     "dev": "concurrently \"npm run server\" \"npm run frontend\"",
-    "start": "node server.js",
+    "start": "node --import @azure/monitor-opentelemetry/loader bootstrap.js",
     "seed": "node utils/seed.js",
-    "server": "cross-env PORT=5000 nodemon server.js",
+    "server": "cross-env PORT=5000 nodemon --exec \"node --import @azure/monitor-opentelemetry/loader\" bootstrap.js",
     "frontend": "cd ./frontend && npm start",
     "setup-frontend": "cd frontend && npm install",
     "build-frontend": "npm run setup-frontend && cd frontend && npm run build",
@@ -20,6 +20,7 @@
   "author": "Orif Milod",
   "license": "MIT",
   "dependencies": {
+    "@azure/monitor-opentelemetry": "^1.18.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.20.4",
     "cloudinary": "^1.37.1",
@@ -30,12 +31,14 @@
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.13.20",
+    "morgan": "^1.11.0",
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^4.0.0",
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.9.9",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
+    "pino": "^10.3.1",
     "redis": "^3.1.1",
     "validator": "^13.7.0",
     "webpack-sources": "^1.4.3"
@@ -45,6 +48,7 @@
     "jest": "^29.7.0",
     "mongodb-memory-server": "^9.5.0",
     "nodemon": "^2.0.20",
+    "pino-pretty": "^13.1.3",
     "supertest": "^7.0.0"
   },
   "engines": {

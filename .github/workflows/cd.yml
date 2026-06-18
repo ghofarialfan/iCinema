@@ -32,12 +32,13 @@ jobs:
 
       - name: Create .env for deployment
         run: |
-          printf "MONGODB_URL=%s\nJWT_SECRET=%s\nCLOUDINARY_CLOUD_NAME=%s\nCLOUDINARY_API_KEY=%s\nCLOUDINARY_API_SECRET=%s\n" \
+          printf "MONGODB_URL=%s\nJWT_SECRET=%s\nCLOUDINARY_CLOUD_NAME=%s\nCLOUDINARY_API_KEY=%s\nCLOUDINARY_API_SECRET=%s\nAPPLICATIONINSIGHTS_CONNECTION_STRING=%s\n" \
             "${{ secrets.MONGODB_URL }}" \
             "${{ secrets.JWT_SECRET }}" \
             "${{ secrets.CLOUDINARY_CLOUD_NAME }}" \
             "${{ secrets.CLOUDINARY_API_KEY }}" \
-            "${{ secrets.CLOUDINARY_API_SECRET }}" > deployment-package/.env
+            "${{ secrets.CLOUDINARY_API_SECRET }}" \
+            "${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}" > deployment-package/.env
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3

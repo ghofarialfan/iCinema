@@ -66,7 +66,8 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
 ├── models/               # Skema database MongoDB (Mongoose)
 ├── utils/                # Konfigurasi Cloudinary, MongoDB, dan Nodemailer
 ├── app.js                # Setup server Express
-└── server.js             # Entry point aplikasi backend
+├── bootstrap.js          # Entry point + Azure Application Insights
+└── server-main.js        # Startup aplikasi backend
 ```
 
 ---
@@ -108,6 +109,44 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
   <li> <b>POST</b> /api/genres </li>
   <li> <b>DELETE</b> /api/genres/:genreId </li>
 </ul>
+
+### **Health**
+<ul>
+  <li> <b>GET</b> /health — liveness check (server hidup) </li>
+  <li> <b>GET</b> /health/ready — readiness check (MongoDB terhubung) </li>
+</ul>
+
+---
+
+## Monitoring & Observability
+
+iCinema menggunakan tiga lapisan observability di backend:
+
+| Lapisan | Tool | Fungsi |
+| :--- | :--- | :--- |
+| Health Check | Express endpoint | `/health` (liveness) dan `/health/ready` (readiness + MongoDB) |
+| Request Logging | Morgan + Pino | HTTP access log terstruktur ke stdout |
+| APM & Telemetry | Azure Application Insights | Traces, metrics, dependencies, exceptions |
+
+### Environment Variables
+
+```env
+APPLICATIONINSIGHTS_CONNECTION_STRING=<connection-string-dari-azure>
+LOG_LEVEL=info
+```
+
+### Verifikasi di Azure Portal
+
+1. Buka **Application Insights** resource yang terhubung ke App Service.
+2. Cek **Live Metrics** untuk request real-time ke `/api/*`.
+3. Cek **Failures** untuk exception dan HTTP 5xx.
+4. Cek **Application map** untuk dependency MongoDB dan HTTP outbound.
+
+### Azure App Service Health Check
+
+1. App Service → **Health check** → set path ke `/health/ready`.
+2. Pastikan `APPLICATIONINSIGHTS_CONNECTION_STRING` ada di **Configuration → Application settings**.
+3. Untuk CD otomatis, tambahkan secret `APPLICATIONINSIGHTS_CONNECTION_STRING` di GitHub repository.
 
 ---
 

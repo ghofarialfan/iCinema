@@ -61,7 +61,8 @@ jobs:
           cp -r middleware deployment-package/
           cp -r models deployment-package/
           cp -r utils deployment-package/
-          cp server.js deployment-package/
+          cp bootstrap.js deployment-package/
+          cp server-main.js deployment-package/
           cp app.js deployment-package/
           cp package.json deployment-package/
           cp package-lock.json deployment-package/
