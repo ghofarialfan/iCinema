@@ -53,6 +53,19 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
 - **Interaktivitas**: Fitur kartu film ketika di hover menampilkan animasi, kemudian ketika diklik memunculkan sinopsis dan pilihan untuk menonton filmnya.
 - **Validasi (Joi)**: Memastikan setiap data yang dimasukkan (seperti rating atau file media) sesuai dengan format yang diharapkan sebelum dikirim ke server.
 
+## 📁 Struktur Direktori
+├── .github/workflows/    # Konfigurasi deployment otomatis CI/CD
+├── controller/           # Logika backend (Auth, Movie, Genre, User)
+├── frontend/             # Antarmuka frontend React & Redux
+│   ├── public/           # Aset statis frontend
+│   ├── src/              # Source code utama React
+│   └── Dockerfile        # Blueprint containerization frontend
+├── middleware/           # Proteksi rute (checkAuth, checkAdmin)
+├── models/               # Skema database MongoDB (Mongoose)
+├── utils/                # Konfigurasi Cloudinary, MongoDB, dan Nodemailer
+├── app.js                # Setup server Express
+└── server.js             # Entry point aplikasi backend
+
 ---
 
 ## ✨ Fitur Utama
@@ -120,7 +133,14 @@ npm run setup
 # Jalankan mode pengembangan (Backend & Frontend sekaligus)
 npm run dev
 ```
+## 🐳 Menjalankan dengan Docker (Frontend)
+Proyek ini sudah mendukung containerization untuk sisi frontend. Kamu bisa mem-build dan menjalankan image Docker dengan perintah berikut:
 
+```bash
+cd frontend
+docker build -t icinema-frontend .
+docker run -p 3000:3000 icinema-frontend
+```
 ---
 
 ## 📝 Kontributor
