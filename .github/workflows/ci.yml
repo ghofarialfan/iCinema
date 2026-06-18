@@ -62,6 +62,7 @@ jobs:
           cp -r models deployment-package/
           cp -r utils deployment-package/
           cp server.js deployment-package/
+          cp app.js deployment-package/
           cp package.json deployment-package/
           cp package-lock.json deployment-package/
 
