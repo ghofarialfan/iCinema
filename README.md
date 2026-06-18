@@ -54,6 +54,8 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
 - **Validasi (Joi)**: Memastikan setiap data yang dimasukkan (seperti rating atau file media) sesuai dengan format yang diharapkan sebelum dikirim ke server.
 
 ## 📁 Struktur Direktori
+
+```
 ├── .github/workflows/    # Konfigurasi deployment otomatis CI/CD
 ├── controller/           # Logika backend (Auth, Movie, Genre, User)
 ├── frontend/             # Antarmuka frontend React & Redux
@@ -65,6 +67,7 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
 ├── utils/                # Konfigurasi Cloudinary, MongoDB, dan Nodemailer
 ├── app.js                # Setup server Express
 └── server.js             # Entry point aplikasi backend
+```
 
 ---
 
