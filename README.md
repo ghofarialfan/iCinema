@@ -27,6 +27,7 @@ iCinema menggunakan pipeline **CI/CD (Continuous Integration & Continuous Deploy
 Setiap kali ada perubahan kode pada branch `main`, GitHub Actions akan menjalankan proses berikut:
 
 #### **1. Tahap CI (Continuous Integration)**
+- **Frontend Testing**: Menjalankan pengujian otomatis secara *headless* menggunakan perintah `npm run test:ci` untuk memastikan tidak ada *bug* atau regresi pada antarmuka sebelum di-*build*.
 - **Build Frontend**: GitHub Runner membangun aplikasi React menjadi file statis yang dioptimalkan.
 - **Packaging**: Menggabungkan hasil build frontend dengan seluruh logika backend (controller, models, middleware).
 - **Artifact Upload**: Paket siap pakai disimpan sebagai artifact untuk menjamin konsistensi antara tahap build dan deploy.
@@ -34,7 +35,7 @@ Setiap kali ada perubahan kode pada branch `main`, GitHub Actions akan menjalank
 #### **2. Tahap CD (Continuous Deployment)**
 - **Environment Setup**: Membuat file `.env` secara dinamis menggunakan rahasia (Secrets) dari GitHub.
 - **Deployment ke Azure**: Mengirimkan paket aplikasi ke **Azure App Service** menggunakan mekanisme *Zero Downtime*.
-- **Startup**: Aplikasi langsung aktif di cloud dan terhubung ke **MongoDB Atlas** serta **Cloudinary**.
+- **Startup**: Aplikasi langsung aktif di cloud dan terhubung ke MongoDB Atlas, Cloudinary, serta termonitor oleh Azure Application Insights.
 
 ---
 
@@ -46,7 +47,7 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
 - **API Berbasis REST**: Mengelola data menggunakan metode HTTP yang bersih (GET, POST, PATCH, DELETE).
 - **Keamanan (JWT & Bcrypt)**: Melindungi akun pengguna dengan enkripsi password dan token autentikasi yang aman.
 - **Role-Based Access Control (RBAC)**: Membatasi fitur manajemen hanya untuk akun dengan peran Admin.
-- **Cloudinary Integration**: Mengelola penyimpanan file poster dan video secara eksternal melalui API Cloudinary untuk efisiensi beban server.
+- **Cloud Integration**: Mengelola penyimpanan file media melalui Cloudinary, serta menerapkan **Azure Application Insights** untuk kebutuhan observabilitas dan telemetri server.
 
 ### **Frontend (React & Redux)**
 - **State Management**: Menggunakan Redux untuk menjaga sinkronisasi data di seluruh halaman tanpa perlu memuat ulang browser.
@@ -57,16 +58,16 @@ Aplikasi ini dibangun dengan standar industri menggunakan **MERN Stack** dan ars
 
 ```
 ├── .github/workflows/    # Konfigurasi deployment otomatis CI/CD
-├── controller/           # Logika backend (Auth, Movie, Genre, User)
+├── controller/           # Logika backend (Auth, Movie, Genre, User, Health)
 ├── frontend/             # Antarmuka frontend React & Redux
 │   ├── public/           # Aset statis frontend
 │   ├── src/              # Source code utama React
 │   └── Dockerfile        # Blueprint containerization frontend
 ├── middleware/           # Proteksi rute (checkAuth, checkAdmin)
 ├── models/               # Skema database MongoDB (Mongoose)
-├── utils/                # Konfigurasi Cloudinary, MongoDB, dan Nodemailer
+├── utils/                # Integrasi Cloudinary, MongoDB, Nodemailer, & Logger
 ├── app.js                # Setup server Express
-├── bootstrap.js          # Entry point + Azure Application Insights
+├── bootstrap.js          # Entry point + Azure Application Insights Setup
 └── server-main.js        # Startup aplikasi backend
 ```
 
@@ -156,7 +157,18 @@ LOG_LEVEL=info
 - Node.js terinstal.
 - Akun MongoDB Atlas dan Cloudinary.
 
-### **2. Instalasi**
+### **2. Konfigurasi Environment Variables**
+- Duplikat file `.env.example` di direktori utama menjadi `.env`, lalu sesuaikan isi dengan kredensial:
+    ```env
+    MONGO_URI=your_mongodb_atlas_uri
+    JWT_SECRET=your_jwt_secret
+    CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+    CLOUDINARY_API_KEY=your_cloudinary_api_key
+    CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+    APPLICATIONINSIGHTS_CONNECTION_STRING=your_azure_insights_string
+ ```
+   ```
+### **3. Instalasi**
 Gunakan package manager [npm](https://www.npmjs.com/) untuk menginstal iCinema.
 
 ```bash
@@ -170,7 +182,7 @@ cd iCinema
 npm run setup
 ```
 
-### **3. Menjalankan Proyek**
+### **4. Menjalankan Proyek**
 ```bash
 # Jalankan mode pengembangan (Backend & Frontend sekaligus)
 npm run dev
@@ -182,6 +194,15 @@ Proyek ini sudah mendukung containerization untuk sisi frontend. Kamu bisa mem-b
 cd frontend
 docker build -t icinema-frontend .
 docker run -p 3000:3000 icinema-frontend
+```
+
+# Menjalankan mode pengembangan (Backend & Frontend sekaligus)
+```
+npm run dev
+```
+# Menjalankan pengujian frontend lokal
+```
+cd frontend && npm run test:ci
 ```
 ---
 
